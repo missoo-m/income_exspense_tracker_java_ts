@@ -1,0 +1,1090 @@
+openapi: 3.0.3
+info:
+  title: Expense Tracker API
+  description: Платформа для управления личными финансами с модулем категоризации расходов и планирования бюджета
+  version: 1.0.0
+  contact:
+    name: Expense Tracker Team
+    email: support@expense-tracker.com
+
+servers:
+  - url: http://localhost:5001/api/v1
+    description: Сервер разработки
+
+tags:
+  - name: Auth
+    description: Аутентификация и регистрация пользователей
+  - name: Expense
+    description: Управление расходами
+  - name: Income
+    description: Управление доходами
+  - name: Budget
+    description: Управление бюджетами
+  - name: Category
+    description: Управление категориями расходов
+  - name: Dashboard
+    description: Дашборд и статистика
+  - name: Notification
+    description: Уведомления
+  - name: Public
+    description: Публичный контент (новости, курсы валют)
+  - name: Admin
+    description: Администрирование (только для ADMIN)
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT токен, полученный при авторизации
+
+  schemas:
+    # ==================== ОБЩИЕ СХЕМЫ ====================
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Сообщение об ошибке
+        error:
+          type: string
+          description: Детали ошибки (опционально)
+    
+    # ==================== ПОЛЬЗОВАТЕЛЬ ====================
+    User:
+      type: object
+      properties:
+        _id:
+          type: integer
+          format: int64
+          description: Уникальный идентификатор пользователя
+        fullName:
+          type: string
+          description: Полное имя пользователя
+        email:
+          type: string
+          format: email
+          description: Адрес электронной почты
+        role:
+          type: string
+          enum: [NORMAL, ADMIN]
+          description: Роль пользователя
+        profileImageUrl:
+          type: string
+          description: URL аватара пользователя
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    
+    RegisterRequest:
+      type: object
+      required:
+        - fullName
+        - email
+        - password
+      properties:
+        fullName:
+          type: string
+          description: Полное имя пользователя
+          example: "Иван Иванов"
+        email:
+          type: string
+          format: email
+          description: Адрес электронной почты
+          example: "ivan@example.com"
+        password:
+          type: string
+          format: password
+          description: Пароль (минимум 8 символов)
+          example: "password123"
+        profileImageUrl:
+          type: string
+          description: URL аватара (опционально)
+        role:
+          type: string
+          description: Роль (опционально, по умолчанию NORMAL)
+          enum: [NORMAL, ADMIN]
+    
+    LoginRequest:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          format: email
+          example: "ivan@example.com"
+        password:
+          type: string
+          format: password
+          example: "password123"
+    
+    AuthResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        user:
+          $ref: '#/components/schemas/User'
+        token:
+          type: string
+          description: JWT токен для авторизации
+    
+    Expense:
+      type: object
+      properties:
+        _id:
+          type: integer
+          format: int64
+        icon:
+          type: string
+          description: URL иконки
+        category:
+          type: string
+          description: Название категории
+        generalCategory:
+          type: string
+          description: Общая категория
+        description:
+          type: string
+          description: Описание расхода
+        amount:
+          type: number
+          format: double
+          description: Сумма расхода
+        date:
+          type: string
+          format: date
+          description: Дата расхода
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    
+    ExpenseRequest:
+      type: object
+      required:
+        - category
+        - generalCategory
+        - amount
+        - date
+      properties:
+        icon:
+          type: string
+        category:
+          type: string
+        generalCategory:
+          type: string
+        description:
+          type: string
+        amount:
+          type: number
+          format: double
+        date:
+          type: string
+          format: date
+    
+    ExpensePageResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Expense'
+        page:
+          type: integer
+        size:
+          type: integer
+        totalItems:
+          type: integer
+        totalPages:
+          type: integer
+    
+    Income:
+      type: object
+      properties:
+        _id:
+          type: integer
+          format: int64
+        icon:
+          type: string
+        source:
+          type: string
+          description: Источник дохода
+        amount:
+          type: number
+          format: double
+        date:
+          type: string
+          format: date
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    
+    IncomeRequest:
+      type: object
+      required:
+        - source
+        - amount
+        - date
+      properties:
+        icon:
+          type: string
+        source:
+          type: string
+        amount:
+          type: number
+          format: double
+        date:
+          type: string
+          format: date
+    
+    IncomePageResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Income'
+        page:
+          type: integer
+        size:
+          type: integer
+        totalItems:
+          type: integer
+        totalPages:
+          type: integer
+    
+    Budget:
+      type: object
+      properties:
+        _id:
+          type: integer
+          format: int64
+        month:
+          type: string
+          pattern: '^\d{4}-\d{2}$'
+          description: Месяц в формате YYYY-MM
+        generalCategory:
+          type: string
+        amount:
+          type: number
+          format: double
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    
+    BudgetRequest:
+      type: object
+      required:
+        - month
+        - generalCategory
+        - amount
+      properties:
+        month:
+          type: string
+          pattern: '^\d{4}-\d{2}$'
+        generalCategory:
+          type: string
+        amount:
+          type: number
+          format: double
+    
+    Category:
+      type: object
+      properties:
+        _id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        isDefault:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    
+    CategoryRequest:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+    
+    Notification:
+      type: object
+      properties:
+        _id:
+          type: integer
+          format: int64
+        type:
+          type: string
+          description: Тип уведомления (BUDGET_EXCEEDED и др.)
+        message:
+          type: string
+        read:
+          type: boolean
+        month:
+          type: string
+        generalCategory:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+    
+    News:
+      type: object
+      properties:
+        _id:
+          type: integer
+          format: int64
+        title:
+          type: string
+        content:
+          type: string
+        type:
+          type: string
+        date:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    
+    NewsRequest:
+      type: object
+      required:
+        - title
+        - content
+        - type
+      properties:
+        title:
+          type: string
+        content:
+          type: string
+        type:
+          type: string
+    
+    CurrencyRates:
+      type: object
+      properties:
+        baseCurrency:
+          type: string
+          description: Базовая валюта (BYN)
+        rates:
+          type: object
+          additionalProperties:
+            type: number
+          description: Курсы валют (USD, EUR, RUB, YEN)
+        date:
+          type: string
+          format: date-time
+        source:
+          type: string
+          description: Источник данных (NBRB)
+    
+    DashboardData:
+      type: object
+      properties:
+        totalBalance:
+          type: number
+          format: double
+        totalIncome:
+          type: number
+          format: double
+        totalExpense:
+          type: number
+          format: double
+        last30DaysExpenses:
+          type: object
+          properties:
+            total:
+              type: number
+            transactions:
+              type: array
+              items:
+                $ref: '#/components/schemas/Expense'
+        last60DaysIncome:
+          type: object
+          properties:
+            total:
+              type: number
+            transactions:
+              type: array
+              items:
+                $ref: '#/components/schemas/Income'
+        recentTransactions:
+          type: array
+          items:
+            type: object
+        expensesByCategory:
+          type: array
+          items:
+            type: object
+            properties:
+              category:
+                type: string
+              total:
+                type: number
+
+paths:
+  /auth/register:
+    post:
+      tags: [Auth]
+      summary: Регистрация нового пользователя
+      operationId: register
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterRequest'
+      responses:
+        '201':
+          description: Успешная регистрация
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '400':
+          description: Ошибка валидации
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /auth/login:
+    post:
+      tags: [Auth]
+      summary: Аутентификация пользователя
+      operationId: login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '201':
+          description: Успешный вход
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '400':
+          description: Неверные учетные данные
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /auth/getUser:
+    get:
+      tags: [Auth]
+      summary: Получение информации о текущем пользователе
+      operationId: getUser
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Информация о пользователе
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          description: Неавторизован
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /auth/update:
+    put:
+      tags: [Auth]
+      summary: Обновление профиля пользователя
+      operationId: updateProfile
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                fullName:
+                  type: string
+                password:
+                  type: string
+                profileImage:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: Профиль обновлен
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  user:
+                    $ref: '#/components/schemas/User'
+        '401':
+          description: Неавторизован
+
+  /expense/add:
+    post:
+      tags: [Expense]
+      summary: Добавление расхода
+      operationId: addExpense
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExpenseRequest'
+      responses:
+        '200':
+          description: Расход добавлен
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Expense'
+        '400':
+          description: Ошибка валидации
+        '401':
+          description: Неавторизован
+
+  /expense/get:
+    get:
+      tags: [Expense]
+      summary: Получение списка расходов
+      operationId: getExpenses
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 0
+        - name: size
+          in: query
+          schema:
+            type: integer
+            default: 5
+        - name: from
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: to
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: generalCategory
+          in: query
+          schema:
+            type: string
+        - name: category
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Список расходов
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExpensePageResponse'
+        '401':
+          description: Неавторизован
+
+  /expense/{id}:
+    delete:
+      tags: [Expense]
+      summary: Удаление расхода
+      operationId: deleteExpense
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Расход удален
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '401':
+          description: Неавторизован
+        '404':
+          description: Расход не найден
+
+  /expense/downloadexcel:
+    get:
+      tags: [Expense]
+      summary: Скачать расходы в Excel
+      operationId: downloadExpensesExcel
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Excel файл
+          content:
+            application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
+              schema:
+                type: string
+                format: binary
+        '401':
+          description: Неавторизован
+
+  /income/add:
+    post:
+      tags: [Income]
+      summary: Добавление дохода
+      operationId: addIncome
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IncomeRequest'
+      responses:
+        '200':
+          description: Доход добавлен
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Income'
+
+  /income/get:
+    get:
+      tags: [Income]
+      summary: Получение списка доходов
+      operationId: getIncomes
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 0
+        - name: size
+          in: query
+          schema:
+            type: integer
+            default: 5
+        - name: from
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: to
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: source
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Список доходов
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IncomePageResponse'
+
+  /income/{id}:
+    delete:
+      tags: [Income]
+      summary: Удаление дохода
+      operationId: deleteIncome
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Доход удален
+
+  /budgets:
+    get:
+      tags: [Budget]
+      summary: Получение бюджетов по месяцу
+      operationId: getBudgetsByMonth
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: month
+          in: query
+          required: true
+          schema:
+            type: string
+            pattern: '^\d{4}-\d{2}$'
+      responses:
+        '200':
+          description: Список бюджетов
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Budget'
+    post:
+      tags: [Budget]
+      summary: Установка/обновление бюджета
+      operationId: upsertBudget
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BudgetRequest'
+      responses:
+        '200':
+          description: Бюджет сохранен
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Budget'
+
+  /budgets/{id}:
+    delete:
+      tags: [Budget]
+      summary: Удаление бюджета
+      operationId: deleteBudget
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Бюджет удален
+
+  /categories:
+    get:
+      tags: [Category]
+      summary: Получение категорий расходов
+      operationId: getCategories
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Список категорий
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Category'
+    post:
+      tags: [Category]
+      summary: Создание категории
+      operationId: createCategory
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategoryRequest'
+      responses:
+        '200':
+          description: Категория создана
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+
+  /categories/{id}:
+    put:
+      tags: [Category]
+      summary: Обновление категории
+      operationId: updateCategory
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategoryRequest'
+      responses:
+        '200':
+          description: Категория обновлена
+    delete:
+      tags: [Category]
+      summary: Удаление категории
+      operationId: deleteCategory
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Категория удалена
+
+  /dashboard:
+    get:
+      tags: [Dashboard]
+      summary: Получение данных для дашборда
+      operationId: getDashboard
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Данные дашборда
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DashboardData'
+
+  /notifications:
+    get:
+      tags: [Notification]
+      summary: Получение уведомлений
+      operationId: getNotifications
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Список уведомлений
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Notification'
+
+  /notifications/{id}/read:
+    put:
+      tags: [Notification]
+      summary: Отметить уведомление как прочитанное
+      operationId: markNotificationRead
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Уведомление отмечено как прочитанное
+
+  /public/news:
+    get:
+      tags: [Public]
+      summary: Получение публичных новостей
+      operationId: getPublicNews
+      responses:
+        '200':
+          description: Список новостей
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/News'
+
+  /public/currencies:
+    get:
+      tags: [Public]
+      summary: Получение курсов валют
+      operationId: getCurrencies
+      responses:
+        '200':
+          description: Курсы валют
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CurrencyRates'
+        '500':
+          description: Ошибка при загрузке курсов
+
+  /admin/users:
+    get:
+      tags: [Admin]
+      summary: Получение списка пользователей (только ADMIN)
+      operationId: getAllUsers
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Список пользователей
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        '403':
+          description: Доступ запрещен
+
+  /admin/users/{id}:
+    delete:
+      tags: [Admin]
+      summary: Удаление пользователя (только ADMIN)
+      operationId: deleteUser
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Пользователь удален
+        '403':
+          description: Доступ запрещен
+        '404':
+          description: Пользователь не найден
+
+  /admin/content:
+    post:
+      tags: [Admin]
+      summary: Добавление новости (только ADMIN)
+      operationId: addContent
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewsRequest'
+      responses:
+        '200':
+          description: Новость добавлена
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/News'
+
+  /admin/content/admin:
+    get:
+      tags: [Admin]
+      summary: Получение всего контента (только ADMIN)
+      operationId: getAllContent
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Список контента
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/News'
+
+  /admin/content/{id}:
+    put:
+      tags: [Admin]
+      summary: Редактирование новости (только ADMIN)
+      operationId: updateContent
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewsRequest'
+      responses:
+        '200':
+          description: Новость обновлена
+    delete:
+      tags: [Admin]
+      summary: Удаление новости (только ADMIN)
+      operationId: deleteContent
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Новость удалена
