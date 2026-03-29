@@ -1,8 +1,13 @@
 /Users/mac/Desktop/geellya_tracker_java_ts/backend-java/src/test/java/com/example/expensetracker/config/TestcontainersConfig.java
+/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/src/test/java/com/example/expensetracker/integration/controller/AdminControllerIT.java
 /Users/mac/Desktop/geellya_tracker_java_ts/backend-java/src/test/java/com/example/expensetracker/integration/controller/BudgetControllerIT.java
+/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/src/test/java/com/example/expensetracker/integration/controller/CategoryControllerIT.java
 /Users/mac/Desktop/geellya_tracker_java_ts/backend-java/src/test/java/com/example/expensetracker/integration/controller/ExpenseControllerIT.java
 /Users/mac/Desktop/geellya_tracker_java_ts/backend-java/src/test/java/com/example/expensetracker/integration/controller/IncomeControllerIT.java
+/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/src/test/java/com/example/expensetracker/integration/controller/NotificationControllerIT.java
 /Users/mac/Desktop/geellya_tracker_java_ts/backend-java/src/test/java/com/example/expensetracker/integration/repository/UserRepositoryIT.java
 /Users/mac/Desktop/geellya_tracker_java_ts/backend-java/src/test/java/com/example/expensetracker/unit/controller/AuthControllerTest.java
+/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/src/test/java/com/example/expensetracker/unit/service/CurrencyRateServiceTest.java
 /Users/mac/Desktop/geellya_tracker_java_ts/backend-java/src/test/java/com/example/expensetracker/unit/service/JwtServiceTest.java
+/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/src/test/java/com/example/expensetracker/unit/service/TransactionServiceTest.java
 /Users/mac/Desktop/geellya_tracker_java_ts/backend-java/src/test/java/com/example/expensetracker/unit/service/UserServiceTest.java

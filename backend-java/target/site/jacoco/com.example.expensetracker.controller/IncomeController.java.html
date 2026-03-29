@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>IncomeController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">expense-tracker-backend</a> &gt; <a href="index.source.html" class="el_package">com.example.expensetracker.controller</a> &gt; <span class="el_source">IncomeController.java</span></div><h1>IncomeController.java</h1><pre class="source lang-java linenums">package com.example.expensetracker.controller;
+
+import com.example.expensetracker.model.Income;
+import com.example.expensetracker.model.User;
+import com.example.expensetracker.repository.IncomeRepository;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Map;
+
+@RestController
+@RequestMapping(&quot;/api/v1/income&quot;)
+public class IncomeController {
+
+    private final IncomeRepository incomeRepository;
+
+<span class="fc" id="L33">    public IncomeController(IncomeRepository incomeRepository) {</span>
+<span class="fc" id="L34">        this.incomeRepository = incomeRepository;</span>
+<span class="fc" id="L35">    }</span>
+
+<span class="nc" id="L37">    public record IncomeRequest(</span>
+            String icon,
+            @NotNull String source,
+            @NotNull Double amount,
+            @NotNull String date
+    ) {}
+
+    @PostMapping(&quot;/add&quot;)
+    public ResponseEntity&lt;?&gt; addIncome(@AuthenticationPrincipal User user,
+                                       @Valid @RequestBody IncomeRequest body) {
+<span class="nc bnc" id="L47" title="All 2 branches missed.">        if (user == null) {</span>
+<span class="nc" id="L48">            return ResponseEntity.status(401).body(Map.of(&quot;messege&quot;, &quot;Unauthorized&quot;));</span>
+        }
+<span class="nc" id="L50">        LocalDate d = LocalDate.parse(body.date());</span>
+<span class="nc" id="L51">        Income income = Income.builder()</span>
+<span class="nc" id="L52">                .user(user)</span>
+<span class="nc" id="L53">                .icon(body.icon())</span>
+<span class="nc" id="L54">                .source(body.source())</span>
+<span class="nc" id="L55">                .amount(body.amount())</span>
+<span class="nc" id="L56">                .date(d)</span>
+<span class="nc" id="L57">                .build();</span>
+<span class="nc" id="L58">        incomeRepository.save(income);</span>
+<span class="nc" id="L59">        return ResponseEntity.ok(income);</span>
+    }
+
+    @GetMapping(&quot;/get&quot;)
+    public ResponseEntity&lt;?&gt; getAll(@AuthenticationPrincipal User user,
+                                    @RequestParam(value = &quot;page&quot;, defaultValue = &quot;0&quot;) int page,
+                                    @RequestParam(value = &quot;size&quot;, defaultValue = &quot;5&quot;) int size,
+                                    @RequestParam(value = &quot;from&quot;, required = false) String from,
+                                    @RequestParam(value = &quot;to&quot;, required = false) String to,
+                                    @RequestParam(value = &quot;source&quot;, required = false) String source) {
+<span class="nc bnc" id="L69" title="All 2 branches missed.">        if (user == null) {</span>
+<span class="nc" id="L70">            return ResponseEntity.status(401).body(Map.of(&quot;messege&quot;, &quot;Unauthorized&quot;));</span>
+        }
+<span class="nc bnc" id="L72" title="All 4 branches missed.">        LocalDate fromDate = (from == null || from.isBlank()) ? null : LocalDate.parse(from);</span>
+<span class="nc bnc" id="L73" title="All 4 branches missed.">        LocalDate toDate = (to == null || to.isBlank()) ? null : LocalDate.parse(to);</span>
+<span class="nc bnc" id="L74" title="All 4 branches missed.">        String sourceFilter = (source == null || source.isBlank()) ? null : source.trim();</span>
+
+<span class="nc" id="L76">        Pageable pageable = PageRequest.of(Math.max(page, 0), Math.min(Math.max(size, 1), 100));</span>
+<span class="nc" id="L77">        Page&lt;Income&gt; p = incomeRepository.findPage(user, fromDate, toDate, sourceFilter, pageable);</span>
+<span class="nc" id="L78">        return ResponseEntity.ok(Map.of(</span>
+<span class="nc" id="L79">                &quot;items&quot;, p.getContent(),</span>
+<span class="nc" id="L80">                &quot;page&quot;, p.getNumber(),</span>
+<span class="nc" id="L81">                &quot;size&quot;, p.getSize(),</span>
+<span class="nc" id="L82">                &quot;totalItems&quot;, p.getTotalElements(),</span>
+<span class="nc" id="L83">                &quot;totalPages&quot;, p.getTotalPages()</span>
+        ));
+    }
+
+    @DeleteMapping(&quot;/{id}&quot;)
+    public ResponseEntity&lt;?&gt; delete(@AuthenticationPrincipal User user,
+                                    @PathVariable(&quot;id&quot;) Long id) {
+<span class="nc bnc" id="L90" title="All 2 branches missed.">        if (user == null) {</span>
+<span class="nc" id="L91">            return ResponseEntity.status(401).body(Map.of(&quot;messege&quot;, &quot;Unauthorized&quot;));</span>
+        }
+<span class="nc" id="L93">        incomeRepository.deleteById(id);</span>
+<span class="nc" id="L94">        return ResponseEntity.ok(Map.of(&quot;messege&quot;, &quot; Доход успешно удален &quot;));</span>
+    }
+
+    @GetMapping(&quot;/downloadexcel&quot;)
+    public ResponseEntity&lt;byte[]&gt; downloadExcel(@AuthenticationPrincipal User user) throws IOException {
+<span class="nc bnc" id="L99" title="All 2 branches missed.">        if (user == null) {</span>
+<span class="nc" id="L100">            return ResponseEntity.status(401).build();</span>
+        }
+<span class="nc" id="L102">        List&lt;Income&gt; list = incomeRepository.findByUserOrderByDateDesc(user);</span>
+
+<span class="nc" id="L104">        Workbook workbook = new XSSFWorkbook();</span>
+<span class="nc" id="L105">        Sheet sheet = workbook.createSheet(&quot;Доход&quot;);</span>
+<span class="nc" id="L106">        int rowIdx = 0;</span>
+<span class="nc" id="L107">        Row header = sheet.createRow(rowIdx++);</span>
+<span class="nc" id="L108">        header.createCell(0).setCellValue(&quot;Источник&quot;);</span>
+<span class="nc" id="L109">        header.createCell(1).setCellValue(&quot;Сумма&quot;);</span>
+<span class="nc" id="L110">        header.createCell(2).setCellValue(&quot;Дата&quot;);</span>
+
+<span class="nc bnc" id="L112" title="All 2 branches missed.">        for (Income income : list) {</span>
+<span class="nc" id="L113">            Row row = sheet.createRow(rowIdx++);</span>
+<span class="nc" id="L114">            row.createCell(0).setCellValue(income.getSource());</span>
+<span class="nc" id="L115">            row.createCell(1).setCellValue(income.getAmount());</span>
+<span class="nc" id="L116">            row.createCell(2).setCellValue(income.getDate().toString());</span>
+<span class="nc" id="L117">        }</span>
+
+<span class="nc" id="L119">        ByteArrayOutputStream out = new ByteArrayOutputStream();</span>
+<span class="nc" id="L120">        workbook.write(out);</span>
+<span class="nc" id="L121">        workbook.close();</span>
+
+<span class="nc" id="L123">        HttpHeaders headers = new HttpHeaders();</span>
+<span class="nc" id="L124">        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);</span>
+<span class="nc" id="L125">        headers.set(HttpHeaders.CONTENT_DISPOSITION, &quot;attachment; filename=income_details.xlsx&quot;);</span>
+<span class="nc" id="L126">        return ResponseEntity.ok()</span>
+<span class="nc" id="L127">                .headers(headers)</span>
+<span class="nc" id="L128">                .body(out.toByteArray());</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
