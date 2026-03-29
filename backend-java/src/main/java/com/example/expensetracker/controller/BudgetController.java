@@ -64,7 +64,7 @@ public class BudgetController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@AuthenticationPrincipal User user,
-                                    @PathVariable Long id) {
+                                    @PathVariable("id") Long id) {
         if (user == null) {
             return ResponseEntity.status(401).body(Map.of("message", "Unauthorized"));
         }

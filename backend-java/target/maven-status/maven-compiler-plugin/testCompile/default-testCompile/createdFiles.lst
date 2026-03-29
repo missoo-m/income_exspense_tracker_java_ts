@@ -1,6 +1,8 @@
-com/example/expensetracker/AuthIntegrationTest.class
-com/example/expensetracker/BudgetAndNotificationIntegrationTest.class
-com/example/expensetracker/config/TestOAuth2Config.class
-com/example/expensetracker/testutil/TestAuth.class
-com/example/expensetracker/config/TestSecurityConfig.class
-com/example/expensetracker/CategoryIntegrationTest.class
+com/example/expensetracker/unit/service/JwtServiceTest.class
+com/example/expensetracker/unit/service/UserServiceTest.class
+com/example/expensetracker/integration/repository/UserRepositoryIT.class
+com/example/expensetracker/unit/controller/AuthControllerTest.class
+com/example/expensetracker/integration/controller/IncomeControllerIT.class
+com/example/expensetracker/integration/controller/BudgetControllerIT.class
+com/example/expensetracker/config/TestcontainersConfig.class
+com/example/expensetracker/integration/controller/ExpenseControllerIT.class

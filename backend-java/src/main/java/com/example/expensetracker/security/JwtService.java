@@ -36,6 +36,7 @@ public class JwtService {
     }
 
     public Long parseUserId(String token) {
+    try {
         var claims = Jwts.parserBuilder()
                 .setSigningKey(key)
                 .build()
@@ -52,6 +53,10 @@ public class JwtService {
             return Long.parseLong(s);
         }
         return null;
+    } catch (Exception e) {
+        // Любое исключение (невалидный токен, истекший токен и т.д.) -> null
+        return null;
     }
+}
 }
 

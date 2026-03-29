@@ -1,0 +1,667 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.example.expensetracker.unit.controller.AuthControllerTest" time="7.092" tests="4" errors="0" skipped="0" failures="0">
+  <properties>
+    <property name="java.specification.version" value="21"/>
+    <property name="sun.jnu.encoding" value="UTF-8"/>
+    <property name="java.class.path" value="/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/target/test-classes:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/target/classes:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/boot/spring-boot-starter-web/3.3.5/spring-boot-starter-web-3.3.5.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/boot/spring-boot-starter/3.3.5/spring-boot-starter-3.3.5.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/boot/spring-boot/3.3.5/spring-boot-3.3.5.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/boot/spring-boot-autoconfigure/3.3.5/spring-boot-autoconfigure-3.3.5.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/boot/spring-boot-starter-logging/3.3.5/spring-boot-starter-logging-3.3.5.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/ch/qos/logback/logback-classic/1.5.11/logback-classic-1.5.11.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/ch/qos/logback/logback-core/1.5.11/logback-core-1.5.11.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/apache/logging/log4j/log4j-to-slf4j/2.23.1/log4j-to-slf4j-2.23.1.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/slf4j/jul-to-slf4j/2.0.16/jul-to-slf4j-2.0.16.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/jakarta/annotation/jakarta.annotation-api/2.1.1/jakarta.annotation-api-2.1.1.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/yaml/snakeyaml/2.2/snakeyaml-2.2.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/boot/spring-boot-starter-json/3.3.5/spring-boot-starter-json-3.3.5.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/com/fasterxml/jackson/datatype/jackson-datatype-jdk8/2.17.2/jackson-datatype-jdk8-2.17.2.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/com/fasterxml/jackson/datatype/jackson-datatype-jsr310/2.17.2/jackson-datatype-jsr310-2.17.2.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/com/fasterxml/jackson/module/jackson-module-parameter-names/2.17.2/jackson-module-parameter-names-2.17.2.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/boot/spring-boot-starter-tomcat/3.3.5/spring-boot-starter-tomcat-3.3.5.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/apache/tomcat/embed/tomcat-embed-core/10.1.31/tomcat-embed-core-10.1.31.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/apache/tomcat/embed/tomcat-embed-websocket/10.1.31/tomcat-embed-websocket-10.1.31.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/spring-web/6.1.14/spring-web-6.1.14.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/spring-beans/6.1.14/spring-beans-6.1.14.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/io/micrometer/micrometer-observation/1.13.6/micrometer-observation-1.13.6.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/io/micrometer/micrometer-commons/1.13.6/micrometer-commons-1.13.6.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/spring-webmvc/6.1.14/spring-webmvc-6.1.14.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/spring-context/6.1.14/spring-context-6.1.14.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/spring-expression/6.1.14/spring-expression-6.1.14.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/boot/spring-boot-starter-cache/3.3.5/spring-boot-starter-cache-3.3.5.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/spring-context-support/6.1.14/spring-context-support-6.1.14.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/boot/spring-boot-starter-data-jpa/3.3.5/spring-boot-starter-data-jpa-3.3.5.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/boot/spring-boot-starter-aop/3.3.5/spring-boot-starter-aop-3.3.5.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/aspectj/aspectjweaver/1.9.22.1/aspectjweaver-1.9.22.1.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/boot/spring-boot-starter-jdbc/3.3.5/spring-boot-starter-jdbc-3.3.5.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/com/zaxxer/HikariCP/5.1.0/HikariCP-5.1.0.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/spring-jdbc/6.1.14/spring-jdbc-6.1.14.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/hibernate/orm/hibernate-core/6.5.3.Final/hibernate-core-6.5.3.Final.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/jakarta/persistence/jakarta.persistence-api/3.1.0/jakarta.persistence-api-3.1.0.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/jakarta/transaction/jakarta.transaction-api/2.0.1/jakarta.transaction-api-2.0.1.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/jboss/logging/jboss-logging/3.5.3.Final/jboss-logging-3.5.3.Final.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/hibernate/common/hibernate-commons-annotations/6.0.6.Final/hibernate-commons-annotations-6.0.6.Final.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/io/smallrye/jandex/3.1.2/jandex-3.1.2.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/com/fasterxml/classmate/1.7.0/classmate-1.7.0.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/net/bytebuddy/byte-buddy/1.14.19/byte-buddy-1.14.19.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/glassfish/jaxb/jaxb-runtime/4.0.5/jaxb-runtime-4.0.5.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/glassfish/jaxb/jaxb-core/4.0.5/jaxb-core-4.0.5.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/eclipse/angus/angus-activation/2.0.2/angus-activation-2.0.2.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/glassfish/jaxb/txw2/4.0.5/txw2-4.0.5.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/com/sun/istack/istack-commons-runtime/4.1.2/istack-commons-runtime-4.1.2.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/jakarta/inject/jakarta.inject-api/2.0.1/jakarta.inject-api-2.0.1.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/antlr/antlr4-runtime/4.13.0/antlr4-runtime-4.13.0.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/data/spring-data-jpa/3.3.5/spring-data-jpa-3.3.5.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/data/spring-data-commons/3.3.5/spring-data-commons-3.3.5.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/spring-orm/6.1.14/spring-orm-6.1.14.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/spring-tx/6.1.14/spring-tx-6.1.14.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/spring-aspects/6.1.14/spring-aspects-6.1.14.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/boot/spring-boot-starter-data-redis/3.3.5/spring-boot-starter-data-redis-3.3.5.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/io/lettuce/lettuce-core/6.3.2.RELEASE/lettuce-core-6.3.2.RELEASE.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/io/netty/netty-common/4.1.114.Final/netty-common-4.1.114.Final.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/io/netty/netty-handler/4.1.114.Final/netty-handler-4.1.114.Final.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/io/netty/netty-resolver/4.1.114.Final/netty-resolver-4.1.114.Final.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/io/netty/netty-buffer/4.1.114.Final/netty-buffer-4.1.114.Final.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/io/netty/netty-transport-native-unix-common/4.1.114.Final/netty-transport-native-unix-common-4.1.114.Final.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/io/netty/netty-codec/4.1.114.Final/netty-codec-4.1.114.Final.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/io/netty/netty-transport/4.1.114.Final/netty-transport-4.1.114.Final.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/io/projectreactor/reactor-core/3.6.11/reactor-core-3.6.11.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/reactivestreams/reactive-streams/1.0.4/reactive-streams-1.0.4.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/data/spring-data-redis/3.3.5/spring-data-redis-3.3.5.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/data/spring-data-keyvalue/3.3.5/spring-data-keyvalue-3.3.5.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/spring-oxm/6.1.14/spring-oxm-6.1.14.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/postgresql/postgresql/42.7.4/postgresql-42.7.4.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/checkerframework/checker-qual/3.42.0/checker-qual-3.42.0.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/boot/spring-boot-starter-security/3.3.5/spring-boot-starter-security-3.3.5.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/spring-aop/6.1.14/spring-aop-6.1.14.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/security/spring-security-config/6.3.4/spring-security-config-6.3.4.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/security/spring-security-web/6.3.4/spring-security-web-6.3.4.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/boot/spring-boot-starter-oauth2-client/3.3.5/spring-boot-starter-oauth2-client-3.3.5.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/security/spring-security-core/6.3.4/spring-security-core-6.3.4.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/security/spring-security-crypto/6.3.4/spring-security-crypto-6.3.4.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/security/spring-security-oauth2-client/6.3.4/spring-security-oauth2-client-6.3.4.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/security/spring-security-oauth2-core/6.3.4/spring-security-oauth2-core-6.3.4.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/com/nimbusds/oauth2-oidc-sdk/9.43.4/oauth2-oidc-sdk-9.43.4.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/com/github/stephenc/jcip/jcip-annotations/1.0-1/jcip-annotations-1.0-1.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/com/nimbusds/content-type/2.2/content-type-2.2.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/com/nimbusds/lang-tag/1.7/lang-tag-1.7.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/security/spring-security-oauth2-jose/6.3.4/spring-security-oauth2-jose-6.3.4.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/com/nimbusds/nimbus-jose-jwt/9.37.3/nimbus-jose-jwt-9.37.3.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/io/jsonwebtoken/jjwt-api/0.11.5/jjwt-api-0.11.5.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/io/jsonwebtoken/jjwt-impl/0.11.5/jjwt-impl-0.11.5.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/io/jsonwebtoken/jjwt-jackson/0.11.5/jjwt-jackson-0.11.5.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/com/fasterxml/jackson/core/jackson-databind/2.17.2/jackson-databind-2.17.2.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/com/fasterxml/jackson/core/jackson-annotations/2.17.2/jackson-annotations-2.17.2.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/com/fasterxml/jackson/core/jackson-core/2.17.2/jackson-core-2.17.2.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/boot/spring-boot-starter-validation/3.3.5/spring-boot-starter-validation-3.3.5.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/apache/tomcat/embed/tomcat-embed-el/10.1.31/tomcat-embed-el-10.1.31.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/hibernate/validator/hibernate-validator/8.0.1.Final/hibernate-validator-8.0.1.Final.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/jakarta/validation/jakarta.validation-api/3.0.2/jakarta.validation-api-3.0.2.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/apache/poi/poi-ooxml/5.3.0/poi-ooxml-5.3.0.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/apache/poi/poi/5.3.0/poi-5.3.0.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/commons-codec/commons-codec/1.16.1/commons-codec-1.16.1.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/apache/commons/commons-math3/3.6.1/commons-math3-3.6.1.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/com/zaxxer/SparseBitSet/1.3/SparseBitSet-1.3.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/apache/poi/poi-ooxml-lite/5.3.0/poi-ooxml-lite-5.3.0.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/apache/xmlbeans/xmlbeans/5.2.1/xmlbeans-5.2.1.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/apache/commons/commons-compress/1.26.2/commons-compress-1.26.2.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/apache/commons/commons-lang3/3.14.0/commons-lang3-3.14.0.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/commons-io/commons-io/2.16.1/commons-io-2.16.1.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/com/github/virtuald/curvesapi/1.08/curvesapi-1.08.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/apache/logging/log4j/log4j-api/2.23.1/log4j-api-2.23.1.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/apache/commons/commons-collections4/4.4/commons-collections4-4.4.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/projectlombok/lombok/1.18.34/lombok-1.18.34.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/boot/spring-boot-starter-test/3.3.5/spring-boot-starter-test-3.3.5.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/boot/spring-boot-test/3.3.5/spring-boot-test-3.3.5.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/boot/spring-boot-test-autoconfigure/3.3.5/spring-boot-test-autoconfigure-3.3.5.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/com/jayway/jsonpath/json-path/2.9.0/json-path-2.9.0.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/jakarta/xml/bind/jakarta.xml.bind-api/4.0.2/jakarta.xml.bind-api-4.0.2.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/jakarta/activation/jakarta.activation-api/2.1.3/jakarta.activation-api-2.1.3.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/net/minidev/json-smart/2.5.1/json-smart-2.5.1.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/net/minidev/accessors-smart/2.5.1/accessors-smart-2.5.1.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/ow2/asm/asm/9.6/asm-9.6.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/assertj/assertj-core/3.25.3/assertj-core-3.25.3.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/awaitility/awaitility/4.2.2/awaitility-4.2.2.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/hamcrest/hamcrest/2.2/hamcrest-2.2.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/junit/jupiter/junit-jupiter/5.10.5/junit-jupiter-5.10.5.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/junit/jupiter/junit-jupiter-api/5.10.5/junit-jupiter-api-5.10.5.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/opentest4j/opentest4j/1.3.0/opentest4j-1.3.0.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/junit/platform/junit-platform-commons/1.10.5/junit-platform-commons-1.10.5.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/junit/jupiter/junit-jupiter-params/5.10.5/junit-jupiter-params-5.10.5.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/junit/jupiter/junit-jupiter-engine/5.10.5/junit-jupiter-engine-5.10.5.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/junit/platform/junit-platform-engine/1.10.5/junit-platform-engine-1.10.5.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/mockito/mockito-core/5.11.0/mockito-core-5.11.0.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/net/bytebuddy/byte-buddy-agent/1.14.19/byte-buddy-agent-1.14.19.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/objenesis/objenesis/3.3/objenesis-3.3.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/mockito/mockito-junit-jupiter/5.11.0/mockito-junit-jupiter-5.11.0.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/skyscreamer/jsonassert/1.5.3/jsonassert-1.5.3.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/com/vaadin/external/google/android-json/0.0.20131108.vaadin1/android-json-0.0.20131108.vaadin1.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/spring-core/6.1.14/spring-core-6.1.14.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/spring-jcl/6.1.14/spring-jcl-6.1.14.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/spring-test/6.1.14/spring-test-6.1.14.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/xmlunit/xmlunit-core/2.9.1/xmlunit-core-2.9.1.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/testcontainers/testcontainers/1.19.3/testcontainers-1.19.3.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/junit/junit/4.13.2/junit-4.13.2.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/hamcrest/hamcrest-core/2.2/hamcrest-core-2.2.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/slf4j/slf4j-api/2.0.16/slf4j-api-2.0.16.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/rnorth/duct-tape/duct-tape/1.0.8/duct-tape-1.0.8.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/jetbrains/annotations/17.0.0/annotations-17.0.0.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/com/github/docker-java/docker-java-api/3.3.4/docker-java-api-3.3.4.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/com/github/docker-java/docker-java-transport-zerodep/3.3.4/docker-java-transport-zerodep-3.3.4.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/com/github/docker-java/docker-java-transport/3.3.4/docker-java-transport-3.3.4.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/net/java/dev/jna/jna/5.13.0/jna-5.13.0.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/testcontainers/postgresql/1.19.3/postgresql-1.19.3.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/testcontainers/jdbc/1.19.8/jdbc-1.19.8.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/testcontainers/database-commons/1.19.8/database-commons-1.19.8.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/testcontainers/junit-jupiter/1.19.3/junit-jupiter-1.19.3.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/com/h2database/h2/2.2.224/h2-2.2.224.jar:"/>
+    <property name="java.vm.vendor" value="Homebrew"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="java.vendor.url" value="https://github.com/Homebrew/homebrew-core/issues"/>
+    <property name="user.timezone" value="Europe/Minsk"/>
+    <property name="org.jboss.logging.provider" value="slf4j"/>
+    <property name="os.name" value="Mac OS X"/>
+    <property name="java.vm.specification.version" value="21"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="user.country" value="BY"/>
+    <property name="sun.boot.library.path" value="/opt/homebrew/Cellar/openjdk@21/21.0.9/libexec/openjdk.jdk/Contents/Home/lib"/>
+    <property name="sun.java.command" value="/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/target/surefire/surefirebooter-20260329162456633_3.jar /Users/mac/Desktop/geellya_tracker_java_ts/backend-java/target/surefire 2026-03-29T16-24-56_579-jvmRun1 surefire-20260329162456633_1tmp surefire_0-20260329162456633_2tmp"/>
+    <property name="http.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
+    <property name="jdk.debug" value="release"/>
+    <property name="test" value="*Test"/>
+    <property name="surefire.test.class.path" value="/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/target/test-classes:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/target/classes:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/boot/spring-boot-starter-web/3.3.5/spring-boot-starter-web-3.3.5.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/boot/spring-boot-starter/3.3.5/spring-boot-starter-3.3.5.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/boot/spring-boot/3.3.5/spring-boot-3.3.5.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/boot/spring-boot-autoconfigure/3.3.5/spring-boot-autoconfigure-3.3.5.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/boot/spring-boot-starter-logging/3.3.5/spring-boot-starter-logging-3.3.5.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/ch/qos/logback/logback-classic/1.5.11/logback-classic-1.5.11.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/ch/qos/logback/logback-core/1.5.11/logback-core-1.5.11.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/apache/logging/log4j/log4j-to-slf4j/2.23.1/log4j-to-slf4j-2.23.1.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/slf4j/jul-to-slf4j/2.0.16/jul-to-slf4j-2.0.16.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/jakarta/annotation/jakarta.annotation-api/2.1.1/jakarta.annotation-api-2.1.1.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/yaml/snakeyaml/2.2/snakeyaml-2.2.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/boot/spring-boot-starter-json/3.3.5/spring-boot-starter-json-3.3.5.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/com/fasterxml/jackson/datatype/jackson-datatype-jdk8/2.17.2/jackson-datatype-jdk8-2.17.2.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/com/fasterxml/jackson/datatype/jackson-datatype-jsr310/2.17.2/jackson-datatype-jsr310-2.17.2.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/com/fasterxml/jackson/module/jackson-module-parameter-names/2.17.2/jackson-module-parameter-names-2.17.2.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/boot/spring-boot-starter-tomcat/3.3.5/spring-boot-starter-tomcat-3.3.5.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/apache/tomcat/embed/tomcat-embed-core/10.1.31/tomcat-embed-core-10.1.31.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/apache/tomcat/embed/tomcat-embed-websocket/10.1.31/tomcat-embed-websocket-10.1.31.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/spring-web/6.1.14/spring-web-6.1.14.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/spring-beans/6.1.14/spring-beans-6.1.14.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/io/micrometer/micrometer-observation/1.13.6/micrometer-observation-1.13.6.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/io/micrometer/micrometer-commons/1.13.6/micrometer-commons-1.13.6.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/spring-webmvc/6.1.14/spring-webmvc-6.1.14.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/spring-context/6.1.14/spring-context-6.1.14.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/spring-expression/6.1.14/spring-expression-6.1.14.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/boot/spring-boot-starter-cache/3.3.5/spring-boot-starter-cache-3.3.5.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/spring-context-support/6.1.14/spring-context-support-6.1.14.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/boot/spring-boot-starter-data-jpa/3.3.5/spring-boot-starter-data-jpa-3.3.5.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/boot/spring-boot-starter-aop/3.3.5/spring-boot-starter-aop-3.3.5.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/aspectj/aspectjweaver/1.9.22.1/aspectjweaver-1.9.22.1.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/boot/spring-boot-starter-jdbc/3.3.5/spring-boot-starter-jdbc-3.3.5.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/com/zaxxer/HikariCP/5.1.0/HikariCP-5.1.0.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/spring-jdbc/6.1.14/spring-jdbc-6.1.14.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/hibernate/orm/hibernate-core/6.5.3.Final/hibernate-core-6.5.3.Final.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/jakarta/persistence/jakarta.persistence-api/3.1.0/jakarta.persistence-api-3.1.0.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/jakarta/transaction/jakarta.transaction-api/2.0.1/jakarta.transaction-api-2.0.1.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/jboss/logging/jboss-logging/3.5.3.Final/jboss-logging-3.5.3.Final.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/hibernate/common/hibernate-commons-annotations/6.0.6.Final/hibernate-commons-annotations-6.0.6.Final.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/io/smallrye/jandex/3.1.2/jandex-3.1.2.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/com/fasterxml/classmate/1.7.0/classmate-1.7.0.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/net/bytebuddy/byte-buddy/1.14.19/byte-buddy-1.14.19.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/glassfish/jaxb/jaxb-runtime/4.0.5/jaxb-runtime-4.0.5.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/glassfish/jaxb/jaxb-core/4.0.5/jaxb-core-4.0.5.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/eclipse/angus/angus-activation/2.0.2/angus-activation-2.0.2.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/glassfish/jaxb/txw2/4.0.5/txw2-4.0.5.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/com/sun/istack/istack-commons-runtime/4.1.2/istack-commons-runtime-4.1.2.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/jakarta/inject/jakarta.inject-api/2.0.1/jakarta.inject-api-2.0.1.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/antlr/antlr4-runtime/4.13.0/antlr4-runtime-4.13.0.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/data/spring-data-jpa/3.3.5/spring-data-jpa-3.3.5.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/data/spring-data-commons/3.3.5/spring-data-commons-3.3.5.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/spring-orm/6.1.14/spring-orm-6.1.14.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/spring-tx/6.1.14/spring-tx-6.1.14.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/spring-aspects/6.1.14/spring-aspects-6.1.14.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/boot/spring-boot-starter-data-redis/3.3.5/spring-boot-starter-data-redis-3.3.5.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/io/lettuce/lettuce-core/6.3.2.RELEASE/lettuce-core-6.3.2.RELEASE.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/io/netty/netty-common/4.1.114.Final/netty-common-4.1.114.Final.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/io/netty/netty-handler/4.1.114.Final/netty-handler-4.1.114.Final.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/io/netty/netty-resolver/4.1.114.Final/netty-resolver-4.1.114.Final.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/io/netty/netty-buffer/4.1.114.Final/netty-buffer-4.1.114.Final.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/io/netty/netty-transport-native-unix-common/4.1.114.Final/netty-transport-native-unix-common-4.1.114.Final.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/io/netty/netty-codec/4.1.114.Final/netty-codec-4.1.114.Final.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/io/netty/netty-transport/4.1.114.Final/netty-transport-4.1.114.Final.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/io/projectreactor/reactor-core/3.6.11/reactor-core-3.6.11.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/reactivestreams/reactive-streams/1.0.4/reactive-streams-1.0.4.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/data/spring-data-redis/3.3.5/spring-data-redis-3.3.5.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/data/spring-data-keyvalue/3.3.5/spring-data-keyvalue-3.3.5.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/spring-oxm/6.1.14/spring-oxm-6.1.14.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/postgresql/postgresql/42.7.4/postgresql-42.7.4.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/checkerframework/checker-qual/3.42.0/checker-qual-3.42.0.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/boot/spring-boot-starter-security/3.3.5/spring-boot-starter-security-3.3.5.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/spring-aop/6.1.14/spring-aop-6.1.14.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/security/spring-security-config/6.3.4/spring-security-config-6.3.4.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/security/spring-security-web/6.3.4/spring-security-web-6.3.4.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/boot/spring-boot-starter-oauth2-client/3.3.5/spring-boot-starter-oauth2-client-3.3.5.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/security/spring-security-core/6.3.4/spring-security-core-6.3.4.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/security/spring-security-crypto/6.3.4/spring-security-crypto-6.3.4.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/security/spring-security-oauth2-client/6.3.4/spring-security-oauth2-client-6.3.4.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/security/spring-security-oauth2-core/6.3.4/spring-security-oauth2-core-6.3.4.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/com/nimbusds/oauth2-oidc-sdk/9.43.4/oauth2-oidc-sdk-9.43.4.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/com/github/stephenc/jcip/jcip-annotations/1.0-1/jcip-annotations-1.0-1.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/com/nimbusds/content-type/2.2/content-type-2.2.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/com/nimbusds/lang-tag/1.7/lang-tag-1.7.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/security/spring-security-oauth2-jose/6.3.4/spring-security-oauth2-jose-6.3.4.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/com/nimbusds/nimbus-jose-jwt/9.37.3/nimbus-jose-jwt-9.37.3.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/io/jsonwebtoken/jjwt-api/0.11.5/jjwt-api-0.11.5.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/io/jsonwebtoken/jjwt-impl/0.11.5/jjwt-impl-0.11.5.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/io/jsonwebtoken/jjwt-jackson/0.11.5/jjwt-jackson-0.11.5.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/com/fasterxml/jackson/core/jackson-databind/2.17.2/jackson-databind-2.17.2.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/com/fasterxml/jackson/core/jackson-annotations/2.17.2/jackson-annotations-2.17.2.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/com/fasterxml/jackson/core/jackson-core/2.17.2/jackson-core-2.17.2.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/boot/spring-boot-starter-validation/3.3.5/spring-boot-starter-validation-3.3.5.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/apache/tomcat/embed/tomcat-embed-el/10.1.31/tomcat-embed-el-10.1.31.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/hibernate/validator/hibernate-validator/8.0.1.Final/hibernate-validator-8.0.1.Final.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/jakarta/validation/jakarta.validation-api/3.0.2/jakarta.validation-api-3.0.2.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/apache/poi/poi-ooxml/5.3.0/poi-ooxml-5.3.0.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/apache/poi/poi/5.3.0/poi-5.3.0.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/commons-codec/commons-codec/1.16.1/commons-codec-1.16.1.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/apache/commons/commons-math3/3.6.1/commons-math3-3.6.1.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/com/zaxxer/SparseBitSet/1.3/SparseBitSet-1.3.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/apache/poi/poi-ooxml-lite/5.3.0/poi-ooxml-lite-5.3.0.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/apache/xmlbeans/xmlbeans/5.2.1/xmlbeans-5.2.1.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/apache/commons/commons-compress/1.26.2/commons-compress-1.26.2.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/apache/commons/commons-lang3/3.14.0/commons-lang3-3.14.0.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/commons-io/commons-io/2.16.1/commons-io-2.16.1.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/com/github/virtuald/curvesapi/1.08/curvesapi-1.08.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/apache/logging/log4j/log4j-api/2.23.1/log4j-api-2.23.1.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/apache/commons/commons-collections4/4.4/commons-collections4-4.4.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/projectlombok/lombok/1.18.34/lombok-1.18.34.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/boot/spring-boot-starter-test/3.3.5/spring-boot-starter-test-3.3.5.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/boot/spring-boot-test/3.3.5/spring-boot-test-3.3.5.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/boot/spring-boot-test-autoconfigure/3.3.5/spring-boot-test-autoconfigure-3.3.5.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/com/jayway/jsonpath/json-path/2.9.0/json-path-2.9.0.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/jakarta/xml/bind/jakarta.xml.bind-api/4.0.2/jakarta.xml.bind-api-4.0.2.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/jakarta/activation/jakarta.activation-api/2.1.3/jakarta.activation-api-2.1.3.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/net/minidev/json-smart/2.5.1/json-smart-2.5.1.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/net/minidev/accessors-smart/2.5.1/accessors-smart-2.5.1.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/ow2/asm/asm/9.6/asm-9.6.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/assertj/assertj-core/3.25.3/assertj-core-3.25.3.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/awaitility/awaitility/4.2.2/awaitility-4.2.2.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/hamcrest/hamcrest/2.2/hamcrest-2.2.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/junit/jupiter/junit-jupiter/5.10.5/junit-jupiter-5.10.5.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/junit/jupiter/junit-jupiter-api/5.10.5/junit-jupiter-api-5.10.5.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/opentest4j/opentest4j/1.3.0/opentest4j-1.3.0.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/junit/platform/junit-platform-commons/1.10.5/junit-platform-commons-1.10.5.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/junit/jupiter/junit-jupiter-params/5.10.5/junit-jupiter-params-5.10.5.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/junit/jupiter/junit-jupiter-engine/5.10.5/junit-jupiter-engine-5.10.5.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/junit/platform/junit-platform-engine/1.10.5/junit-platform-engine-1.10.5.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/mockito/mockito-core/5.11.0/mockito-core-5.11.0.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/net/bytebuddy/byte-buddy-agent/1.14.19/byte-buddy-agent-1.14.19.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/objenesis/objenesis/3.3/objenesis-3.3.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/mockito/mockito-junit-jupiter/5.11.0/mockito-junit-jupiter-5.11.0.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/skyscreamer/jsonassert/1.5.3/jsonassert-1.5.3.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/com/vaadin/external/google/android-json/0.0.20131108.vaadin1/android-json-0.0.20131108.vaadin1.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/spring-core/6.1.14/spring-core-6.1.14.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/spring-jcl/6.1.14/spring-jcl-6.1.14.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/springframework/spring-test/6.1.14/spring-test-6.1.14.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/xmlunit/xmlunit-core/2.9.1/xmlunit-core-2.9.1.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/testcontainers/testcontainers/1.19.3/testcontainers-1.19.3.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/junit/junit/4.13.2/junit-4.13.2.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/hamcrest/hamcrest-core/2.2/hamcrest-core-2.2.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/slf4j/slf4j-api/2.0.16/slf4j-api-2.0.16.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/rnorth/duct-tape/duct-tape/1.0.8/duct-tape-1.0.8.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/jetbrains/annotations/17.0.0/annotations-17.0.0.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/com/github/docker-java/docker-java-api/3.3.4/docker-java-api-3.3.4.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/com/github/docker-java/docker-java-transport-zerodep/3.3.4/docker-java-transport-zerodep-3.3.4.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/com/github/docker-java/docker-java-transport/3.3.4/docker-java-transport-3.3.4.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/net/java/dev/jna/jna/5.13.0/jna-5.13.0.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/testcontainers/postgresql/1.19.3/postgresql-1.19.3.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/testcontainers/jdbc/1.19.8/jdbc-1.19.8.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/testcontainers/database-commons/1.19.8/database-commons-1.19.8.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/org/testcontainers/junit-jupiter/1.19.3/junit-jupiter-1.19.3.jar:/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/com/h2database/h2/2.2.224/h2-2.2.224.jar:"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="user.home" value="/Users/mac"/>
+    <property name="user.language" value="ru"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.version.date" value="2025-10-21"/>
+    <property name="java.home" value="/opt/homebrew/Cellar/openjdk@21/21.0.9/libexec/openjdk.jdk/Contents/Home"/>
+    <property name="file.separator" value="/"/>
+    <property name="basedir" value="/Users/mac/Desktop/geellya_tracker_java_ts/backend-java"/>
+    <property name="java.vm.compressedOopsMode" value="Zero based"/>
+    <property name="line.separator" value="&#10;"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="FILE_LOG_CHARSET" value="UTF-8"/>
+    <property name="java.awt.headless" value="true"/>
+    <property name="apple.awt.application.name" value="ForkedBooter"/>
+    <property name="surefire.real.class.path" value="/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/target/surefire/surefirebooter-20260329162456633_3.jar"/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
+    <property name="java.runtime.version" value="21.0.9"/>
+    <property name="user.name" value="mac"/>
+    <property name="stdout.encoding" value="UTF-8"/>
+    <property name="path.separator" value=":"/>
+    <property name="os.version" value="26.3.1"/>
+    <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
+    <property name="file.encoding" value="UTF-8"/>
+    <property name="java.vm.name" value="OpenJDK 64-Bit Server VM"/>
+    <property name="java.vendor.version" value="Homebrew"/>
+    <property name="localRepository" value="/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo"/>
+    <property name="java.vendor.url.bug" value="https://github.com/Homebrew/homebrew-core/issues"/>
+    <property name="java.io.tmpdir" value="/var/folders/49/4kcn3q2x233_xgjv3rvxkl140000gn/T/"/>
+    <property name="com.zaxxer.hikari.pool_number" value="1"/>
+    <property name="java.version" value="21.0.9"/>
+    <property name="user.dir" value="/Users/mac/Desktop/geellya_tracker_java_ts/backend-java"/>
+    <property name="os.arch" value="aarch64"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="PID" value="83588"/>
+    <property name="CONSOLE_LOG_CHARSET" value="UTF-8"/>
+    <property name="native.encoding" value="UTF-8"/>
+    <property name="java.library.path" value="/Users/mac/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:."/>
+    <property name="java.vm.info" value="mixed mode, sharing"/>
+    <property name="stderr.encoding" value="UTF-8"/>
+    <property name="java.vendor" value="Homebrew"/>
+    <property name="java.vm.version" value="21.0.9"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeBig"/>
+    <property name="maven.repo.local" value=".m2repo"/>
+    <property name="socksNonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
+    <property name="java.class.version" value="65.0"/>
+    <property name="LOGGED_APPLICATION_NAME" value="[expense-tracker-backend] "/>
+  </properties>
+  <testcase name="login_ShouldReturn201_WhenCredentialsAreValid" classname="com.example.expensetracker.unit.controller.AuthControllerTest" time="0.381">
+    <system-out><![CDATA[16:24:57.175 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.example.expensetracker.unit.controller.AuthControllerTest]: AuthControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+16:24:57.245 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.example.expensetracker.ExpenseTrackerApplication for test class com.example.expensetracker.unit.controller.AuthControllerTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.3.5)
+
+2026-03-29T16:24:57.462+03:00  INFO 83588 --- [expense-tracker-backend] [           main] c.e.e.u.controller.AuthControllerTest    : Starting AuthControllerTest using Java 21.0.9 with PID 83588 (started by mac in /Users/mac/Desktop/geellya_tracker_java_ts/backend-java)
+2026-03-29T16:24:57.463+03:00  INFO 83588 --- [expense-tracker-backend] [           main] c.e.e.u.controller.AuthControllerTest    : The following 1 profile is active: "test"
+2026-03-29T16:24:57.926+03:00  INFO 83588 --- [expense-tracker-backend] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-03-29T16:24:57.927+03:00  INFO 83588 --- [expense-tracker-backend] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-03-29T16:24:58.032+03:00  INFO 83588 --- [expense-tracker-backend] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 100 ms. Found 8 JPA repository interfaces.
+2026-03-29T16:24:58.044+03:00  INFO 83588 --- [expense-tracker-backend] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-03-29T16:24:58.044+03:00  INFO 83588 --- [expense-tracker-backend] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-03-29T16:24:58.055+03:00  INFO 83588 --- [expense-tracker-backend] [           main] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.expensetracker.repository.BudgetRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-03-29T16:24:58.055+03:00  INFO 83588 --- [expense-tracker-backend] [           main] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.expensetracker.repository.CategoryRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-03-29T16:24:58.055+03:00  INFO 83588 --- [expense-tracker-backend] [           main] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.expensetracker.repository.CurrencyRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-03-29T16:24:58.056+03:00  INFO 83588 --- [expense-tracker-backend] [           main] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.expensetracker.repository.ExpenseRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-03-29T16:24:58.056+03:00  INFO 83588 --- [expense-tracker-backend] [           main] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.expensetracker.repository.IncomeRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-03-29T16:24:58.056+03:00  INFO 83588 --- [expense-tracker-backend] [           main] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.expensetracker.repository.NewsRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-03-29T16:24:58.056+03:00  INFO 83588 --- [expense-tracker-backend] [           main] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.expensetracker.repository.NotificationRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-03-29T16:24:58.057+03:00  INFO 83588 --- [expense-tracker-backend] [           main] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.expensetracker.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-03-29T16:24:58.057+03:00  INFO 83588 --- [expense-tracker-backend] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 7 ms. Found 0 Redis repository interfaces.
+2026-03-29T16:24:59.121+03:00  INFO 83588 --- [expense-tracker-backend] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-03-29T16:24:59.172+03:00  INFO 83588 --- [expense-tracker-backend] [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2026-03-29T16:24:59.195+03:00  INFO 83588 --- [expense-tracker-backend] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-03-29T16:24:59.277+03:00  INFO 83588 --- [expense-tracker-backend] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-03-29T16:24:59.297+03:00  INFO 83588 --- [expense-tracker-backend] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-03-29T16:24:59.433+03:00  INFO 83588 --- [expense-tracker-backend] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=SA
+2026-03-29T16:24:59.434+03:00  INFO 83588 --- [expense-tracker-backend] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-03-29T16:24:59.451+03:00  WARN 83588 --- [expense-tracker-backend] [           main] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-03-29T16:25:00.130+03:00  INFO 83588 --- [expense-tracker-backend] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+Hibernate: 
+    drop table if exists "budgets" cascade 
+Hibernate: 
+    drop table if exists "categories" cascade 
+Hibernate: 
+    drop table if exists "currency_rate_values" cascade 
+Hibernate: 
+    drop table if exists "currency_rates" cascade 
+Hibernate: 
+    drop table if exists "expense" cascade 
+Hibernate: 
+    drop table if exists "income" cascade 
+Hibernate: 
+    drop table if exists "news" cascade 
+Hibernate: 
+    drop table if exists "notifications" cascade 
+Hibernate: 
+    drop table if exists "users" cascade 
+Hibernate: 
+    create table "budgets" (
+        "amount" float(53) not null,
+        "month" varchar(7) not null,
+        "created_at" timestamp(6) with time zone not null,
+        "id" bigint generated by default as identity,
+        "updated_at" timestamp(6) with time zone,
+        "user_id" bigint not null,
+        "general_category" varchar(255) not null,
+        primary key ("id"),
+        unique ("user_id", "month", "general_category")
+    )
+Hibernate: 
+    create table "categories" (
+        "is_default" boolean not null,
+        "created_at" timestamp(6) with time zone not null,
+        "id" bigint generated by default as identity,
+        "updated_at" timestamp(6) with time zone,
+        "user_id" bigint,
+        "name" varchar(255) not null,
+        primary key ("id"),
+        unique ("user_id", "name")
+    )
+Hibernate: 
+    create table "currency_rate_values" (
+        "rate" float(53),
+        "currency_id" bigint not null,
+        "code" varchar(255) not null,
+        primary key ("currency_id", "code")
+    )
+Hibernate: 
+    create table "currency_rates" (
+        "created_at" timestamp(6) with time zone not null,
+        "id" bigint generated by default as identity,
+        "updated_at" timestamp(6) with time zone,
+        "base_currency" varchar(255) not null unique,
+        "source" varchar(255),
+        primary key ("id")
+    )
+Hibernate: 
+    create table "expense" (
+        "amount" float(53) not null,
+        "date" date not null,
+        "created_at" timestamp(6) with time zone not null,
+        "id" bigint generated by default as identity,
+        "updated_at" timestamp(6) with time zone,
+        "user_id" bigint not null,
+        "category" varchar(255) not null,
+        "description" varchar(255),
+        "general_category" varchar(255),
+        "icon" varchar(255),
+        primary key ("id")
+    )
+Hibernate: 
+    create table "income" (
+        "amount" float(53) not null,
+        "date" date not null,
+        "created_at" timestamp(6) with time zone not null,
+        "id" bigint generated by default as identity,
+        "updated_at" timestamp(6) with time zone,
+        "user_id" bigint not null,
+        "icon" varchar(255),
+        "source" varchar(255) not null,
+        primary key ("id")
+    )
+Hibernate: 
+    create table "news" (
+        "author_id" bigint not null,
+        "created_at" timestamp(6) with time zone not null,
+        "date" timestamp(6) with time zone not null,
+        "id" bigint generated by default as identity,
+        "updated_at" timestamp(6) with time zone,
+        "content" "text" not null,
+        "title" varchar(255) not null,
+        "type" varchar(255) not null,
+        primary key ("id")
+    )
+2026-03-29T16:25:00.156+03:00  WARN 83588 --- [expense-tracker-backend] [           main] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "
+    create table "news" (
+        "author_id" bigint not null,
+        "created_at" timestamp(6) with time zone not null,
+        "date" timestamp(6) with time zone not null,
+        "id" bigint generated by default as identity,
+        "updated_at" timestamp(6) with time zone,
+        "content" "text" not null,
+        "title" varchar(255) not null,
+        "type" varchar(255) not null,
+        primary key ("id")
+    )" via JDBC [Домен "text" не найден
+Domain "text" not found;]
+
+org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "
+    create table "news" (
+        "author_id" bigint not null,
+        "created_at" timestamp(6) with time zone not null,
+        "date" timestamp(6) with time zone not null,
+        "id" bigint generated by default as identity,
+        "updated_at" timestamp(6) with time zone,
+        "content" "text" not null,
+        "title" varchar(255) not null,
+        "type" varchar(255) not null,
+        primary key ("id")
+    )" via JDBC [Домен "text" не найден
+Domain "text" not found;]
+	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:94) ~[hibernate-core-6.5.3.Final.jar:6.5.3.Final]
+	at org.hibernate.tool.schema.internal.Helper.applySqlString(Helper.java:233) ~[hibernate-core-6.5.3.Final.jar:6.5.3.Final]
+	at org.hibernate.tool.schema.internal.Helper.applySqlStrings(Helper.java:217) ~[hibernate-core-6.5.3.Final.jar:6.5.3.Final]
+	at org.hibernate.tool.schema.internal.SchemaCreatorImpl.createTables(SchemaCreatorImpl.java:428) ~[hibernate-core-6.5.3.Final.jar:6.5.3.Final]
+	at org.hibernate.tool.schema.internal.SchemaCreatorImpl.createSequencesTablesConstraints(SchemaCreatorImpl.java:344) ~[hibernate-core-6.5.3.Final.jar:6.5.3.Final]
+	at org.hibernate.tool.schema.internal.SchemaCreatorImpl.createFromMetadata(SchemaCreatorImpl.java:239) ~[hibernate-core-6.5.3.Final.jar:6.5.3.Final]
+	at org.hibernate.tool.schema.internal.SchemaCreatorImpl.performCreation(SchemaCreatorImpl.java:172) ~[hibernate-core-6.5.3.Final.jar:6.5.3.Final]
+	at org.hibernate.tool.schema.internal.SchemaCreatorImpl.doCreation(SchemaCreatorImpl.java:142) ~[hibernate-core-6.5.3.Final.jar:6.5.3.Final]
+	at org.hibernate.tool.schema.internal.SchemaCreatorImpl.doCreation(SchemaCreatorImpl.java:118) ~[hibernate-core-6.5.3.Final.jar:6.5.3.Final]
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:250) ~[hibernate-core-6.5.3.Final.jar:6.5.3.Final]
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.lambda$process$5(SchemaManagementToolCoordinator.java:144) ~[hibernate-core-6.5.3.Final.jar:6.5.3.Final]
+	at java.base/java.util.HashMap.forEach(HashMap.java:1429) ~[na:na]
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:141) ~[hibernate-core-6.5.3.Final.jar:6.5.3.Final]
+	at org.hibernate.boot.internal.SessionFactoryObserverForSchemaExport.sessionFactoryCreated(SessionFactoryObserverForSchemaExport.java:37) ~[hibernate-core-6.5.3.Final.jar:6.5.3.Final]
+	at org.hibernate.internal.SessionFactoryObserverChain.sessionFactoryCreated(SessionFactoryObserverChain.java:35) ~[hibernate-core-6.5.3.Final.jar:6.5.3.Final]
+	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:322) ~[hibernate-core-6.5.3.Final.jar:6.5.3.Final]
+	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:457) ~[hibernate-core-6.5.3.Final.jar:6.5.3.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1506) ~[hibernate-core-6.5.3.Final.jar:6.5.3.Final]
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:75) ~[spring-orm-6.1.14.jar:6.1.14]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:390) ~[spring-orm-6.1.14.jar:6.1.14]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:409) ~[spring-orm-6.1.14.jar:6.1.14]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:396) ~[spring-orm-6.1.14.jar:6.1.14]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:366) ~[spring-orm-6.1.14.jar:6.1.14]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1853) ~[spring-beans-6.1.14.jar:6.1.14]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1802) ~[spring-beans-6.1.14.jar:6.1.14]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600) ~[spring-beans-6.1.14.jar:6.1.14]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.14.jar:6.1.14]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337) ~[spring-beans-6.1.14.jar:6.1.14]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.14.jar:6.1.14]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335) ~[spring-beans-6.1.14.jar:6.1.14]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:205) ~[spring-beans-6.1.14.jar:6.1.14]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:954) ~[spring-context-6.1.14.jar:6.1.14]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:625) ~[spring-context-6.1.14.jar:6.1.14]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754) ~[spring-boot-3.3.5.jar:3.3.5]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456) ~[spring-boot-3.3.5.jar:3.3.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335) ~[spring-boot-3.3.5.jar:3.3.5]
+	at org.springframework.boot.test.context.SpringBootContextLoader.lambda$loadContext$3(SpringBootContextLoader.java:137) ~[spring-boot-test-3.3.5.jar:3.3.5]
+	at org.springframework.util.function.ThrowingSupplier.get(ThrowingSupplier.java:58) ~[spring-core-6.1.14.jar:6.1.14]
+	at org.springframework.util.function.ThrowingSupplier.get(ThrowingSupplier.java:46) ~[spring-core-6.1.14.jar:6.1.14]
+	at org.springframework.boot.SpringApplication.withHook(SpringApplication.java:1463) ~[spring-boot-3.3.5.jar:3.3.5]
+	at org.springframework.boot.test.context.SpringBootContextLoader$ContextLoaderHook.run(SpringBootContextLoader.java:553) ~[spring-boot-test-3.3.5.jar:3.3.5]
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:137) ~[spring-boot-test-3.3.5.jar:3.3.5]
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:108) ~[spring-boot-test-3.3.5.jar:3.3.5]
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:225) ~[spring-test-6.1.14.jar:6.1.14]
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:152) ~[spring-test-6.1.14.jar:6.1.14]
+	at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:130) ~[spring-test-6.1.14.jar:6.1.14]
+	at org.springframework.test.context.web.ServletTestExecutionListener.setUpRequestContextIfNecessary(ServletTestExecutionListener.java:191) ~[spring-test-6.1.14.jar:6.1.14]
+	at org.springframework.test.context.web.ServletTestExecutionListener.prepareTestInstance(ServletTestExecutionListener.java:130) ~[spring-test-6.1.14.jar:6.1.14]
+	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:260) ~[spring-test-6.1.14.jar:6.1.14]
+	at org.springframework.test.context.junit.jupiter.SpringExtension.postProcessTestInstance(SpringExtension.java:163) ~[spring-test-6.1.14.jar:6.1.14]
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$invokeTestInstancePostProcessors$10(ClassBasedTestDescriptor.java:378) ~[junit-jupiter-engine-5.10.5.jar:5.10.5]
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.executeAndMaskThrowable(ClassBasedTestDescriptor.java:383) ~[junit-jupiter-engine-5.10.5.jar:5.10.5]
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$invokeTestInstancePostProcessors$11(ClassBasedTestDescriptor.java:378) ~[junit-jupiter-engine-5.10.5.jar:5.10.5]
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197) ~[na:na]
+	at java.base/java.util.stream.ReferencePipeline$2$1.accept(ReferencePipeline.java:179) ~[na:na]
+	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1708) ~[na:na]
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509) ~[na:na]
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499) ~[na:na]
+	at java.base/java.util.stream.StreamSpliterators$WrappingSpliterator.forEachRemaining(StreamSpliterators.java:310) ~[na:na]
+	at java.base/java.util.stream.Streams$ConcatSpliterator.forEachRemaining(Streams.java:735) ~[na:na]
+	at java.base/java.util.stream.Streams$ConcatSpliterator.forEachRemaining(Streams.java:734) ~[na:na]
+	at java.base/java.util.stream.ReferencePipeline$Head.forEach(ReferencePipeline.java:762) ~[na:na]
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.invokeTestInstancePostProcessors(ClassBasedTestDescriptor.java:377) ~[junit-jupiter-engine-5.10.5.jar:5.10.5]
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$instantiateAndPostProcessTestInstance$6(ClassBasedTestDescriptor.java:290) ~[junit-jupiter-engine-5.10.5.jar:5.10.5]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.5.jar:1.10.5]
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.instantiateAndPostProcessTestInstance(ClassBasedTestDescriptor.java:289) ~[junit-jupiter-engine-5.10.5.jar:5.10.5]
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$testInstancesProvider$4(ClassBasedTestDescriptor.java:279) ~[junit-jupiter-engine-5.10.5.jar:5.10.5]
+	at java.base/java.util.Optional.orElseGet(Optional.java:364) ~[na:na]
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$testInstancesProvider$5(ClassBasedTestDescriptor.java:278) ~[junit-jupiter-engine-5.10.5.jar:5.10.5]
+	at org.junit.jupiter.engine.execution.TestInstancesProvider.getTestInstances(TestInstancesProvider.java:31) ~[junit-jupiter-engine-5.10.5.jar:5.10.5]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$prepare$0(TestMethodTestDescriptor.java:106) ~[junit-jupiter-engine-5.10.5.jar:5.10.5]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.5.jar:1.10.5]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.prepare(TestMethodTestDescriptor.java:105) ~[junit-jupiter-engine-5.10.5.jar:5.10.5]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.prepare(TestMethodTestDescriptor.java:69) ~[junit-jupiter-engine-5.10.5.jar:5.10.5]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$prepare$2(NodeTestTask.java:128) ~[junit-platform-engine-1.10.5.jar:1.10.5]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.5.jar:1.10.5]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.prepare(NodeTestTask.java:128) ~[junit-platform-engine-1.10.5.jar:1.10.5]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95) ~[junit-platform-engine-1.10.5.jar:1.10.5]
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596) ~[na:na]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41) ~[junit-platform-engine-1.10.5.jar:1.10.5]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:160) ~[junit-platform-engine-1.10.5.jar:1.10.5]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.5.jar:1.10.5]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146) ~[junit-platform-engine-1.10.5.jar:1.10.5]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.10.5.jar:1.10.5]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144) ~[junit-platform-engine-1.10.5.jar:1.10.5]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.5.jar:1.10.5]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143) ~[junit-platform-engine-1.10.5.jar:1.10.5]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100) ~[junit-platform-engine-1.10.5.jar:1.10.5]
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596) ~[na:na]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41) ~[junit-platform-engine-1.10.5.jar:1.10.5]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:160) ~[junit-platform-engine-1.10.5.jar:1.10.5]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.5.jar:1.10.5]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146) ~[junit-platform-engine-1.10.5.jar:1.10.5]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.10.5.jar:1.10.5]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144) ~[junit-platform-engine-1.10.5.jar:1.10.5]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.5.jar:1.10.5]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143) ~[junit-platform-engine-1.10.5.jar:1.10.5]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100) ~[junit-platform-engine-1.10.5.jar:1.10.5]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35) ~[junit-platform-engine-1.10.5.jar:1.10.5]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57) ~[junit-platform-engine-1.10.5.jar:1.10.5]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:54) ~[junit-platform-engine-1.10.5.jar:1.10.5]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:198) ~[junit-platform-launcher-1.10.5.jar:1.10.5]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:169) ~[junit-platform-launcher-1.10.5.jar:1.10.5]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:93) ~[junit-platform-launcher-1.10.5.jar:1.10.5]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:58) ~[junit-platform-launcher-1.10.5.jar:1.10.5]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:141) ~[junit-platform-launcher-1.10.5.jar:1.10.5]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:57) ~[junit-platform-launcher-1.10.5.jar:1.10.5]
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:103) ~[junit-platform-launcher-1.10.5.jar:1.10.5]
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:85) ~[junit-platform-launcher-1.10.5.jar:1.10.5]
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:47) ~[junit-platform-launcher-1.10.5.jar:1.10.5]
+	at org.apache.maven.surefire.junitplatform.LazyLauncher.execute(LazyLauncher.java:56) ~[surefire-junit-platform-3.2.5.jar:3.2.5]
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.execute(JUnitPlatformProvider.java:184) ~[surefire-junit-platform-3.2.5.jar:3.2.5]
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invokeAllTests(JUnitPlatformProvider.java:148) ~[surefire-junit-platform-3.2.5.jar:3.2.5]
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invoke(JUnitPlatformProvider.java:122) ~[surefire-junit-platform-3.2.5.jar:3.2.5]
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385) ~[surefire-booter-3.2.5.jar:3.2.5]
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162) ~[surefire-booter-3.2.5.jar:3.2.5]
+	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507) ~[surefire-booter-3.2.5.jar:3.2.5]
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495) ~[surefire-booter-3.2.5.jar:3.2.5]
+Caused by: org.h2.jdbc.JdbcSQLSyntaxErrorException: Домен "text" не найден
+Domain "text" not found; SQL statement:
+
+    create table "news" (
+        "author_id" bigint not null,
+        "created_at" timestamp(6) with time zone not null,
+        "date" timestamp(6) with time zone not null,
+        "id" bigint generated by default as identity,
+        "updated_at" timestamp(6) with time zone,
+        "content" "text" not null,
+        "title" varchar(255) not null,
+        "type" varchar(255) not null,
+        primary key ("id")
+    ) [90120-224]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:644) ~[h2-2.2.224.jar:2.2.224]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489) ~[h2-2.2.224.jar:2.2.224]
+	at org.h2.message.DbException.get(DbException.java:223) ~[h2-2.2.224.jar:2.2.224]
+	at org.h2.message.DbException.get(DbException.java:199) ~[h2-2.2.224.jar:2.2.224]
+	at org.h2.schema.Schema.getDomain(Schema.java:611) ~[h2-2.2.224.jar:2.2.224]
+	at org.h2.command.Parser.parseColumnWithType(Parser.java:5689) ~[h2-2.2.224.jar:2.2.224]
+	at org.h2.command.Parser.parseColumnForTable(Parser.java:5565) ~[h2-2.2.224.jar:2.2.224]
+	at org.h2.command.Parser.parseTableColumnDefinition(Parser.java:8999) ~[h2-2.2.224.jar:2.2.224]
+	at org.h2.command.Parser.parseCreateTable(Parser.java:8939) ~[h2-2.2.224.jar:2.2.224]
+	at org.h2.command.Parser.parseCreate(Parser.java:6404) ~[h2-2.2.224.jar:2.2.224]
+	at org.h2.command.Parser.parsePrepared(Parser.java:666) ~[h2-2.2.224.jar:2.2.224]
+	at org.h2.command.Parser.parse(Parser.java:592) ~[h2-2.2.224.jar:2.2.224]
+	at org.h2.command.Parser.parse(Parser.java:564) ~[h2-2.2.224.jar:2.2.224]
+	at org.h2.command.Parser.prepareCommand(Parser.java:483) ~[h2-2.2.224.jar:2.2.224]
+	at org.h2.engine.SessionLocal.prepareLocal(SessionLocal.java:639) ~[h2-2.2.224.jar:2.2.224]
+	at org.h2.engine.SessionLocal.prepareCommand(SessionLocal.java:559) ~[h2-2.2.224.jar:2.2.224]
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1166) ~[h2-2.2.224.jar:2.2.224]
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:245) ~[h2-2.2.224.jar:2.2.224]
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:231) ~[h2-2.2.224.jar:2.2.224]
+	at com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:94) ~[HikariCP-5.1.0.jar:na]
+	at com.zaxxer.hikari.pool.HikariProxyStatement.execute(HikariProxyStatement.java) ~[HikariCP-5.1.0.jar:na]
+	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:80) ~[hibernate-core-6.5.3.Final.jar:6.5.3.Final]
+	... 117 common frames omitted
+
+Hibernate: 
+    create table "notifications" (
+        "read" boolean not null,
+        "created_at" timestamp(6) with time zone not null,
+        "id" bigint generated by default as identity,
+        "user_id" bigint not null,
+        "general_category" varchar(255),
+        "message" "text" not null,
+        "month" varchar(255),
+        "type" varchar(255) not null,
+        primary key ("id")
+    )
+2026-03-29T16:25:00.164+03:00  WARN 83588 --- [expense-tracker-backend] [           main] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "
+    create table "notifications" (
+        "read" boolean not null,
+        "created_at" timestamp(6) with time zone not null,
+        "id" bigint generated by default as identity,
+        "user_id" bigint not null,
+        "general_category" varchar(255),
+        "message" "text" not null,
+        "month" varchar(255),
+        "type" varchar(255) not null,
+        primary key ("id")
+    )" via JDBC [Домен "text" не найден
+Domain "text" not found;]
+
+org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "
+    create table "notifications" (
+        "read" boolean not null,
+        "created_at" timestamp(6) with time zone not null,
+        "id" bigint generated by default as identity,
+        "user_id" bigint not null,
+        "general_category" varchar(255),
+        "message" "text" not null,
+        "month" varchar(255),
+        "type" varchar(255) not null,
+        primary key ("id")
+    )" via JDBC [Домен "text" не найден
+Domain "text" not found;]
+	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:94) ~[hibernate-core-6.5.3.Final.jar:6.5.3.Final]
+	at org.hibernate.tool.schema.internal.Helper.applySqlString(Helper.java:233) ~[hibernate-core-6.5.3.Final.jar:6.5.3.Final]
+	at org.hibernate.tool.schema.internal.Helper.applySqlStrings(Helper.java:217) ~[hibernate-core-6.5.3.Final.jar:6.5.3.Final]
+	at org.hibernate.tool.schema.internal.SchemaCreatorImpl.createTables(SchemaCreatorImpl.java:428) ~[hibernate-core-6.5.3.Final.jar:6.5.3.Final]
+	at org.hibernate.tool.schema.internal.SchemaCreatorImpl.createSequencesTablesConstraints(SchemaCreatorImpl.java:344) ~[hibernate-core-6.5.3.Final.jar:6.5.3.Final]
+	at org.hibernate.tool.schema.internal.SchemaCreatorImpl.createFromMetadata(SchemaCreatorImpl.java:239) ~[hibernate-core-6.5.3.Final.jar:6.5.3.Final]
+	at org.hibernate.tool.schema.internal.SchemaCreatorImpl.performCreation(SchemaCreatorImpl.java:172) ~[hibernate-core-6.5.3.Final.jar:6.5.3.Final]
+	at org.hibernate.tool.schema.internal.SchemaCreatorImpl.doCreation(SchemaCreatorImpl.java:142) ~[hibernate-core-6.5.3.Final.jar:6.5.3.Final]
+	at org.hibernate.tool.schema.internal.SchemaCreatorImpl.doCreation(SchemaCreatorImpl.java:118) ~[hibernate-core-6.5.3.Final.jar:6.5.3.Final]
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:250) ~[hibernate-core-6.5.3.Final.jar:6.5.3.Final]
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.lambda$process$5(SchemaManagementToolCoordinator.java:144) ~[hibernate-core-6.5.3.Final.jar:6.5.3.Final]
+	at java.base/java.util.HashMap.forEach(HashMap.java:1429) ~[na:na]
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:141) ~[hibernate-core-6.5.3.Final.jar:6.5.3.Final]
+	at org.hibernate.boot.internal.SessionFactoryObserverForSchemaExport.sessionFactoryCreated(SessionFactoryObserverForSchemaExport.java:37) ~[hibernate-core-6.5.3.Final.jar:6.5.3.Final]
+	at org.hibernate.internal.SessionFactoryObserverChain.sessionFactoryCreated(SessionFactoryObserverChain.java:35) ~[hibernate-core-6.5.3.Final.jar:6.5.3.Final]
+	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:322) ~[hibernate-core-6.5.3.Final.jar:6.5.3.Final]
+	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:457) ~[hibernate-core-6.5.3.Final.jar:6.5.3.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1506) ~[hibernate-core-6.5.3.Final.jar:6.5.3.Final]
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:75) ~[spring-orm-6.1.14.jar:6.1.14]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:390) ~[spring-orm-6.1.14.jar:6.1.14]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:409) ~[spring-orm-6.1.14.jar:6.1.14]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:396) ~[spring-orm-6.1.14.jar:6.1.14]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:366) ~[spring-orm-6.1.14.jar:6.1.14]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1853) ~[spring-beans-6.1.14.jar:6.1.14]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1802) ~[spring-beans-6.1.14.jar:6.1.14]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600) ~[spring-beans-6.1.14.jar:6.1.14]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.14.jar:6.1.14]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337) ~[spring-beans-6.1.14.jar:6.1.14]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.14.jar:6.1.14]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335) ~[spring-beans-6.1.14.jar:6.1.14]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:205) ~[spring-beans-6.1.14.jar:6.1.14]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:954) ~[spring-context-6.1.14.jar:6.1.14]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:625) ~[spring-context-6.1.14.jar:6.1.14]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754) ~[spring-boot-3.3.5.jar:3.3.5]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456) ~[spring-boot-3.3.5.jar:3.3.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335) ~[spring-boot-3.3.5.jar:3.3.5]
+	at org.springframework.boot.test.context.SpringBootContextLoader.lambda$loadContext$3(SpringBootContextLoader.java:137) ~[spring-boot-test-3.3.5.jar:3.3.5]
+	at org.springframework.util.function.ThrowingSupplier.get(ThrowingSupplier.java:58) ~[spring-core-6.1.14.jar:6.1.14]
+	at org.springframework.util.function.ThrowingSupplier.get(ThrowingSupplier.java:46) ~[spring-core-6.1.14.jar:6.1.14]
+	at org.springframework.boot.SpringApplication.withHook(SpringApplication.java:1463) ~[spring-boot-3.3.5.jar:3.3.5]
+	at org.springframework.boot.test.context.SpringBootContextLoader$ContextLoaderHook.run(SpringBootContextLoader.java:553) ~[spring-boot-test-3.3.5.jar:3.3.5]
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:137) ~[spring-boot-test-3.3.5.jar:3.3.5]
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:108) ~[spring-boot-test-3.3.5.jar:3.3.5]
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:225) ~[spring-test-6.1.14.jar:6.1.14]
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:152) ~[spring-test-6.1.14.jar:6.1.14]
+	at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:130) ~[spring-test-6.1.14.jar:6.1.14]
+	at org.springframework.test.context.web.ServletTestExecutionListener.setUpRequestContextIfNecessary(ServletTestExecutionListener.java:191) ~[spring-test-6.1.14.jar:6.1.14]
+	at org.springframework.test.context.web.ServletTestExecutionListener.prepareTestInstance(ServletTestExecutionListener.java:130) ~[spring-test-6.1.14.jar:6.1.14]
+	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:260) ~[spring-test-6.1.14.jar:6.1.14]
+	at org.springframework.test.context.junit.jupiter.SpringExtension.postProcessTestInstance(SpringExtension.java:163) ~[spring-test-6.1.14.jar:6.1.14]
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$invokeTestInstancePostProcessors$10(ClassBasedTestDescriptor.java:378) ~[junit-jupiter-engine-5.10.5.jar:5.10.5]
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.executeAndMaskThrowable(ClassBasedTestDescriptor.java:383) ~[junit-jupiter-engine-5.10.5.jar:5.10.5]
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$invokeTestInstancePostProcessors$11(ClassBasedTestDescriptor.java:378) ~[junit-jupiter-engine-5.10.5.jar:5.10.5]
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197) ~[na:na]
+	at java.base/java.util.stream.ReferencePipeline$2$1.accept(ReferencePipeline.java:179) ~[na:na]
+	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1708) ~[na:na]
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509) ~[na:na]
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499) ~[na:na]
+	at java.base/java.util.stream.StreamSpliterators$WrappingSpliterator.forEachRemaining(StreamSpliterators.java:310) ~[na:na]
+	at java.base/java.util.stream.Streams$ConcatSpliterator.forEachRemaining(Streams.java:735) ~[na:na]
+	at java.base/java.util.stream.Streams$ConcatSpliterator.forEachRemaining(Streams.java:734) ~[na:na]
+	at java.base/java.util.stream.ReferencePipeline$Head.forEach(ReferencePipeline.java:762) ~[na:na]
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.invokeTestInstancePostProcessors(ClassBasedTestDescriptor.java:377) ~[junit-jupiter-engine-5.10.5.jar:5.10.5]
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$instantiateAndPostProcessTestInstance$6(ClassBasedTestDescriptor.java:290) ~[junit-jupiter-engine-5.10.5.jar:5.10.5]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.5.jar:1.10.5]
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.instantiateAndPostProcessTestInstance(ClassBasedTestDescriptor.java:289) ~[junit-jupiter-engine-5.10.5.jar:5.10.5]
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$testInstancesProvider$4(ClassBasedTestDescriptor.java:279) ~[junit-jupiter-engine-5.10.5.jar:5.10.5]
+	at java.base/java.util.Optional.orElseGet(Optional.java:364) ~[na:na]
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$testInstancesProvider$5(ClassBasedTestDescriptor.java:278) ~[junit-jupiter-engine-5.10.5.jar:5.10.5]
+	at org.junit.jupiter.engine.execution.TestInstancesProvider.getTestInstances(TestInstancesProvider.java:31) ~[junit-jupiter-engine-5.10.5.jar:5.10.5]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$prepare$0(TestMethodTestDescriptor.java:106) ~[junit-jupiter-engine-5.10.5.jar:5.10.5]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.5.jar:1.10.5]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.prepare(TestMethodTestDescriptor.java:105) ~[junit-jupiter-engine-5.10.5.jar:5.10.5]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.prepare(TestMethodTestDescriptor.java:69) ~[junit-jupiter-engine-5.10.5.jar:5.10.5]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$prepare$2(NodeTestTask.java:128) ~[junit-platform-engine-1.10.5.jar:1.10.5]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.5.jar:1.10.5]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.prepare(NodeTestTask.java:128) ~[junit-platform-engine-1.10.5.jar:1.10.5]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95) ~[junit-platform-engine-1.10.5.jar:1.10.5]
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596) ~[na:na]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41) ~[junit-platform-engine-1.10.5.jar:1.10.5]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:160) ~[junit-platform-engine-1.10.5.jar:1.10.5]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.5.jar:1.10.5]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146) ~[junit-platform-engine-1.10.5.jar:1.10.5]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.10.5.jar:1.10.5]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144) ~[junit-platform-engine-1.10.5.jar:1.10.5]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.5.jar:1.10.5]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143) ~[junit-platform-engine-1.10.5.jar:1.10.5]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100) ~[junit-platform-engine-1.10.5.jar:1.10.5]
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596) ~[na:na]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41) ~[junit-platform-engine-1.10.5.jar:1.10.5]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:160) ~[junit-platform-engine-1.10.5.jar:1.10.5]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.5.jar:1.10.5]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146) ~[junit-platform-engine-1.10.5.jar:1.10.5]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.10.5.jar:1.10.5]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144) ~[junit-platform-engine-1.10.5.jar:1.10.5]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.5.jar:1.10.5]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143) ~[junit-platform-engine-1.10.5.jar:1.10.5]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100) ~[junit-platform-engine-1.10.5.jar:1.10.5]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35) ~[junit-platform-engine-1.10.5.jar:1.10.5]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57) ~[junit-platform-engine-1.10.5.jar:1.10.5]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:54) ~[junit-platform-engine-1.10.5.jar:1.10.5]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:198) ~[junit-platform-launcher-1.10.5.jar:1.10.5]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:169) ~[junit-platform-launcher-1.10.5.jar:1.10.5]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:93) ~[junit-platform-launcher-1.10.5.jar:1.10.5]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:58) ~[junit-platform-launcher-1.10.5.jar:1.10.5]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:141) ~[junit-platform-launcher-1.10.5.jar:1.10.5]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:57) ~[junit-platform-launcher-1.10.5.jar:1.10.5]
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:103) ~[junit-platform-launcher-1.10.5.jar:1.10.5]
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:85) ~[junit-platform-launcher-1.10.5.jar:1.10.5]
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:47) ~[junit-platform-launcher-1.10.5.jar:1.10.5]
+	at org.apache.maven.surefire.junitplatform.LazyLauncher.execute(LazyLauncher.java:56) ~[surefire-junit-platform-3.2.5.jar:3.2.5]
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.execute(JUnitPlatformProvider.java:184) ~[surefire-junit-platform-3.2.5.jar:3.2.5]
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invokeAllTests(JUnitPlatformProvider.java:148) ~[surefire-junit-platform-3.2.5.jar:3.2.5]
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invoke(JUnitPlatformProvider.java:122) ~[surefire-junit-platform-3.2.5.jar:3.2.5]
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385) ~[surefire-booter-3.2.5.jar:3.2.5]
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162) ~[surefire-booter-3.2.5.jar:3.2.5]
+	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507) ~[surefire-booter-3.2.5.jar:3.2.5]
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495) ~[surefire-booter-3.2.5.jar:3.2.5]
+Caused by: org.h2.jdbc.JdbcSQLSyntaxErrorException: Домен "text" не найден
+Domain "text" not found; SQL statement:
+
+    create table "notifications" (
+        "read" boolean not null,
+        "created_at" timestamp(6) with time zone not null,
+        "id" bigint generated by default as identity,
+        "user_id" bigint not null,
+        "general_category" varchar(255),
+        "message" "text" not null,
+        "month" varchar(255),
+        "type" varchar(255) not null,
+        primary key ("id")
+    ) [90120-224]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:644) ~[h2-2.2.224.jar:2.2.224]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489) ~[h2-2.2.224.jar:2.2.224]
+	at org.h2.message.DbException.get(DbException.java:223) ~[h2-2.2.224.jar:2.2.224]
+	at org.h2.message.DbException.get(DbException.java:199) ~[h2-2.2.224.jar:2.2.224]
+	at org.h2.schema.Schema.getDomain(Schema.java:611) ~[h2-2.2.224.jar:2.2.224]
+	at org.h2.command.Parser.parseColumnWithType(Parser.java:5689) ~[h2-2.2.224.jar:2.2.224]
+	at org.h2.command.Parser.parseColumnForTable(Parser.java:5565) ~[h2-2.2.224.jar:2.2.224]
+	at org.h2.command.Parser.parseTableColumnDefinition(Parser.java:8999) ~[h2-2.2.224.jar:2.2.224]
+	at org.h2.command.Parser.parseCreateTable(Parser.java:8939) ~[h2-2.2.224.jar:2.2.224]
+	at org.h2.command.Parser.parseCreate(Parser.java:6404) ~[h2-2.2.224.jar:2.2.224]
+	at org.h2.command.Parser.parsePrepared(Parser.java:666) ~[h2-2.2.224.jar:2.2.224]
+	at org.h2.command.Parser.parse(Parser.java:592) ~[h2-2.2.224.jar:2.2.224]
+	at org.h2.command.Parser.parse(Parser.java:564) ~[h2-2.2.224.jar:2.2.224]
+	at org.h2.command.Parser.prepareCommand(Parser.java:483) ~[h2-2.2.224.jar:2.2.224]
+	at org.h2.engine.SessionLocal.prepareLocal(SessionLocal.java:639) ~[h2-2.2.224.jar:2.2.224]
+	at org.h2.engine.SessionLocal.prepareCommand(SessionLocal.java:559) ~[h2-2.2.224.jar:2.2.224]
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1166) ~[h2-2.2.224.jar:2.2.224]
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:245) ~[h2-2.2.224.jar:2.2.224]
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:231) ~[h2-2.2.224.jar:2.2.224]
+	at com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:94) ~[HikariCP-5.1.0.jar:na]
+	at com.zaxxer.hikari.pool.HikariProxyStatement.execute(HikariProxyStatement.java) ~[HikariCP-5.1.0.jar:na]
+	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:80) ~[hibernate-core-6.5.3.Final.jar:6.5.3.Final]
+	... 117 common frames omitted
+
+Hibernate: 
+    create table "users" (
+        "created_at" timestamp(6) with time zone not null,
+        "id" bigint generated by default as identity,
+        "updated_at" timestamp(6) with time zone,
+        "email" varchar(255) not null unique,
+        "full_name" varchar(255) not null,
+        "password" varchar(255) not null,
+        "profile_image_url" varchar(255),
+        "role" enum ('ADMIN','NORMAL') not null,
+        primary key ("id")
+    )
+Hibernate: 
+    alter table if exists "budgets" 
+       add constraint "FKo0kv55x4yfo0te1y3vuk0lade" 
+       foreign key ("user_id") 
+       references "users"
+Hibernate: 
+    alter table if exists "categories" 
+       add constraint "FKaq8kvsoegp81j5glhxox1alyf" 
+       foreign key ("user_id") 
+       references "users"
+Hibernate: 
+    alter table if exists "currency_rate_values" 
+       add constraint "FKbcgdis9v5wdsa7hnm93b0uvq0" 
+       foreign key ("currency_id") 
+       references "currency_rates"
+Hibernate: 
+    alter table if exists "expense" 
+       add constraint "FKa7ajgqqdcu9hhdfkil3bj1dji" 
+       foreign key ("user_id") 
+       references "users"
+Hibernate: 
+    alter table if exists "income" 
+       add constraint "FK52hk6g6gsxg0yxl6o9tidxy7v" 
+       foreign key ("user_id") 
+       references "users"
+Hibernate: 
+    alter table if exists "news" 
+       add constraint "FK4ojc6mkncpgyyr8m8j2ttqkjf" 
+       foreign key ("author_id") 
+       references "users"
+Hibernate: 
+    alter table if exists "notifications" 
+       add constraint "FKk10cry0ngw776qndbru23piqi" 
+       foreign key ("user_id") 
+       references "users"
+2026-03-29T16:25:00.187+03:00  INFO 83588 --- [expense-tracker-backend] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-03-29T16:25:00.426+03:00  INFO 83588 --- [expense-tracker-backend] [           main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-03-29T16:25:01.971+03:00  WARN 83588 --- [expense-tracker-backend] [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-03-29T16:25:02.943+03:00  INFO 83588 --- [expense-tracker-backend] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-03-29T16:25:02.943+03:00  INFO 83588 --- [expense-tracker-backend] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-03-29T16:25:02.944+03:00  INFO 83588 --- [expense-tracker-backend] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2026-03-29T16:25:02.963+03:00  INFO 83588 --- [expense-tracker-backend] [           main] c.e.e.u.controller.AuthControllerTest    : Started AuthControllerTest in 5.644 seconds (process running for 6.271)
+Hibernate: 
+    select
+        u1_0."id",
+        u1_0."created_at",
+        u1_0."email",
+        u1_0."full_name",
+        u1_0."password",
+        u1_0."profile_image_url",
+        u1_0."role",
+        u1_0."updated_at" 
+    from
+        "users" u1_0 
+    where
+        u1_0."email"=?
+Hibernate: 
+    insert 
+    into
+        "users"
+        ("created_at", "email", "full_name", "password", "profile_image_url", "role", "updated_at", "id") 
+    values
+        (?, ?, ?, ?, ?, ?, ?, default)
+]]></system-out>
+    <system-err><![CDATA[WARNING: A Java agent has been loaded dynamically (/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/net/bytebuddy/byte-buddy-agent/1.14.19/byte-buddy-agent-1.14.19.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+]]></system-err>
+  </testcase>
+  <testcase name="register_ShouldReturn201_WhenRegistrationIsSuccessful" classname="com.example.expensetracker.unit.controller.AuthControllerTest" time="0.13"/>
+  <testcase name="login_ShouldReturn400_WhenCredentialsAreInvalid" classname="com.example.expensetracker.unit.controller.AuthControllerTest" time="0.257"/>
+  <testcase name="register_ShouldReturn400_WhenEmailIsAlreadyTaken" classname="com.example.expensetracker.unit.controller.AuthControllerTest" time="0.136"/>
+</testsuite>
