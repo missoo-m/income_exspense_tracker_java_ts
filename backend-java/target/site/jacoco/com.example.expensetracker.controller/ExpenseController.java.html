@@ -44,7 +44,7 @@ public class ExpenseController {
 <span class="fc" id="L44">        this.notificationRepository = notificationRepository;</span>
 <span class="fc" id="L45">    }</span>
 
-<span class="nc" id="L47">    public record ExpenseRequest(</span>
+<span class="fc" id="L47">    public record ExpenseRequest(</span>
             String icon,
             String category,
             @NotNull String generalCategory,
@@ -56,32 +56,32 @@ public class ExpenseController {
     @PostMapping(&quot;/add&quot;)
     public ResponseEntity&lt;?&gt; addExpense(@AuthenticationPrincipal User user,
                                         @Valid @RequestBody ExpenseRequest body) {
-<span class="nc bnc" id="L59" title="All 2 branches missed.">        if (user == null) {</span>
+<span class="pc bpc" id="L59" title="1 of 2 branches missed.">        if (user == null) {</span>
 <span class="nc" id="L60">            return ResponseEntity.status(401).body(Map.of(&quot;messege&quot;, &quot;Unauthorized&quot;));</span>
         }
-<span class="nc bnc" id="L62" title="All 4 branches missed.">        if (body.generalCategory() == null || body.generalCategory().isBlank()) {</span>
+<span class="pc bpc" id="L62" title="2 of 4 branches missed.">        if (body.generalCategory() == null || body.generalCategory().isBlank()) {</span>
 <span class="nc" id="L63">            return ResponseEntity.badRequest().body(Map.of(&quot;message&quot;, &quot;Требуется общая категория&quot;));</span>
         }
-<span class="nc" id="L65">        String category = body.category();</span>
-<span class="nc bnc" id="L66" title="All 4 branches missed.">        if (category == null || category.isBlank()) {</span>
+<span class="fc" id="L65">        String category = body.category();</span>
+<span class="pc bpc" id="L66" title="2 of 4 branches missed.">        if (category == null || category.isBlank()) {</span>
 <span class="nc" id="L67">            category = body.generalCategory();</span>
         }
-<span class="nc" id="L69">        LocalDate d = LocalDate.parse(body.date());</span>
-<span class="nc" id="L70">        Expense expense = Expense.builder()</span>
-<span class="nc" id="L71">                .user(user)</span>
-<span class="nc" id="L72">                .icon(body.icon())</span>
-<span class="nc" id="L73">                .category(category)</span>
-<span class="nc" id="L74">                .generalCategory(body.generalCategory())</span>
-<span class="nc" id="L75">                .description(body.description())</span>
-<span class="nc" id="L76">                .amount(body.amount())</span>
-<span class="nc" id="L77">                .date(d)</span>
-<span class="nc" id="L78">                .build();</span>
-<span class="nc" id="L79">        expenseRepository.save(expense);</span>
+<span class="fc" id="L69">        LocalDate d = LocalDate.parse(body.date());</span>
+<span class="fc" id="L70">        Expense expense = Expense.builder()</span>
+<span class="fc" id="L71">                .user(user)</span>
+<span class="fc" id="L72">                .icon(body.icon())</span>
+<span class="fc" id="L73">                .category(category)</span>
+<span class="fc" id="L74">                .generalCategory(body.generalCategory())</span>
+<span class="fc" id="L75">                .description(body.description())</span>
+<span class="fc" id="L76">                .amount(body.amount())</span>
+<span class="fc" id="L77">                .date(d)</span>
+<span class="fc" id="L78">                .build();</span>
+<span class="fc" id="L79">        expenseRepository.save(expense);</span>
 
         // Budget check (month + general category)
-<span class="nc" id="L82">        String month = YearMonth.from(d).toString(); // YYYY-MM</span>
-<span class="nc" id="L83">        budgetRepository.findByUserAndMonthAndGeneralCategory(user, month, body.generalCategory())</span>
-<span class="nc" id="L84">                .ifPresent(budget -&gt; {</span>
+<span class="fc" id="L82">        String month = YearMonth.from(d).toString(); // YYYY-MM</span>
+<span class="fc" id="L83">        budgetRepository.findByUserAndMonthAndGeneralCategory(user, month, body.generalCategory())</span>
+<span class="fc" id="L84">                .ifPresent(budget -&gt; {</span>
 <span class="nc" id="L85">                    LocalDate from = YearMonth.parse(month).atDay(1);</span>
 <span class="nc" id="L86">                    LocalDate to = YearMonth.parse(month).atEndOfMonth();</span>
 <span class="nc" id="L87">                    Double spent = expenseRepository.sumByUserAndGeneralCategoryAndMonth(user, body.generalCategory(), from, to);</span>
@@ -103,7 +103,7 @@ public class ExpenseController {
                     }
 <span class="nc" id="L104">                });</span>
 
-<span class="nc" id="L106">        return ResponseEntity.ok(expense);</span>
+<span class="fc" id="L106">        return ResponseEntity.ok(expense);</span>
     }
 
     @GetMapping(&quot;/get&quot;)
@@ -114,33 +114,33 @@ public class ExpenseController {
                                     @RequestParam(value = &quot;to&quot;, required = false) String to,
                                     @RequestParam(value = &quot;generalCategory&quot;, required = false) String generalCategory,
                                     @RequestParam(value = &quot;category&quot;, required = false) String category) {
-<span class="nc bnc" id="L117" title="All 2 branches missed.">        if (user == null) {</span>
+<span class="pc bpc" id="L117" title="1 of 2 branches missed.">        if (user == null) {</span>
 <span class="nc" id="L118">            return ResponseEntity.status(401).body(Map.of(&quot;messege&quot;, &quot;Unauthorized&quot;));</span>
         }
-<span class="nc bnc" id="L120" title="All 4 branches missed.">        LocalDate fromDate = (from == null || from.isBlank()) ? null : LocalDate.parse(from);</span>
-<span class="nc bnc" id="L121" title="All 4 branches missed.">        LocalDate toDate = (to == null || to.isBlank()) ? null : LocalDate.parse(to);</span>
-<span class="nc bnc" id="L122" title="All 4 branches missed.">        String gen = (generalCategory == null || generalCategory.isBlank()) ? null : generalCategory.trim();</span>
-<span class="nc bnc" id="L123" title="All 4 branches missed.">        String cat = (category == null || category.isBlank()) ? null : category.trim();</span>
+<span class="pc bpc" id="L120" title="1 of 4 branches missed.">        LocalDate fromDate = (from == null || from.isBlank()) ? null : LocalDate.parse(from);</span>
+<span class="pc bpc" id="L121" title="1 of 4 branches missed.">        LocalDate toDate = (to == null || to.isBlank()) ? null : LocalDate.parse(to);</span>
+<span class="pc bpc" id="L122" title="3 of 4 branches missed.">        String gen = (generalCategory == null || generalCategory.isBlank()) ? null : generalCategory.trim();</span>
+<span class="pc bpc" id="L123" title="3 of 4 branches missed.">        String cat = (category == null || category.isBlank()) ? null : category.trim();</span>
 
-<span class="nc" id="L125">        Pageable pageable = PageRequest.of(Math.max(page, 0), Math.min(Math.max(size, 1), 100));</span>
-<span class="nc" id="L126">        Page&lt;Expense&gt; p = expenseRepository.findPage(user, fromDate, toDate, gen, cat, pageable);</span>
-<span class="nc" id="L127">        return ResponseEntity.ok(Map.of(</span>
-<span class="nc" id="L128">                &quot;items&quot;, p.getContent(),</span>
-<span class="nc" id="L129">                &quot;page&quot;, p.getNumber(),</span>
-<span class="nc" id="L130">                &quot;size&quot;, p.getSize(),</span>
-<span class="nc" id="L131">                &quot;totalItems&quot;, p.getTotalElements(),</span>
-<span class="nc" id="L132">                &quot;totalPages&quot;, p.getTotalPages()</span>
+<span class="fc" id="L125">        Pageable pageable = PageRequest.of(Math.max(page, 0), Math.min(Math.max(size, 1), 100));</span>
+<span class="fc" id="L126">        Page&lt;Expense&gt; p = expenseRepository.findPage(user, fromDate, toDate, gen, cat, pageable);</span>
+<span class="fc" id="L127">        return ResponseEntity.ok(Map.of(</span>
+<span class="fc" id="L128">                &quot;items&quot;, p.getContent(),</span>
+<span class="fc" id="L129">                &quot;page&quot;, p.getNumber(),</span>
+<span class="fc" id="L130">                &quot;size&quot;, p.getSize(),</span>
+<span class="fc" id="L131">                &quot;totalItems&quot;, p.getTotalElements(),</span>
+<span class="fc" id="L132">                &quot;totalPages&quot;, p.getTotalPages()</span>
         ));
     }
 
     @DeleteMapping(&quot;/{id}&quot;)
     public ResponseEntity&lt;?&gt; delete(@AuthenticationPrincipal User user,
                                     @PathVariable(&quot;id&quot;) Long id) {
-<span class="nc bnc" id="L139" title="All 2 branches missed.">        if (user == null) {</span>
+<span class="pc bpc" id="L139" title="1 of 2 branches missed.">        if (user == null) {</span>
 <span class="nc" id="L140">            return ResponseEntity.status(401).body(Map.of(&quot;messege&quot;, &quot;Unauthorized&quot;));</span>
         }
-<span class="nc" id="L142">        expenseRepository.deleteById(id);</span>
-<span class="nc" id="L143">        return ResponseEntity.ok(Map.of(&quot;messege&quot;, &quot; Расходы успешно удалены &quot;));</span>
+<span class="fc" id="L142">        expenseRepository.deleteById(id);</span>
+<span class="fc" id="L143">        return ResponseEntity.ok(Map.of(&quot;messege&quot;, &quot; Расходы успешно удалены &quot;));</span>
     }
 
     @GetMapping(&quot;/downloadexcel&quot;)

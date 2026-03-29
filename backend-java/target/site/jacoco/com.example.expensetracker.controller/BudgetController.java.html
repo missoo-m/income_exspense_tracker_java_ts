@@ -22,7 +22,7 @@ public class BudgetController {
 <span class="fc" id="L22">        this.budgetRepository = budgetRepository;</span>
 <span class="fc" id="L23">    }</span>
 
-<span class="nc" id="L25">    public record BudgetRequest(</span>
+<span class="fc" id="L25">    public record BudgetRequest(</span>
             @NotBlank String month, // YYYY-MM
             @NotBlank String generalCategory,
             @NotNull Double amount
@@ -31,49 +31,49 @@ public class BudgetController {
     @GetMapping
     public ResponseEntity&lt;?&gt; getByMonth(@AuthenticationPrincipal User user,
                                         @RequestParam(&quot;month&quot;) String month) {
-<span class="nc bnc" id="L34" title="All 2 branches missed.">        if (user == null) {</span>
+<span class="pc bpc" id="L34" title="1 of 2 branches missed.">        if (user == null) {</span>
 <span class="nc" id="L35">            return ResponseEntity.status(401).body(Map.of(&quot;message&quot;, &quot;Несанкционирован&quot;));</span>
         }
-<span class="nc" id="L37">        String m = Budget.normalizeMonth(month);</span>
-<span class="nc" id="L38">        List&lt;Budget&gt; budgets = budgetRepository.findByUserAndMonthOrderByGeneralCategoryAsc(user, m);</span>
-<span class="nc" id="L39">        return ResponseEntity.ok(budgets);</span>
+<span class="fc" id="L37">        String m = Budget.normalizeMonth(month);</span>
+<span class="fc" id="L38">        List&lt;Budget&gt; budgets = budgetRepository.findByUserAndMonthOrderByGeneralCategoryAsc(user, m);</span>
+<span class="fc" id="L39">        return ResponseEntity.ok(budgets);</span>
     }
 
     @PostMapping
     public ResponseEntity&lt;?&gt; upsert(@AuthenticationPrincipal User user,
                                     @RequestBody BudgetRequest body) {
-<span class="nc bnc" id="L45" title="All 2 branches missed.">        if (user == null) {</span>
+<span class="pc bpc" id="L45" title="1 of 2 branches missed.">        if (user == null) {</span>
 <span class="nc" id="L46">            return ResponseEntity.status(401).body(Map.of(&quot;message&quot;, &quot;Unauthorized&quot;));</span>
         }
-<span class="nc" id="L48">        String month = Budget.normalizeMonth(body.month());</span>
-<span class="nc" id="L49">        String category = body.generalCategory().trim();</span>
-<span class="nc bnc" id="L50" title="All 4 branches missed.">        if (body.amount() == null || body.amount() &lt; 0) {</span>
+<span class="fc" id="L48">        String month = Budget.normalizeMonth(body.month());</span>
+<span class="fc" id="L49">        String category = body.generalCategory().trim();</span>
+<span class="pc bpc" id="L50" title="2 of 4 branches missed.">        if (body.amount() == null || body.amount() &lt; 0) {</span>
 <span class="nc" id="L51">            return ResponseEntity.badRequest().body(Map.of(&quot;message&quot;, &quot;Неверная сумма&quot;));</span>
         }
 
-<span class="nc" id="L54">        Budget budget = budgetRepository.findByUserAndMonthAndGeneralCategory(user, month, category)</span>
-<span class="nc" id="L55">                .orElseGet(() -&gt; Budget.builder()</span>
-<span class="nc" id="L56">                        .user(user)</span>
-<span class="nc" id="L57">                        .month(month)</span>
-<span class="nc" id="L58">                        .generalCategory(category)</span>
-<span class="nc" id="L59">                        .build());</span>
-<span class="nc" id="L60">        budget.setAmount(body.amount());</span>
-<span class="nc" id="L61">        budgetRepository.save(budget);</span>
-<span class="nc" id="L62">        return ResponseEntity.ok(budget);</span>
+<span class="fc" id="L54">        Budget budget = budgetRepository.findByUserAndMonthAndGeneralCategory(user, month, category)</span>
+<span class="fc" id="L55">                .orElseGet(() -&gt; Budget.builder()</span>
+<span class="fc" id="L56">                        .user(user)</span>
+<span class="fc" id="L57">                        .month(month)</span>
+<span class="fc" id="L58">                        .generalCategory(category)</span>
+<span class="fc" id="L59">                        .build());</span>
+<span class="fc" id="L60">        budget.setAmount(body.amount());</span>
+<span class="fc" id="L61">        budgetRepository.save(budget);</span>
+<span class="fc" id="L62">        return ResponseEntity.ok(budget);</span>
     }
 
     @DeleteMapping(&quot;/{id}&quot;)
     public ResponseEntity&lt;?&gt; delete(@AuthenticationPrincipal User user,
                                     @PathVariable(&quot;id&quot;) Long id) {
-<span class="nc bnc" id="L68" title="All 2 branches missed.">        if (user == null) {</span>
+<span class="pc bpc" id="L68" title="1 of 2 branches missed.">        if (user == null) {</span>
 <span class="nc" id="L69">            return ResponseEntity.status(401).body(Map.of(&quot;message&quot;, &quot;Unauthorized&quot;));</span>
         }
-<span class="nc" id="L71">        return budgetRepository.findByIdAndUser(id, user)</span>
-<span class="nc" id="L72">                .map(b -&gt; {</span>
-<span class="nc" id="L73">                    budgetRepository.delete(b);</span>
-<span class="nc" id="L74">                    return ResponseEntity.ok(Map.of(&quot;message&quot;, &quot;Бюджет удален.&quot;));</span>
+<span class="fc" id="L71">        return budgetRepository.findByIdAndUser(id, user)</span>
+<span class="fc" id="L72">                .map(b -&gt; {</span>
+<span class="fc" id="L73">                    budgetRepository.delete(b);</span>
+<span class="fc" id="L74">                    return ResponseEntity.ok(Map.of(&quot;message&quot;, &quot;Бюджет удален.&quot;));</span>
                 })
-<span class="nc" id="L76">                .orElseGet(() -&gt; ResponseEntity.status(404).body(Map.of(&quot;message&quot;, &quot;Бюджет не найден&quot;)));</span>
+<span class="pc" id="L76">                .orElseGet(() -&gt; ResponseEntity.status(404).body(Map.of(&quot;message&quot;, &quot;Бюджет не найден&quot;)));</span>
     }
 }
 

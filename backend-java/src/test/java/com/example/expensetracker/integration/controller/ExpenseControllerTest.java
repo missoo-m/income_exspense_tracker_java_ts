@@ -1,6 +1,6 @@
 package com.example.expensetracker.integration.controller;
 
-import com.example.expensetracker.model.Income;
+import com.example.expensetracker.model.Expense;
 import com.example.expensetracker.model.User;
 import com.example.expensetracker.repository.BudgetRepository;
 import com.example.expensetracker.repository.ExpenseRepository;
@@ -28,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-class IncomeControllerIT {
+class ExpenseControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -37,13 +37,13 @@ class IncomeControllerIT {
     private UserRepository userRepository;
 
     @Autowired
-    private IncomeRepository incomeRepository;
+    private ExpenseRepository expenseRepository;
 
     @Autowired
-    private ExpenseRepository expenseRepository;  // ← добавляем
+    private IncomeRepository incomeRepository;  // ← добавляем
 
     @Autowired
-    private BudgetRepository budgetRepository;    // ← добавляем
+    private BudgetRepository budgetRepository;   // ← добавляем
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -59,11 +59,11 @@ class IncomeControllerIT {
 
     @BeforeEach
     void setUp() {
-        // Важно: удаляем в правильном порядке
-        budgetRepository.deleteAll();    // бюджеты
-        expenseRepository.deleteAll();   // расходы
-        incomeRepository.deleteAll();    // доходы
-        userRepository.deleteAll();      // пользователей
+        // Важно: удаляем в правильном порядке (от зависимых к независимым)
+        budgetRepository.deleteAll();    // бюджеты ссылаются на users
+        expenseRepository.deleteAll();   // расходы ссылаются на users
+        incomeRepository.deleteAll();    // доходы ссылаются на users
+        userRepository.deleteAll();      // затем пользователей
 
         testUser = User.builder()
                 .fullName("Тестовый Пользователь")
@@ -76,54 +76,59 @@ class IncomeControllerIT {
     }
 
     @Test
-    void addIncome_ShouldCreateIncome_WhenRequestIsValid() throws Exception {
+    void addExpense_ShouldCreateExpense_WhenRequestIsValid() throws Exception {
         Map<String, Object> request = new HashMap<>();
-        request.put("icon", "salary-icon.png");
-        request.put("source", "Зарплата");
-        request.put("amount", 50000.00);
+        request.put("icon", "food-icon.png");
+        request.put("category", "Еда");
+        request.put("generalCategory", "Продукты");
+        request.put("description", "Покупка продуктов");
+        request.put("amount", 1500.00);
         request.put("date", "2025-03-27");
 
-        mockMvc.perform(post("/api/v1/income/add")
+        mockMvc.perform(post("/api/v1/expense/add")
                 .header("Authorization", "Bearer " + authToken)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.source").value("Зарплата"))
-                .andExpect(jsonPath("$.amount").value(50000.00))
+                .andExpect(jsonPath("$.category").value("Еда"))
+                .andExpect(jsonPath("$.amount").value(1500.00))
                 .andExpect(jsonPath("$.date").value("2025-03-27"));
     }
 
+
     @Test
-    void addIncome_ShouldReturn401_WhenUserIsNotAuthenticated() throws Exception {
+    void addExpense_ShouldReturn401_WhenUserIsNotAuthenticated() throws Exception {
         Map<String, Object> request = new HashMap<>();
-        request.put("source", "Зарплата");
-        request.put("amount", 50000.00);
+        request.put("category", "Еда");
+        request.put("amount", 1500.00);
         request.put("date", "2025-03-27");
 
-        mockMvc.perform(post("/api/v1/income/add")
+        mockMvc.perform(post("/api/v1/expense/add")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isUnauthorized());
     }
 
     @Test
-    void getIncomes_ShouldReturnPaginatedList_WhenUserIsAuthenticated() throws Exception {
-        Income income1 = Income.builder()
+    void getExpenses_ShouldReturnPaginatedList_WhenUserIsAuthenticated() throws Exception {
+        Expense expense1 = Expense.builder()
                 .user(testUser)
-                .source("Зарплата")
-                .amount(50000.00)
+                .category("Транспорт")
+                .generalCategory("Такси")
+                .amount(500.00)
                 .date(LocalDate.of(2025, 3, 20))
                 .build();
-        Income income2 = Income.builder()
+        Expense expense2 = Expense.builder()
                 .user(testUser)
-                .source("Фриланс")
-                .amount(15000.00)
+                .category("Еда")
+                .generalCategory("Ресторан")
+                .amount(1200.00)
                 .date(LocalDate.of(2025, 3, 21))
                 .build();
-        incomeRepository.save(income1);
-        incomeRepository.save(income2);
+        expenseRepository.save(expense1);
+        expenseRepository.save(expense2);
 
-        mockMvc.perform(get("/api/v1/income/get")
+        mockMvc.perform(get("/api/v1/expense/get")
                 .header("Authorization", "Bearer " + authToken)
                 .param("page", "0")
                 .param("size", "10"))
@@ -134,43 +139,45 @@ class IncomeControllerIT {
     }
 
     @Test
-    void deleteIncome_ShouldDeleteIncome_WhenUserIsOwner() throws Exception {
-        Income income = Income.builder()
+    void deleteExpense_ShouldDeleteExpense_WhenUserIsOwner() throws Exception {
+        Expense expense = Expense.builder()
                 .user(testUser)
-                .source("Зарплата")
-                .amount(50000.00)
+                .category("Еда")
+                .generalCategory("Продукты")
+                .amount(1000.00)
                 .date(LocalDate.now())
                 .build();
-        income = incomeRepository.save(income);
+        expense = expenseRepository.save(expense);
 
-        mockMvc.perform(delete("/api/v1/income/{id}", income.getId())
+        mockMvc.perform(delete("/api/v1/expense/{id}", expense.getId())
                 .header("Authorization", "Bearer " + authToken))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.messege").value(" Доход успешно удален "));
+                .andExpect(jsonPath("$.messege").value(" Расходы успешно удалены "));
     }
 
     @Test
-    void getIncomes_ShouldFilterBySource_WhenSourceIsProvided() throws Exception {
-        Income income1 = Income.builder()
+    void getExpenses_ShouldFilterByDateRange_WhenDatesAreProvided() throws Exception {
+        Expense expense1 = Expense.builder()
                 .user(testUser)
-                .source("Зарплата")
-                .amount(50000.00)
-                .date(LocalDate.of(2025, 3, 20))
+                .category("Транспорт")
+                .amount(500.00)
+                .date(LocalDate.of(2025, 3, 15))
                 .build();
-        Income income2 = Income.builder()
+        Expense expense2 = Expense.builder()
                 .user(testUser)
-                .source("Фриланс")
-                .amount(15000.00)
-                .date(LocalDate.of(2025, 3, 21))
+                .category("Еда")
+                .amount(1200.00)
+                .date(LocalDate.of(2025, 3, 25))
                 .build();
-        incomeRepository.save(income1);
-        incomeRepository.save(income2);
+        expenseRepository.save(expense1);
+        expenseRepository.save(expense2);
 
-        mockMvc.perform(get("/api/v1/income/get")
+        mockMvc.perform(get("/api/v1/expense/get")
                 .header("Authorization", "Bearer " + authToken)
-                .param("source", "Зарплата"))
+                .param("from", "2025-03-20")
+                .param("to", "2025-03-31"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.totalItems").value(1))
-                .andExpect(jsonPath("$.items[0].source").value("Зарплата"));
+                .andExpect(jsonPath("$.items[0].category").value("Еда"));
     }
 }

@@ -1,12 +1,12 @@
+com/example/expensetracker/integration/controller/ExpenseControllerTest.class
 com/example/expensetracker/unit/service/UserServiceTest.class
-com/example/expensetracker/integration/repository/UserRepositoryIT.class
-com/example/expensetracker/integration/controller/IncomeControllerIT.class
-com/example/expensetracker/integration/controller/BudgetControllerIT.class
-com/example/expensetracker/integration/controller/ExpenseControllerIT.class
 com/example/expensetracker/integration/controller/AdminControllerTest.class
 com/example/expensetracker/unit/service/CurrencyRateServiceTest.class
+com/example/expensetracker/integration/repository/UserRepositoryTest.class
 com/example/expensetracker/integration/controller/NotificationControllerTest.class
 com/example/expensetracker/integration/controller/CategoryControllerTest.class
 com/example/expensetracker/unit/service/JwtServiceTest.class
+com/example/expensetracker/integration/controller/IncomeControllerTest.class
 com/example/expensetracker/unit/controller/AuthControllerTest.class
 com/example/expensetracker/config/TestcontainersConfig.class
+com/example/expensetracker/integration/controller/BudgetControllerTest.class

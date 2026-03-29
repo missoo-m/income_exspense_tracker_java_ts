@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.example.expensetracker.integration.controller.CategoryControllerTest" time="0.079" tests="9" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.example.expensetracker.integration.controller.BudgetControllerTest" time="0.575" tests="4" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="21"/>
     <property name="sun.jnu.encoding" value="UTF-8"/>
@@ -67,13 +67,464 @@
     <property name="java.class.version" value="65.0"/>
     <property name="LOGGED_APPLICATION_NAME" value="[expense-tracker-backend] "/>
   </properties>
-  <testcase name="delete_ShouldReturn404_WhenCategoryNotFound" classname="com.example.expensetracker.integration.controller.CategoryControllerTest" time="0.065"/>
-  <testcase name="getAll_ShouldReturnCategories_WhenUserHasCategories" classname="com.example.expensetracker.integration.controller.CategoryControllerTest" time="0.002"/>
-  <testcase name="delete_ShouldDeleteCategory_WhenExists" classname="com.example.expensetracker.integration.controller.CategoryControllerTest" time="0.001"/>
-  <testcase name="create_ShouldCreateCategory_WhenNameIsValid" classname="com.example.expensetracker.integration.controller.CategoryControllerTest" time="0.001"/>
-  <testcase name="getAll_ShouldCreateDefaultCategories_WhenUserHasNoCategories" classname="com.example.expensetracker.integration.controller.CategoryControllerTest" time="0.003"/>
-  <testcase name="create_ShouldReturn400_WhenNameIsEmpty" classname="com.example.expensetracker.integration.controller.CategoryControllerTest" time="0.0"/>
-  <testcase name="create_ShouldReturn400_WhenNameAlreadyExists" classname="com.example.expensetracker.integration.controller.CategoryControllerTest" time="0.001"/>
-  <testcase name="update_ShouldUpdateCategory_WhenNameIsValid" classname="com.example.expensetracker.integration.controller.CategoryControllerTest" time="0.002"/>
-  <testcase name="update_ShouldReturn404_WhenCategoryNotFound" classname="com.example.expensetracker.integration.controller.CategoryControllerTest" time="0.001"/>
+  <testcase name="upsertBudget_ShouldCreateNewBudget_WhenBudgetDoesNotExist" classname="com.example.expensetracker.integration.controller.BudgetControllerTest" time="0.143">
+    <system-out><![CDATA[2026-03-29T21:40:19.186+03:00  INFO 67593 --- [expense-tracker-backend] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.example.expensetracker.integration.controller.BudgetControllerTest]: BudgetControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-03-29T21:40:19.188+03:00  INFO 67593 --- [expense-tracker-backend] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.example.expensetracker.ExpenseTrackerApplication for test class com.example.expensetracker.integration.controller.BudgetControllerTest
+Hibernate: 
+    select
+        b1_0."id",
+        b1_0."amount",
+        b1_0."created_at",
+        b1_0."general_category",
+        b1_0."month",
+        b1_0."updated_at",
+        b1_0."user_id" 
+    from
+        "budgets" b1_0
+Hibernate: 
+    select
+        e1_0."id",
+        e1_0."amount",
+        e1_0."category",
+        e1_0."created_at",
+        e1_0."date",
+        e1_0."description",
+        e1_0."general_category",
+        e1_0."icon",
+        e1_0."updated_at",
+        e1_0."user_id" 
+    from
+        "expense" e1_0
+Hibernate: 
+    delete 
+    from
+        "expense" 
+    where
+        "id"=?
+Hibernate: 
+    select
+        i1_0."id",
+        i1_0."amount",
+        i1_0."created_at",
+        i1_0."date",
+        i1_0."icon",
+        i1_0."source",
+        i1_0."updated_at",
+        i1_0."user_id" 
+    from
+        "income" i1_0
+Hibernate: 
+    select
+        u1_0."id",
+        u1_0."created_at",
+        u1_0."email",
+        u1_0."full_name",
+        u1_0."password",
+        u1_0."profile_image_url",
+        u1_0."role",
+        u1_0."updated_at" 
+    from
+        "users" u1_0
+Hibernate: 
+    delete 
+    from
+        "users" 
+    where
+        "id"=?
+Hibernate: 
+    insert 
+    into
+        "users"
+        ("created_at", "email", "full_name", "password", "profile_image_url", "role", "updated_at", "id") 
+    values
+        (?, ?, ?, ?, ?, ?, ?, default)
+Hibernate: 
+    select
+        u1_0."id",
+        u1_0."created_at",
+        u1_0."email",
+        u1_0."full_name",
+        u1_0."password",
+        u1_0."profile_image_url",
+        u1_0."role",
+        u1_0."updated_at" 
+    from
+        "users" u1_0 
+    where
+        u1_0."id"=?
+Hibernate: 
+    select
+        b1_0."id",
+        b1_0."amount",
+        b1_0."created_at",
+        b1_0."general_category",
+        b1_0."month",
+        b1_0."updated_at",
+        b1_0."user_id" 
+    from
+        "budgets" b1_0 
+    where
+        b1_0."user_id"=? 
+        and b1_0."month"=? 
+        and b1_0."general_category"=?
+Hibernate: 
+    insert 
+    into
+        "budgets"
+        ("amount", "created_at", "general_category", "month", "updated_at", "user_id", "id") 
+    values
+        (?, ?, ?, ?, ?, ?, default)
+]]></system-out>
+  </testcase>
+  <testcase name="getBudgetsByMonth_ShouldReturnBudgets_WhenUserHasBudgets" classname="com.example.expensetracker.integration.controller.BudgetControllerTest" time="0.143">
+    <system-out><![CDATA[Hibernate: 
+    select
+        b1_0."id",
+        b1_0."amount",
+        b1_0."created_at",
+        b1_0."general_category",
+        b1_0."month",
+        b1_0."updated_at",
+        b1_0."user_id" 
+    from
+        "budgets" b1_0
+Hibernate: 
+    delete 
+    from
+        "budgets" 
+    where
+        "id"=?
+Hibernate: 
+    select
+        e1_0."id",
+        e1_0."amount",
+        e1_0."category",
+        e1_0."created_at",
+        e1_0."date",
+        e1_0."description",
+        e1_0."general_category",
+        e1_0."icon",
+        e1_0."updated_at",
+        e1_0."user_id" 
+    from
+        "expense" e1_0
+Hibernate: 
+    select
+        i1_0."id",
+        i1_0."amount",
+        i1_0."created_at",
+        i1_0."date",
+        i1_0."icon",
+        i1_0."source",
+        i1_0."updated_at",
+        i1_0."user_id" 
+    from
+        "income" i1_0
+Hibernate: 
+    select
+        u1_0."id",
+        u1_0."created_at",
+        u1_0."email",
+        u1_0."full_name",
+        u1_0."password",
+        u1_0."profile_image_url",
+        u1_0."role",
+        u1_0."updated_at" 
+    from
+        "users" u1_0
+Hibernate: 
+    delete 
+    from
+        "users" 
+    where
+        "id"=?
+Hibernate: 
+    insert 
+    into
+        "users"
+        ("created_at", "email", "full_name", "password", "profile_image_url", "role", "updated_at", "id") 
+    values
+        (?, ?, ?, ?, ?, ?, ?, default)
+Hibernate: 
+    insert 
+    into
+        "budgets"
+        ("amount", "created_at", "general_category", "month", "updated_at", "user_id", "id") 
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate: 
+    insert 
+    into
+        "budgets"
+        ("amount", "created_at", "general_category", "month", "updated_at", "user_id", "id") 
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate: 
+    select
+        u1_0."id",
+        u1_0."created_at",
+        u1_0."email",
+        u1_0."full_name",
+        u1_0."password",
+        u1_0."profile_image_url",
+        u1_0."role",
+        u1_0."updated_at" 
+    from
+        "users" u1_0 
+    where
+        u1_0."id"=?
+Hibernate: 
+    select
+        b1_0."id",
+        b1_0."amount",
+        b1_0."created_at",
+        b1_0."general_category",
+        b1_0."month",
+        b1_0."updated_at",
+        b1_0."user_id" 
+    from
+        "budgets" b1_0 
+    where
+        b1_0."user_id"=? 
+        and b1_0."month"=? 
+    order by
+        b1_0."general_category"
+]]></system-out>
+  </testcase>
+  <testcase name="upsertBudget_ShouldUpdateExistingBudget_WhenBudgetExists" classname="com.example.expensetracker.integration.controller.BudgetControllerTest" time="0.145">
+    <system-out><![CDATA[Hibernate: 
+    select
+        b1_0."id",
+        b1_0."amount",
+        b1_0."created_at",
+        b1_0."general_category",
+        b1_0."month",
+        b1_0."updated_at",
+        b1_0."user_id" 
+    from
+        "budgets" b1_0
+Hibernate: 
+    delete 
+    from
+        "budgets" 
+    where
+        "id"=?
+Hibernate: 
+    delete 
+    from
+        "budgets" 
+    where
+        "id"=?
+Hibernate: 
+    select
+        e1_0."id",
+        e1_0."amount",
+        e1_0."category",
+        e1_0."created_at",
+        e1_0."date",
+        e1_0."description",
+        e1_0."general_category",
+        e1_0."icon",
+        e1_0."updated_at",
+        e1_0."user_id" 
+    from
+        "expense" e1_0
+Hibernate: 
+    select
+        i1_0."id",
+        i1_0."amount",
+        i1_0."created_at",
+        i1_0."date",
+        i1_0."icon",
+        i1_0."source",
+        i1_0."updated_at",
+        i1_0."user_id" 
+    from
+        "income" i1_0
+Hibernate: 
+    select
+        u1_0."id",
+        u1_0."created_at",
+        u1_0."email",
+        u1_0."full_name",
+        u1_0."password",
+        u1_0."profile_image_url",
+        u1_0."role",
+        u1_0."updated_at" 
+    from
+        "users" u1_0
+Hibernate: 
+    delete 
+    from
+        "users" 
+    where
+        "id"=?
+Hibernate: 
+    insert 
+    into
+        "users"
+        ("created_at", "email", "full_name", "password", "profile_image_url", "role", "updated_at", "id") 
+    values
+        (?, ?, ?, ?, ?, ?, ?, default)
+Hibernate: 
+    insert 
+    into
+        "budgets"
+        ("amount", "created_at", "general_category", "month", "updated_at", "user_id", "id") 
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate: 
+    select
+        u1_0."id",
+        u1_0."created_at",
+        u1_0."email",
+        u1_0."full_name",
+        u1_0."password",
+        u1_0."profile_image_url",
+        u1_0."role",
+        u1_0."updated_at" 
+    from
+        "users" u1_0 
+    where
+        u1_0."id"=?
+Hibernate: 
+    select
+        b1_0."id",
+        b1_0."amount",
+        b1_0."created_at",
+        b1_0."general_category",
+        b1_0."month",
+        b1_0."updated_at",
+        b1_0."user_id" 
+    from
+        "budgets" b1_0 
+    where
+        b1_0."user_id"=? 
+        and b1_0."month"=? 
+        and b1_0."general_category"=?
+Hibernate: 
+    update
+        "budgets" 
+    set
+        "amount"=?,
+        "general_category"=?,
+        "month"=?,
+        "updated_at"=?,
+        "user_id"=? 
+    where
+        "id"=?
+]]></system-out>
+  </testcase>
+  <testcase name="deleteBudget_ShouldDeleteBudget_WhenUserIsOwner" classname="com.example.expensetracker.integration.controller.BudgetControllerTest" time="0.137">
+    <system-out><![CDATA[Hibernate: 
+    select
+        b1_0."id",
+        b1_0."amount",
+        b1_0."created_at",
+        b1_0."general_category",
+        b1_0."month",
+        b1_0."updated_at",
+        b1_0."user_id" 
+    from
+        "budgets" b1_0
+Hibernate: 
+    delete 
+    from
+        "budgets" 
+    where
+        "id"=?
+Hibernate: 
+    select
+        e1_0."id",
+        e1_0."amount",
+        e1_0."category",
+        e1_0."created_at",
+        e1_0."date",
+        e1_0."description",
+        e1_0."general_category",
+        e1_0."icon",
+        e1_0."updated_at",
+        e1_0."user_id" 
+    from
+        "expense" e1_0
+Hibernate: 
+    select
+        i1_0."id",
+        i1_0."amount",
+        i1_0."created_at",
+        i1_0."date",
+        i1_0."icon",
+        i1_0."source",
+        i1_0."updated_at",
+        i1_0."user_id" 
+    from
+        "income" i1_0
+Hibernate: 
+    select
+        u1_0."id",
+        u1_0."created_at",
+        u1_0."email",
+        u1_0."full_name",
+        u1_0."password",
+        u1_0."profile_image_url",
+        u1_0."role",
+        u1_0."updated_at" 
+    from
+        "users" u1_0
+Hibernate: 
+    delete 
+    from
+        "users" 
+    where
+        "id"=?
+Hibernate: 
+    insert 
+    into
+        "users"
+        ("created_at", "email", "full_name", "password", "profile_image_url", "role", "updated_at", "id") 
+    values
+        (?, ?, ?, ?, ?, ?, ?, default)
+Hibernate: 
+    insert 
+    into
+        "budgets"
+        ("amount", "created_at", "general_category", "month", "updated_at", "user_id", "id") 
+    values
+        (?, ?, ?, ?, ?, ?, default)
+Hibernate: 
+    select
+        u1_0."id",
+        u1_0."created_at",
+        u1_0."email",
+        u1_0."full_name",
+        u1_0."password",
+        u1_0."profile_image_url",
+        u1_0."role",
+        u1_0."updated_at" 
+    from
+        "users" u1_0 
+    where
+        u1_0."id"=?
+Hibernate: 
+    select
+        b1_0."id",
+        b1_0."amount",
+        b1_0."created_at",
+        b1_0."general_category",
+        b1_0."month",
+        b1_0."updated_at",
+        b1_0."user_id" 
+    from
+        "budgets" b1_0 
+    where
+        b1_0."id"=? 
+        and b1_0."user_id"=?
+Hibernate: 
+    delete 
+    from
+        "budgets" 
+    where
+        "id"=?
+]]></system-out>
+  </testcase>
 </testsuite>

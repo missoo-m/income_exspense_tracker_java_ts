@@ -51,21 +51,21 @@ public class Budget {
 
     @PrePersist
     public void prePersist() {
-<span class="nc bnc" id="L54" title="All 2 branches missed.">        if (this.createdAt == null) {</span>
+<span class="pc bpc" id="L54" title="1 of 2 branches missed.">        if (this.createdAt == null) {</span>
 <span class="nc" id="L55">            this.createdAt = Instant.now();</span>
         }
-<span class="nc" id="L57">        this.updatedAt = Instant.now();</span>
-<span class="nc" id="L58">    }</span>
+<span class="fc" id="L57">        this.updatedAt = Instant.now();</span>
+<span class="fc" id="L58">    }</span>
 
     @PreUpdate
     public void preUpdate() {
-<span class="nc" id="L62">        this.updatedAt = Instant.now();</span>
-<span class="nc" id="L63">    }</span>
+<span class="fc" id="L62">        this.updatedAt = Instant.now();</span>
+<span class="fc" id="L63">    }</span>
 
     public static String normalizeMonth(String month) {
         // Validate format and normalize (throws if invalid)
-<span class="nc" id="L67">        YearMonth ym = YearMonth.parse(month);</span>
-<span class="nc" id="L68">        return ym.toString();</span>
+<span class="fc" id="L67">        YearMonth ym = YearMonth.parse(month);</span>
+<span class="fc" id="L68">        return ym.toString();</span>
     }
 }
 

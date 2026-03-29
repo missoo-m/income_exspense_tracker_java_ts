@@ -51,11 +51,11 @@ public class Income {
 
     @PrePersist
     public void prePersist() {
-<span class="nc bnc" id="L54" title="All 2 branches missed.">        if (this.createdAt == null) {</span>
+<span class="pc bpc" id="L54" title="1 of 2 branches missed.">        if (this.createdAt == null) {</span>
 <span class="nc" id="L55">            this.createdAt = Instant.now();</span>
         }
-<span class="nc" id="L57">        this.updatedAt = Instant.now();</span>
-<span class="nc" id="L58">    }</span>
+<span class="fc" id="L57">        this.updatedAt = Instant.now();</span>
+<span class="fc" id="L58">    }</span>
 
     @PreUpdate
     public void preUpdate() {

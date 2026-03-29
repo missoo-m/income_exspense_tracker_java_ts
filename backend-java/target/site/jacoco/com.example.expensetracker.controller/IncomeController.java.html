@@ -34,7 +34,7 @@ public class IncomeController {
 <span class="fc" id="L34">        this.incomeRepository = incomeRepository;</span>
 <span class="fc" id="L35">    }</span>
 
-<span class="nc" id="L37">    public record IncomeRequest(</span>
+<span class="fc" id="L37">    public record IncomeRequest(</span>
             String icon,
             @NotNull String source,
             @NotNull Double amount,
@@ -44,19 +44,19 @@ public class IncomeController {
     @PostMapping(&quot;/add&quot;)
     public ResponseEntity&lt;?&gt; addIncome(@AuthenticationPrincipal User user,
                                        @Valid @RequestBody IncomeRequest body) {
-<span class="nc bnc" id="L47" title="All 2 branches missed.">        if (user == null) {</span>
+<span class="pc bpc" id="L47" title="1 of 2 branches missed.">        if (user == null) {</span>
 <span class="nc" id="L48">            return ResponseEntity.status(401).body(Map.of(&quot;messege&quot;, &quot;Unauthorized&quot;));</span>
         }
-<span class="nc" id="L50">        LocalDate d = LocalDate.parse(body.date());</span>
-<span class="nc" id="L51">        Income income = Income.builder()</span>
-<span class="nc" id="L52">                .user(user)</span>
-<span class="nc" id="L53">                .icon(body.icon())</span>
-<span class="nc" id="L54">                .source(body.source())</span>
-<span class="nc" id="L55">                .amount(body.amount())</span>
-<span class="nc" id="L56">                .date(d)</span>
-<span class="nc" id="L57">                .build();</span>
-<span class="nc" id="L58">        incomeRepository.save(income);</span>
-<span class="nc" id="L59">        return ResponseEntity.ok(income);</span>
+<span class="fc" id="L50">        LocalDate d = LocalDate.parse(body.date());</span>
+<span class="fc" id="L51">        Income income = Income.builder()</span>
+<span class="fc" id="L52">                .user(user)</span>
+<span class="fc" id="L53">                .icon(body.icon())</span>
+<span class="fc" id="L54">                .source(body.source())</span>
+<span class="fc" id="L55">                .amount(body.amount())</span>
+<span class="fc" id="L56">                .date(d)</span>
+<span class="fc" id="L57">                .build();</span>
+<span class="fc" id="L58">        incomeRepository.save(income);</span>
+<span class="fc" id="L59">        return ResponseEntity.ok(income);</span>
     }
 
     @GetMapping(&quot;/get&quot;)
@@ -66,32 +66,32 @@ public class IncomeController {
                                     @RequestParam(value = &quot;from&quot;, required = false) String from,
                                     @RequestParam(value = &quot;to&quot;, required = false) String to,
                                     @RequestParam(value = &quot;source&quot;, required = false) String source) {
-<span class="nc bnc" id="L69" title="All 2 branches missed.">        if (user == null) {</span>
+<span class="pc bpc" id="L69" title="1 of 2 branches missed.">        if (user == null) {</span>
 <span class="nc" id="L70">            return ResponseEntity.status(401).body(Map.of(&quot;messege&quot;, &quot;Unauthorized&quot;));</span>
         }
-<span class="nc bnc" id="L72" title="All 4 branches missed.">        LocalDate fromDate = (from == null || from.isBlank()) ? null : LocalDate.parse(from);</span>
-<span class="nc bnc" id="L73" title="All 4 branches missed.">        LocalDate toDate = (to == null || to.isBlank()) ? null : LocalDate.parse(to);</span>
-<span class="nc bnc" id="L74" title="All 4 branches missed.">        String sourceFilter = (source == null || source.isBlank()) ? null : source.trim();</span>
+<span class="pc bpc" id="L72" title="3 of 4 branches missed.">        LocalDate fromDate = (from == null || from.isBlank()) ? null : LocalDate.parse(from);</span>
+<span class="pc bpc" id="L73" title="3 of 4 branches missed.">        LocalDate toDate = (to == null || to.isBlank()) ? null : LocalDate.parse(to);</span>
+<span class="pc bpc" id="L74" title="1 of 4 branches missed.">        String sourceFilter = (source == null || source.isBlank()) ? null : source.trim();</span>
 
-<span class="nc" id="L76">        Pageable pageable = PageRequest.of(Math.max(page, 0), Math.min(Math.max(size, 1), 100));</span>
-<span class="nc" id="L77">        Page&lt;Income&gt; p = incomeRepository.findPage(user, fromDate, toDate, sourceFilter, pageable);</span>
-<span class="nc" id="L78">        return ResponseEntity.ok(Map.of(</span>
-<span class="nc" id="L79">                &quot;items&quot;, p.getContent(),</span>
-<span class="nc" id="L80">                &quot;page&quot;, p.getNumber(),</span>
-<span class="nc" id="L81">                &quot;size&quot;, p.getSize(),</span>
-<span class="nc" id="L82">                &quot;totalItems&quot;, p.getTotalElements(),</span>
-<span class="nc" id="L83">                &quot;totalPages&quot;, p.getTotalPages()</span>
+<span class="fc" id="L76">        Pageable pageable = PageRequest.of(Math.max(page, 0), Math.min(Math.max(size, 1), 100));</span>
+<span class="fc" id="L77">        Page&lt;Income&gt; p = incomeRepository.findPage(user, fromDate, toDate, sourceFilter, pageable);</span>
+<span class="fc" id="L78">        return ResponseEntity.ok(Map.of(</span>
+<span class="fc" id="L79">                &quot;items&quot;, p.getContent(),</span>
+<span class="fc" id="L80">                &quot;page&quot;, p.getNumber(),</span>
+<span class="fc" id="L81">                &quot;size&quot;, p.getSize(),</span>
+<span class="fc" id="L82">                &quot;totalItems&quot;, p.getTotalElements(),</span>
+<span class="fc" id="L83">                &quot;totalPages&quot;, p.getTotalPages()</span>
         ));
     }
 
     @DeleteMapping(&quot;/{id}&quot;)
     public ResponseEntity&lt;?&gt; delete(@AuthenticationPrincipal User user,
                                     @PathVariable(&quot;id&quot;) Long id) {
-<span class="nc bnc" id="L90" title="All 2 branches missed.">        if (user == null) {</span>
+<span class="pc bpc" id="L90" title="1 of 2 branches missed.">        if (user == null) {</span>
 <span class="nc" id="L91">            return ResponseEntity.status(401).body(Map.of(&quot;messege&quot;, &quot;Unauthorized&quot;));</span>
         }
-<span class="nc" id="L93">        incomeRepository.deleteById(id);</span>
-<span class="nc" id="L94">        return ResponseEntity.ok(Map.of(&quot;messege&quot;, &quot; Доход успешно удален &quot;));</span>
+<span class="fc" id="L93">        incomeRepository.deleteById(id);</span>
+<span class="fc" id="L94">        return ResponseEntity.ok(Map.of(&quot;messege&quot;, &quot; Доход успешно удален &quot;));</span>
     }
 
     @GetMapping(&quot;/downloadexcel&quot;)

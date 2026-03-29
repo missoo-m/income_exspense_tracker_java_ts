@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.example.expensetracker.unit.controller.AuthControllerTest" time="11.428" tests="4" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.example.expensetracker.integration.controller.IncomeControllerTest" time="1.879" tests="5" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="21"/>
     <property name="sun.jnu.encoding" value="UTF-8"/>
@@ -48,7 +48,7 @@
     <property name="localRepository" value="/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo"/>
     <property name="java.vendor.url.bug" value="https://github.com/Homebrew/homebrew-core/issues"/>
     <property name="java.io.tmpdir" value="/var/folders/49/4kcn3q2x233_xgjv3rvxkl140000gn/T/"/>
-    <property name="com.zaxxer.hikari.pool_number" value="1"/>
+    <property name="com.zaxxer.hikari.pool_number" value="2"/>
     <property name="java.version" value="21.0.9"/>
     <property name="user.dir" value="/Users/mac/Desktop/geellya_tracker_java_ts/backend-java"/>
     <property name="os.arch" value="aarch64"/>
@@ -67,9 +67,9 @@
     <property name="java.class.version" value="65.0"/>
     <property name="LOGGED_APPLICATION_NAME" value="[expense-tracker-backend] "/>
   </properties>
-  <testcase name="login_ShouldReturn201_WhenCredentialsAreValid" classname="com.example.expensetracker.unit.controller.AuthControllerTest" time="0.454">
-    <system-out><![CDATA[21:40:03.806 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.example.expensetracker.unit.controller.AuthControllerTest]: AuthControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-21:40:03.925 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.example.expensetracker.ExpenseTrackerApplication for test class com.example.expensetracker.unit.controller.AuthControllerTest
+  <testcase name="getIncomes_ShouldReturnPaginatedList_WhenUserIsAuthenticated" classname="com.example.expensetracker.integration.controller.IncomeControllerTest" time="0.209">
+    <system-out><![CDATA[2026-03-29T21:40:16.499+03:00  INFO 67593 --- [expense-tracker-backend] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.example.expensetracker.integration.controller.IncomeControllerTest]: IncomeControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-03-29T21:40:16.506+03:00  INFO 67593 --- [expense-tracker-backend] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.example.expensetracker.ExpenseTrackerApplication for test class com.example.expensetracker.integration.controller.IncomeControllerTest
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -80,31 +80,30 @@
 
  :: Spring Boot ::                (v3.3.5)
 
-2026-03-29T21:40:04.306+03:00  INFO 67593 --- [expense-tracker-backend] [           main] c.e.e.u.controller.AuthControllerTest    : Starting AuthControllerTest using Java 21.0.9 with PID 67593 (started by mac in /Users/mac/Desktop/geellya_tracker_java_ts/backend-java)
-2026-03-29T21:40:04.307+03:00  INFO 67593 --- [expense-tracker-backend] [           main] c.e.e.u.controller.AuthControllerTest    : The following 1 profile is active: "test"
-2026-03-29T21:40:05.219+03:00  INFO 67593 --- [expense-tracker-backend] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
-2026-03-29T21:40:05.222+03:00  INFO 67593 --- [expense-tracker-backend] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2026-03-29T21:40:05.453+03:00  INFO 67593 --- [expense-tracker-backend] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 222 ms. Found 8 JPA repository interfaces.
-2026-03-29T21:40:05.485+03:00  INFO 67593 --- [expense-tracker-backend] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
-2026-03-29T21:40:05.487+03:00  INFO 67593 --- [expense-tracker-backend] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-2026-03-29T21:40:05.514+03:00  INFO 67593 --- [expense-tracker-backend] [           main] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.expensetracker.repository.BudgetRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2026-03-29T21:40:05.515+03:00  INFO 67593 --- [expense-tracker-backend] [           main] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.expensetracker.repository.CategoryRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2026-03-29T21:40:05.515+03:00  INFO 67593 --- [expense-tracker-backend] [           main] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.expensetracker.repository.CurrencyRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2026-03-29T21:40:05.516+03:00  INFO 67593 --- [expense-tracker-backend] [           main] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.expensetracker.repository.ExpenseRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2026-03-29T21:40:05.516+03:00  INFO 67593 --- [expense-tracker-backend] [           main] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.expensetracker.repository.IncomeRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2026-03-29T21:40:05.516+03:00  INFO 67593 --- [expense-tracker-backend] [           main] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.expensetracker.repository.NewsRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2026-03-29T21:40:05.517+03:00  INFO 67593 --- [expense-tracker-backend] [           main] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.expensetracker.repository.NotificationRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2026-03-29T21:40:05.517+03:00  INFO 67593 --- [expense-tracker-backend] [           main] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.expensetracker.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2026-03-29T21:40:05.518+03:00  INFO 67593 --- [expense-tracker-backend] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 12 ms. Found 0 Redis repository interfaces.
-2026-03-29T21:40:07.328+03:00  INFO 67593 --- [expense-tracker-backend] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2026-03-29T21:40:07.491+03:00  INFO 67593 --- [expense-tracker-backend] [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
-2026-03-29T21:40:07.577+03:00  INFO 67593 --- [expense-tracker-backend] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2026-03-29T21:40:07.868+03:00  INFO 67593 --- [expense-tracker-backend] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2026-03-29T21:40:07.941+03:00  INFO 67593 --- [expense-tracker-backend] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2026-03-29T21:40:08.544+03:00  INFO 67593 --- [expense-tracker-backend] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=SA
-2026-03-29T21:40:08.546+03:00  INFO 67593 --- [expense-tracker-backend] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2026-03-29T21:40:08.595+03:00  WARN 67593 --- [expense-tracker-backend] [           main] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2026-03-29T21:40:09.985+03:00  INFO 67593 --- [expense-tracker-backend] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-03-29T21:40:16.523+03:00  INFO 67593 --- [expense-tracker-backend] [           main] c.e.e.i.controller.IncomeControllerTest  : Starting IncomeControllerTest using Java 21.0.9 with PID 67593 (started by mac in /Users/mac/Desktop/geellya_tracker_java_ts/backend-java)
+2026-03-29T21:40:16.523+03:00  INFO 67593 --- [expense-tracker-backend] [           main] c.e.e.i.controller.IncomeControllerTest  : The following 1 profile is active: "test"
+2026-03-29T21:40:16.629+03:00  INFO 67593 --- [expense-tracker-backend] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-03-29T21:40:16.629+03:00  INFO 67593 --- [expense-tracker-backend] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-03-29T21:40:16.639+03:00  INFO 67593 --- [expense-tracker-backend] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 9 ms. Found 8 JPA repository interfaces.
+2026-03-29T21:40:16.642+03:00  INFO 67593 --- [expense-tracker-backend] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-03-29T21:40:16.642+03:00  INFO 67593 --- [expense-tracker-backend] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-03-29T21:40:16.644+03:00  INFO 67593 --- [expense-tracker-backend] [           main] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.expensetracker.repository.BudgetRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-03-29T21:40:16.645+03:00  INFO 67593 --- [expense-tracker-backend] [           main] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.expensetracker.repository.CategoryRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-03-29T21:40:16.645+03:00  INFO 67593 --- [expense-tracker-backend] [           main] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.expensetracker.repository.CurrencyRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-03-29T21:40:16.645+03:00  INFO 67593 --- [expense-tracker-backend] [           main] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.expensetracker.repository.ExpenseRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-03-29T21:40:16.645+03:00  INFO 67593 --- [expense-tracker-backend] [           main] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.expensetracker.repository.IncomeRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-03-29T21:40:16.645+03:00  INFO 67593 --- [expense-tracker-backend] [           main] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.expensetracker.repository.NewsRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-03-29T21:40:16.645+03:00  INFO 67593 --- [expense-tracker-backend] [           main] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.expensetracker.repository.NotificationRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-03-29T21:40:16.645+03:00  INFO 67593 --- [expense-tracker-backend] [           main] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.expensetracker.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-03-29T21:40:16.645+03:00  INFO 67593 --- [expense-tracker-backend] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 3 ms. Found 0 Redis repository interfaces.
+2026-03-29T21:40:16.731+03:00  INFO 67593 --- [expense-tracker-backend] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-03-29T21:40:16.732+03:00  INFO 67593 --- [expense-tracker-backend] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-03-29T21:40:16.737+03:00  INFO 67593 --- [expense-tracker-backend] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-03-29T21:40:16.738+03:00  INFO 67593 --- [expense-tracker-backend] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
+2026-03-29T21:40:16.739+03:00  INFO 67593 --- [expense-tracker-backend] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Added connection conn19: url=jdbc:h2:mem:testdb user=SA
+2026-03-29T21:40:16.739+03:00  INFO 67593 --- [expense-tracker-backend] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
+2026-03-29T21:40:16.739+03:00  WARN 67593 --- [expense-tracker-backend] [           main] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-03-29T21:40:16.851+03:00  INFO 67593 --- [expense-tracker-backend] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
 Hibernate: 
     drop table if exists "budgets" cascade 
 Hibernate: 
@@ -200,7 +199,7 @@ Hibernate:
         "type" varchar(255) not null,
         primary key ("id")
     )
-2026-03-29T21:40:10.035+03:00  WARN 67593 --- [expense-tracker-backend] [           main] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "
+2026-03-29T21:40:16.863+03:00  WARN 67593 --- [expense-tracker-backend] [           main] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "
     create table "news" (
         "author_id" bigint not null,
         "created_at" timestamp(6) with time zone not null,
@@ -395,7 +394,7 @@ Hibernate:
         "type" varchar(255) not null,
         primary key ("id")
     )
-2026-03-29T21:40:10.047+03:00  WARN 67593 --- [expense-tracker-backend] [           main] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "
+2026-03-29T21:40:16.866+03:00  WARN 67593 --- [expense-tracker-backend] [           main] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "
     create table "notifications" (
         "read" boolean not null,
         "created_at" timestamp(6) with time zone not null,
@@ -625,13 +624,12 @@ Hibernate:
        add constraint "FKk10cry0ngw776qndbru23piqi" 
        foreign key ("user_id") 
        references "users"
-2026-03-29T21:40:10.086+03:00  INFO 67593 --- [expense-tracker-backend] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2026-03-29T21:40:10.464+03:00  INFO 67593 --- [expense-tracker-backend] [           main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
-2026-03-29T21:40:12.625+03:00  WARN 67593 --- [expense-tracker-backend] [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2026-03-29T21:40:13.693+03:00  INFO 67593 --- [expense-tracker-backend] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
-2026-03-29T21:40:13.693+03:00  INFO 67593 --- [expense-tracker-backend] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2026-03-29T21:40:13.694+03:00  INFO 67593 --- [expense-tracker-backend] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
-2026-03-29T21:40:13.712+03:00  INFO 67593 --- [expense-tracker-backend] [           main] c.e.e.u.controller.AuthControllerTest    : Started AuthControllerTest in 9.65 seconds (process running for 10.981)
+2026-03-29T21:40:16.875+03:00  INFO 67593 --- [expense-tracker-backend] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-03-29T21:40:17.139+03:00  WARN 67593 --- [expense-tracker-backend] [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-03-29T21:40:17.431+03:00  INFO 67593 --- [expense-tracker-backend] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-03-29T21:40:17.431+03:00  INFO 67593 --- [expense-tracker-backend] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-03-29T21:40:17.431+03:00  INFO 67593 --- [expense-tracker-backend] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2026-03-29T21:40:17.438+03:00  INFO 67593 --- [expense-tracker-backend] [           main] c.e.e.i.controller.IncomeControllerTest  : Started IncomeControllerTest in 0.93 seconds (process running for 14.707)
 Hibernate: 
     select
         u1_0."id",
@@ -653,14 +651,518 @@ Hibernate:
         ("created_at", "email", "full_name", "password", "profile_image_url", "role", "updated_at", "id") 
     values
         (?, ?, ?, ?, ?, ?, ?, default)
+Hibernate: 
+    select
+        b1_0."id",
+        b1_0."amount",
+        b1_0."created_at",
+        b1_0."general_category",
+        b1_0."month",
+        b1_0."updated_at",
+        b1_0."user_id" 
+    from
+        "budgets" b1_0
+Hibernate: 
+    select
+        e1_0."id",
+        e1_0."amount",
+        e1_0."category",
+        e1_0."created_at",
+        e1_0."date",
+        e1_0."description",
+        e1_0."general_category",
+        e1_0."icon",
+        e1_0."updated_at",
+        e1_0."user_id" 
+    from
+        "expense" e1_0
+Hibernate: 
+    select
+        i1_0."id",
+        i1_0."amount",
+        i1_0."created_at",
+        i1_0."date",
+        i1_0."icon",
+        i1_0."source",
+        i1_0."updated_at",
+        i1_0."user_id" 
+    from
+        "income" i1_0
+Hibernate: 
+    select
+        u1_0."id",
+        u1_0."created_at",
+        u1_0."email",
+        u1_0."full_name",
+        u1_0."password",
+        u1_0."profile_image_url",
+        u1_0."role",
+        u1_0."updated_at" 
+    from
+        "users" u1_0
+Hibernate: 
+    delete 
+    from
+        "users" 
+    where
+        "id"=?
+Hibernate: 
+    insert 
+    into
+        "users"
+        ("created_at", "email", "full_name", "password", "profile_image_url", "role", "updated_at", "id") 
+    values
+        (?, ?, ?, ?, ?, ?, ?, default)
+Hibernate: 
+    insert 
+    into
+        "income"
+        ("amount", "created_at", "date", "icon", "source", "updated_at", "user_id", "id") 
+    values
+        (?, ?, ?, ?, ?, ?, ?, default)
+Hibernate: 
+    insert 
+    into
+        "income"
+        ("amount", "created_at", "date", "icon", "source", "updated_at", "user_id", "id") 
+    values
+        (?, ?, ?, ?, ?, ?, ?, default)
+Hibernate: 
+    select
+        u1_0."id",
+        u1_0."created_at",
+        u1_0."email",
+        u1_0."full_name",
+        u1_0."password",
+        u1_0."profile_image_url",
+        u1_0."role",
+        u1_0."updated_at" 
+    from
+        "users" u1_0 
+    where
+        u1_0."id"=?
+Hibernate: 
+    select
+        i1_0."id",
+        i1_0."amount",
+        i1_0."created_at",
+        i1_0."date",
+        i1_0."icon",
+        i1_0."source",
+        i1_0."updated_at",
+        i1_0."user_id" 
+    from
+        "income" i1_0 
+    where
+        i1_0."user_id"=? 
+        and i1_0."date">=coalesce(?, i1_0."date") 
+        and i1_0."date"<=coalesce(?, i1_0."date") 
+        and (
+            coalesce(?, '')='' 
+            or lower(i1_0."source") like lower(('%'||?||'%')) escape ''
+        ) 
+    order by
+        i1_0."date" desc 
+    fetch
+        first ? rows only
 ]]></system-out>
-    <system-err><![CDATA[WARNING: A Java agent has been loaded dynamically (/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/net/bytebuddy/byte-buddy-agent/1.14.19/byte-buddy-agent-1.14.19.jar)
-WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
-WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
-WARNING: Dynamic loading of agents will be disallowed by default in a future release
-]]></system-err>
   </testcase>
-  <testcase name="register_ShouldReturn201_WhenRegistrationIsSuccessful" classname="com.example.expensetracker.unit.controller.AuthControllerTest" time="0.13"/>
-  <testcase name="login_ShouldReturn400_WhenCredentialsAreInvalid" classname="com.example.expensetracker.unit.controller.AuthControllerTest" time="0.245"/>
-  <testcase name="register_ShouldReturn400_WhenEmailIsAlreadyTaken" classname="com.example.expensetracker.unit.controller.AuthControllerTest" time="0.127"/>
+  <testcase name="deleteIncome_ShouldDeleteIncome_WhenUserIsOwner" classname="com.example.expensetracker.integration.controller.IncomeControllerTest" time="0.142">
+    <system-out><![CDATA[Hibernate: 
+    select
+        b1_0."id",
+        b1_0."amount",
+        b1_0."created_at",
+        b1_0."general_category",
+        b1_0."month",
+        b1_0."updated_at",
+        b1_0."user_id" 
+    from
+        "budgets" b1_0
+Hibernate: 
+    select
+        e1_0."id",
+        e1_0."amount",
+        e1_0."category",
+        e1_0."created_at",
+        e1_0."date",
+        e1_0."description",
+        e1_0."general_category",
+        e1_0."icon",
+        e1_0."updated_at",
+        e1_0."user_id" 
+    from
+        "expense" e1_0
+Hibernate: 
+    select
+        i1_0."id",
+        i1_0."amount",
+        i1_0."created_at",
+        i1_0."date",
+        i1_0."icon",
+        i1_0."source",
+        i1_0."updated_at",
+        i1_0."user_id" 
+    from
+        "income" i1_0
+Hibernate: 
+    delete 
+    from
+        "income" 
+    where
+        "id"=?
+Hibernate: 
+    delete 
+    from
+        "income" 
+    where
+        "id"=?
+Hibernate: 
+    select
+        u1_0."id",
+        u1_0."created_at",
+        u1_0."email",
+        u1_0."full_name",
+        u1_0."password",
+        u1_0."profile_image_url",
+        u1_0."role",
+        u1_0."updated_at" 
+    from
+        "users" u1_0
+Hibernate: 
+    delete 
+    from
+        "users" 
+    where
+        "id"=?
+Hibernate: 
+    insert 
+    into
+        "users"
+        ("created_at", "email", "full_name", "password", "profile_image_url", "role", "updated_at", "id") 
+    values
+        (?, ?, ?, ?, ?, ?, ?, default)
+Hibernate: 
+    insert 
+    into
+        "income"
+        ("amount", "created_at", "date", "icon", "source", "updated_at", "user_id", "id") 
+    values
+        (?, ?, ?, ?, ?, ?, ?, default)
+Hibernate: 
+    select
+        u1_0."id",
+        u1_0."created_at",
+        u1_0."email",
+        u1_0."full_name",
+        u1_0."password",
+        u1_0."profile_image_url",
+        u1_0."role",
+        u1_0."updated_at" 
+    from
+        "users" u1_0 
+    where
+        u1_0."id"=?
+Hibernate: 
+    select
+        i1_0."id",
+        i1_0."amount",
+        i1_0."created_at",
+        i1_0."date",
+        i1_0."icon",
+        i1_0."source",
+        i1_0."updated_at",
+        i1_0."user_id" 
+    from
+        "income" i1_0 
+    where
+        i1_0."id"=?
+Hibernate: 
+    delete 
+    from
+        "income" 
+    where
+        "id"=?
+]]></system-out>
+  </testcase>
+  <testcase name="addIncome_ShouldReturn401_WhenUserIsNotAuthenticated" classname="com.example.expensetracker.integration.controller.IncomeControllerTest" time="0.135">
+    <system-out><![CDATA[Hibernate: 
+    select
+        b1_0."id",
+        b1_0."amount",
+        b1_0."created_at",
+        b1_0."general_category",
+        b1_0."month",
+        b1_0."updated_at",
+        b1_0."user_id" 
+    from
+        "budgets" b1_0
+Hibernate: 
+    select
+        e1_0."id",
+        e1_0."amount",
+        e1_0."category",
+        e1_0."created_at",
+        e1_0."date",
+        e1_0."description",
+        e1_0."general_category",
+        e1_0."icon",
+        e1_0."updated_at",
+        e1_0."user_id" 
+    from
+        "expense" e1_0
+Hibernate: 
+    select
+        i1_0."id",
+        i1_0."amount",
+        i1_0."created_at",
+        i1_0."date",
+        i1_0."icon",
+        i1_0."source",
+        i1_0."updated_at",
+        i1_0."user_id" 
+    from
+        "income" i1_0
+Hibernate: 
+    select
+        u1_0."id",
+        u1_0."created_at",
+        u1_0."email",
+        u1_0."full_name",
+        u1_0."password",
+        u1_0."profile_image_url",
+        u1_0."role",
+        u1_0."updated_at" 
+    from
+        "users" u1_0
+Hibernate: 
+    delete 
+    from
+        "users" 
+    where
+        "id"=?
+Hibernate: 
+    insert 
+    into
+        "users"
+        ("created_at", "email", "full_name", "password", "profile_image_url", "role", "updated_at", "id") 
+    values
+        (?, ?, ?, ?, ?, ?, ?, default)
+]]></system-out>
+  </testcase>
+  <testcase name="getIncomes_ShouldFilterBySource_WhenSourceIsProvided" classname="com.example.expensetracker.integration.controller.IncomeControllerTest" time="0.145">
+    <system-out><![CDATA[Hibernate: 
+    select
+        b1_0."id",
+        b1_0."amount",
+        b1_0."created_at",
+        b1_0."general_category",
+        b1_0."month",
+        b1_0."updated_at",
+        b1_0."user_id" 
+    from
+        "budgets" b1_0
+Hibernate: 
+    select
+        e1_0."id",
+        e1_0."amount",
+        e1_0."category",
+        e1_0."created_at",
+        e1_0."date",
+        e1_0."description",
+        e1_0."general_category",
+        e1_0."icon",
+        e1_0."updated_at",
+        e1_0."user_id" 
+    from
+        "expense" e1_0
+Hibernate: 
+    select
+        i1_0."id",
+        i1_0."amount",
+        i1_0."created_at",
+        i1_0."date",
+        i1_0."icon",
+        i1_0."source",
+        i1_0."updated_at",
+        i1_0."user_id" 
+    from
+        "income" i1_0
+Hibernate: 
+    select
+        u1_0."id",
+        u1_0."created_at",
+        u1_0."email",
+        u1_0."full_name",
+        u1_0."password",
+        u1_0."profile_image_url",
+        u1_0."role",
+        u1_0."updated_at" 
+    from
+        "users" u1_0
+Hibernate: 
+    delete 
+    from
+        "users" 
+    where
+        "id"=?
+Hibernate: 
+    insert 
+    into
+        "users"
+        ("created_at", "email", "full_name", "password", "profile_image_url", "role", "updated_at", "id") 
+    values
+        (?, ?, ?, ?, ?, ?, ?, default)
+Hibernate: 
+    insert 
+    into
+        "income"
+        ("amount", "created_at", "date", "icon", "source", "updated_at", "user_id", "id") 
+    values
+        (?, ?, ?, ?, ?, ?, ?, default)
+Hibernate: 
+    insert 
+    into
+        "income"
+        ("amount", "created_at", "date", "icon", "source", "updated_at", "user_id", "id") 
+    values
+        (?, ?, ?, ?, ?, ?, ?, default)
+Hibernate: 
+    select
+        u1_0."id",
+        u1_0."created_at",
+        u1_0."email",
+        u1_0."full_name",
+        u1_0."password",
+        u1_0."profile_image_url",
+        u1_0."role",
+        u1_0."updated_at" 
+    from
+        "users" u1_0 
+    where
+        u1_0."id"=?
+Hibernate: 
+    select
+        i1_0."id",
+        i1_0."amount",
+        i1_0."created_at",
+        i1_0."date",
+        i1_0."icon",
+        i1_0."source",
+        i1_0."updated_at",
+        i1_0."user_id" 
+    from
+        "income" i1_0 
+    where
+        i1_0."user_id"=? 
+        and i1_0."date">=coalesce(?, i1_0."date") 
+        and i1_0."date"<=coalesce(?, i1_0."date") 
+        and (
+            coalesce(?, '')='' 
+            or lower(i1_0."source") like lower(('%'||?||'%')) escape ''
+        ) 
+    order by
+        i1_0."date" desc 
+    fetch
+        first ? rows only
+]]></system-out>
+  </testcase>
+  <testcase name="addIncome_ShouldCreateIncome_WhenRequestIsValid" classname="com.example.expensetracker.integration.controller.IncomeControllerTest" time="0.176">
+    <system-out><![CDATA[Hibernate: 
+    select
+        b1_0."id",
+        b1_0."amount",
+        b1_0."created_at",
+        b1_0."general_category",
+        b1_0."month",
+        b1_0."updated_at",
+        b1_0."user_id" 
+    from
+        "budgets" b1_0
+Hibernate: 
+    select
+        e1_0."id",
+        e1_0."amount",
+        e1_0."category",
+        e1_0."created_at",
+        e1_0."date",
+        e1_0."description",
+        e1_0."general_category",
+        e1_0."icon",
+        e1_0."updated_at",
+        e1_0."user_id" 
+    from
+        "expense" e1_0
+Hibernate: 
+    select
+        i1_0."id",
+        i1_0."amount",
+        i1_0."created_at",
+        i1_0."date",
+        i1_0."icon",
+        i1_0."source",
+        i1_0."updated_at",
+        i1_0."user_id" 
+    from
+        "income" i1_0
+Hibernate: 
+    delete 
+    from
+        "income" 
+    where
+        "id"=?
+Hibernate: 
+    delete 
+    from
+        "income" 
+    where
+        "id"=?
+Hibernate: 
+    select
+        u1_0."id",
+        u1_0."created_at",
+        u1_0."email",
+        u1_0."full_name",
+        u1_0."password",
+        u1_0."profile_image_url",
+        u1_0."role",
+        u1_0."updated_at" 
+    from
+        "users" u1_0
+Hibernate: 
+    delete 
+    from
+        "users" 
+    where
+        "id"=?
+Hibernate: 
+    insert 
+    into
+        "users"
+        ("created_at", "email", "full_name", "password", "profile_image_url", "role", "updated_at", "id") 
+    values
+        (?, ?, ?, ?, ?, ?, ?, default)
+Hibernate: 
+    select
+        u1_0."id",
+        u1_0."created_at",
+        u1_0."email",
+        u1_0."full_name",
+        u1_0."password",
+        u1_0."profile_image_url",
+        u1_0."role",
+        u1_0."updated_at" 
+    from
+        "users" u1_0 
+    where
+        u1_0."id"=?
+Hibernate: 
+    insert 
+    into
+        "income"
+        ("amount", "created_at", "date", "icon", "source", "updated_at", "user_id", "id") 
+    values
+        (?, ?, ?, ?, ?, ?, ?, default)
+]]></system-out>
+  </testcase>
 </testsuite>

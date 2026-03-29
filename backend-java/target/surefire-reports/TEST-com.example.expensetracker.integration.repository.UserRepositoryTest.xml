@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.example.expensetracker.unit.controller.AuthControllerTest" time="11.428" tests="4" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.example.expensetracker.integration.repository.UserRepositoryTest" time="0.559" tests="5" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="21"/>
     <property name="sun.jnu.encoding" value="UTF-8"/>
@@ -67,9 +67,9 @@
     <property name="java.class.version" value="65.0"/>
     <property name="LOGGED_APPLICATION_NAME" value="[expense-tracker-backend] "/>
   </properties>
-  <testcase name="login_ShouldReturn201_WhenCredentialsAreValid" classname="com.example.expensetracker.unit.controller.AuthControllerTest" time="0.454">
-    <system-out><![CDATA[21:40:03.806 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.example.expensetracker.unit.controller.AuthControllerTest]: AuthControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-21:40:03.925 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.example.expensetracker.ExpenseTrackerApplication for test class com.example.expensetracker.unit.controller.AuthControllerTest
+  <testcase name="delete_ShouldRemoveUser_WhenUserExists" classname="com.example.expensetracker.integration.repository.UserRepositoryTest" time="0.042">
+    <system-out><![CDATA[2026-03-29T21:40:15.857+03:00  INFO 67593 --- [expense-tracker-backend] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.example.expensetracker.integration.repository.UserRepositoryTest]: UserRepositoryTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-03-29T21:40:15.873+03:00  INFO 67593 --- [expense-tracker-backend] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.example.expensetracker.ExpenseTrackerApplication for test class com.example.expensetracker.integration.repository.UserRepositoryTest
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -80,31 +80,18 @@
 
  :: Spring Boot ::                (v3.3.5)
 
-2026-03-29T21:40:04.306+03:00  INFO 67593 --- [expense-tracker-backend] [           main] c.e.e.u.controller.AuthControllerTest    : Starting AuthControllerTest using Java 21.0.9 with PID 67593 (started by mac in /Users/mac/Desktop/geellya_tracker_java_ts/backend-java)
-2026-03-29T21:40:04.307+03:00  INFO 67593 --- [expense-tracker-backend] [           main] c.e.e.u.controller.AuthControllerTest    : The following 1 profile is active: "test"
-2026-03-29T21:40:05.219+03:00  INFO 67593 --- [expense-tracker-backend] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
-2026-03-29T21:40:05.222+03:00  INFO 67593 --- [expense-tracker-backend] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2026-03-29T21:40:05.453+03:00  INFO 67593 --- [expense-tracker-backend] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 222 ms. Found 8 JPA repository interfaces.
-2026-03-29T21:40:05.485+03:00  INFO 67593 --- [expense-tracker-backend] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
-2026-03-29T21:40:05.487+03:00  INFO 67593 --- [expense-tracker-backend] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-2026-03-29T21:40:05.514+03:00  INFO 67593 --- [expense-tracker-backend] [           main] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.expensetracker.repository.BudgetRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2026-03-29T21:40:05.515+03:00  INFO 67593 --- [expense-tracker-backend] [           main] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.expensetracker.repository.CategoryRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2026-03-29T21:40:05.515+03:00  INFO 67593 --- [expense-tracker-backend] [           main] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.expensetracker.repository.CurrencyRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2026-03-29T21:40:05.516+03:00  INFO 67593 --- [expense-tracker-backend] [           main] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.expensetracker.repository.ExpenseRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2026-03-29T21:40:05.516+03:00  INFO 67593 --- [expense-tracker-backend] [           main] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.expensetracker.repository.IncomeRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2026-03-29T21:40:05.516+03:00  INFO 67593 --- [expense-tracker-backend] [           main] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.expensetracker.repository.NewsRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2026-03-29T21:40:05.517+03:00  INFO 67593 --- [expense-tracker-backend] [           main] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.expensetracker.repository.NotificationRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2026-03-29T21:40:05.517+03:00  INFO 67593 --- [expense-tracker-backend] [           main] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.expensetracker.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2026-03-29T21:40:05.518+03:00  INFO 67593 --- [expense-tracker-backend] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 12 ms. Found 0 Redis repository interfaces.
-2026-03-29T21:40:07.328+03:00  INFO 67593 --- [expense-tracker-backend] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2026-03-29T21:40:07.491+03:00  INFO 67593 --- [expense-tracker-backend] [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
-2026-03-29T21:40:07.577+03:00  INFO 67593 --- [expense-tracker-backend] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2026-03-29T21:40:07.868+03:00  INFO 67593 --- [expense-tracker-backend] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2026-03-29T21:40:07.941+03:00  INFO 67593 --- [expense-tracker-backend] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2026-03-29T21:40:08.544+03:00  INFO 67593 --- [expense-tracker-backend] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=SA
-2026-03-29T21:40:08.546+03:00  INFO 67593 --- [expense-tracker-backend] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2026-03-29T21:40:08.595+03:00  WARN 67593 --- [expense-tracker-backend] [           main] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2026-03-29T21:40:09.985+03:00  INFO 67593 --- [expense-tracker-backend] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-03-29T21:40:15.894+03:00  INFO 67593 --- [expense-tracker-backend] [           main] c.e.e.i.repository.UserRepositoryTest    : Starting UserRepositoryTest using Java 21.0.9 with PID 67593 (started by mac in /Users/mac/Desktop/geellya_tracker_java_ts/backend-java)
+2026-03-29T21:40:15.894+03:00  INFO 67593 --- [expense-tracker-backend] [           main] c.e.e.i.repository.UserRepositoryTest    : The following 1 profile is active: "test"
+2026-03-29T21:40:15.967+03:00  INFO 67593 --- [expense-tracker-backend] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-03-29T21:40:15.967+03:00  INFO 67593 --- [expense-tracker-backend] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-03-29T21:40:15.978+03:00  INFO 67593 --- [expense-tracker-backend] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 10 ms. Found 8 JPA repository interfaces.
+2026-03-29T21:40:15.990+03:00  INFO 67593 --- [expense-tracker-backend] [           main] beddedDataSourceBeanFactoryPostProcessor : Replacing 'dataSource' DataSource bean with embedded version
+2026-03-29T21:40:16.011+03:00  INFO 67593 --- [expense-tracker-backend] [           main] o.s.j.d.e.EmbeddedDatabaseFactory        : Starting embedded database: url='jdbc:h2:mem:24821ac7-1bf2-4e95-8be6-fcec0738f2d7;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false', username='sa'
+2026-03-29T21:40:16.032+03:00  INFO 67593 --- [expense-tracker-backend] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-03-29T21:40:16.034+03:00  INFO 67593 --- [expense-tracker-backend] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-03-29T21:40:16.040+03:00  INFO 67593 --- [expense-tracker-backend] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-03-29T21:40:16.041+03:00  WARN 67593 --- [expense-tracker-backend] [           main] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-03-29T21:40:16.176+03:00  INFO 67593 --- [expense-tracker-backend] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
 Hibernate: 
     drop table if exists "budgets" cascade 
 Hibernate: 
@@ -200,7 +187,7 @@ Hibernate:
         "type" varchar(255) not null,
         primary key ("id")
     )
-2026-03-29T21:40:10.035+03:00  WARN 67593 --- [expense-tracker-backend] [           main] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "
+2026-03-29T21:40:16.185+03:00  WARN 67593 --- [expense-tracker-backend] [           main] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "
     create table "news" (
         "author_id" bigint not null,
         "created_at" timestamp(6) with time zone not null,
@@ -273,8 +260,8 @@ Domain "text" not found;]
 	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:225) ~[spring-test-6.1.14.jar:6.1.14]
 	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:152) ~[spring-test-6.1.14.jar:6.1.14]
 	at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:130) ~[spring-test-6.1.14.jar:6.1.14]
-	at org.springframework.test.context.web.ServletTestExecutionListener.setUpRequestContextIfNecessary(ServletTestExecutionListener.java:191) ~[spring-test-6.1.14.jar:6.1.14]
-	at org.springframework.test.context.web.ServletTestExecutionListener.prepareTestInstance(ServletTestExecutionListener.java:130) ~[spring-test-6.1.14.jar:6.1.14]
+	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.injectDependencies(DependencyInjectionTestExecutionListener.java:142) ~[spring-test-6.1.14.jar:6.1.14]
+	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.prepareTestInstance(DependencyInjectionTestExecutionListener.java:98) ~[spring-test-6.1.14.jar:6.1.14]
 	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:260) ~[spring-test-6.1.14.jar:6.1.14]
 	at org.springframework.test.context.junit.jupiter.SpringExtension.postProcessTestInstance(SpringExtension.java:163) ~[spring-test-6.1.14.jar:6.1.14]
 	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$invokeTestInstancePostProcessors$10(ClassBasedTestDescriptor.java:378) ~[junit-jupiter-engine-5.10.5.jar:5.10.5]
@@ -378,8 +365,6 @@ Domain "text" not found; SQL statement:
 	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1166) ~[h2-2.2.224.jar:2.2.224]
 	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:245) ~[h2-2.2.224.jar:2.2.224]
 	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:231) ~[h2-2.2.224.jar:2.2.224]
-	at com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:94) ~[HikariCP-5.1.0.jar:na]
-	at com.zaxxer.hikari.pool.HikariProxyStatement.execute(HikariProxyStatement.java) ~[HikariCP-5.1.0.jar:na]
 	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:80) ~[hibernate-core-6.5.3.Final.jar:6.5.3.Final]
 	... 117 common frames omitted
 
@@ -395,7 +380,7 @@ Hibernate:
         "type" varchar(255) not null,
         primary key ("id")
     )
-2026-03-29T21:40:10.047+03:00  WARN 67593 --- [expense-tracker-backend] [           main] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "
+2026-03-29T21:40:16.189+03:00  WARN 67593 --- [expense-tracker-backend] [           main] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "
     create table "notifications" (
         "read" boolean not null,
         "created_at" timestamp(6) with time zone not null,
@@ -468,8 +453,8 @@ Domain "text" not found;]
 	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:225) ~[spring-test-6.1.14.jar:6.1.14]
 	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:152) ~[spring-test-6.1.14.jar:6.1.14]
 	at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:130) ~[spring-test-6.1.14.jar:6.1.14]
-	at org.springframework.test.context.web.ServletTestExecutionListener.setUpRequestContextIfNecessary(ServletTestExecutionListener.java:191) ~[spring-test-6.1.14.jar:6.1.14]
-	at org.springframework.test.context.web.ServletTestExecutionListener.prepareTestInstance(ServletTestExecutionListener.java:130) ~[spring-test-6.1.14.jar:6.1.14]
+	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.injectDependencies(DependencyInjectionTestExecutionListener.java:142) ~[spring-test-6.1.14.jar:6.1.14]
+	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.prepareTestInstance(DependencyInjectionTestExecutionListener.java:98) ~[spring-test-6.1.14.jar:6.1.14]
 	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:260) ~[spring-test-6.1.14.jar:6.1.14]
 	at org.springframework.test.context.junit.jupiter.SpringExtension.postProcessTestInstance(SpringExtension.java:163) ~[spring-test-6.1.14.jar:6.1.14]
 	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$invokeTestInstancePostProcessors$10(ClassBasedTestDescriptor.java:378) ~[junit-jupiter-engine-5.10.5.jar:5.10.5]
@@ -573,8 +558,6 @@ Domain "text" not found; SQL statement:
 	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1166) ~[h2-2.2.224.jar:2.2.224]
 	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:245) ~[h2-2.2.224.jar:2.2.224]
 	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:231) ~[h2-2.2.224.jar:2.2.224]
-	at com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:94) ~[HikariCP-5.1.0.jar:na]
-	at com.zaxxer.hikari.pool.HikariProxyStatement.execute(HikariProxyStatement.java) ~[HikariCP-5.1.0.jar:na]
 	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:80) ~[hibernate-core-6.5.3.Final.jar:6.5.3.Final]
 	... 117 common frames omitted
 
@@ -625,13 +608,68 @@ Hibernate:
        add constraint "FKk10cry0ngw776qndbru23piqi" 
        foreign key ("user_id") 
        references "users"
-2026-03-29T21:40:10.086+03:00  INFO 67593 --- [expense-tracker-backend] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2026-03-29T21:40:10.464+03:00  INFO 67593 --- [expense-tracker-backend] [           main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
-2026-03-29T21:40:12.625+03:00  WARN 67593 --- [expense-tracker-backend] [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2026-03-29T21:40:13.693+03:00  INFO 67593 --- [expense-tracker-backend] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
-2026-03-29T21:40:13.693+03:00  INFO 67593 --- [expense-tracker-backend] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2026-03-29T21:40:13.694+03:00  INFO 67593 --- [expense-tracker-backend] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
-2026-03-29T21:40:13.712+03:00  INFO 67593 --- [expense-tracker-backend] [           main] c.e.e.u.controller.AuthControllerTest    : Started AuthControllerTest in 9.65 seconds (process running for 10.981)
+2026-03-29T21:40:16.201+03:00  INFO 67593 --- [expense-tracker-backend] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-03-29T21:40:16.336+03:00  INFO 67593 --- [expense-tracker-backend] [           main] c.e.e.i.repository.UserRepositoryTest    : Started UserRepositoryTest in 0.461 seconds (process running for 13.605)
+Hibernate: 
+    insert 
+    into
+        "users"
+        ("created_at", "email", "full_name", "password", "profile_image_url", "role", "updated_at", "id") 
+    values
+        (?, ?, ?, ?, ?, ?, ?, default)
+]]></system-out>
+  </testcase>
+  <testcase name="save_ShouldPersistUser_WhenDataIsValid" classname="com.example.expensetracker.integration.repository.UserRepositoryTest" time="0.005">
+    <system-out><![CDATA[Hibernate: 
+    insert 
+    into
+        "users"
+        ("created_at", "email", "full_name", "password", "profile_image_url", "role", "updated_at", "id") 
+    values
+        (?, ?, ?, ?, ?, ?, ?, default)
+Hibernate: 
+    insert 
+    into
+        "users"
+        ("created_at", "email", "full_name", "password", "profile_image_url", "role", "updated_at", "id") 
+    values
+        (?, ?, ?, ?, ?, ?, ?, default)
+]]></system-out>
+  </testcase>
+  <testcase name="existsByRole_ShouldReturnTrue_WhenAdminExists" classname="com.example.expensetracker.integration.repository.UserRepositoryTest" time="0.011">
+    <system-out><![CDATA[Hibernate: 
+    insert 
+    into
+        "users"
+        ("created_at", "email", "full_name", "password", "profile_image_url", "role", "updated_at", "id") 
+    values
+        (?, ?, ?, ?, ?, ?, ?, default)
+Hibernate: 
+    insert 
+    into
+        "users"
+        ("created_at", "email", "full_name", "password", "profile_image_url", "role", "updated_at", "id") 
+    values
+        (?, ?, ?, ?, ?, ?, ?, default)
+Hibernate: 
+    select
+        u1_0."id" 
+    from
+        "users" u1_0 
+    where
+        u1_0."role"=? 
+    fetch
+        first ? rows only
+]]></system-out>
+  </testcase>
+  <testcase name="findByEmail_ShouldReturnEmpty_WhenEmailDoesNotExist" classname="com.example.expensetracker.integration.repository.UserRepositoryTest" time="0.006">
+    <system-out><![CDATA[Hibernate: 
+    insert 
+    into
+        "users"
+        ("created_at", "email", "full_name", "password", "profile_image_url", "role", "updated_at", "id") 
+    values
+        (?, ?, ?, ?, ?, ?, ?, default)
 Hibernate: 
     select
         u1_0."id",
@@ -646,21 +684,30 @@ Hibernate:
         "users" u1_0 
     where
         u1_0."email"=?
-Hibernate: 
+]]></system-out>
+  </testcase>
+  <testcase name="findByEmail_ShouldReturnUser_WhenEmailExists" classname="com.example.expensetracker.integration.repository.UserRepositoryTest" time="0.006">
+    <system-out><![CDATA[Hibernate: 
     insert 
     into
         "users"
         ("created_at", "email", "full_name", "password", "profile_image_url", "role", "updated_at", "id") 
     values
         (?, ?, ?, ?, ?, ?, ?, default)
+Hibernate: 
+    select
+        u1_0."id",
+        u1_0."created_at",
+        u1_0."email",
+        u1_0."full_name",
+        u1_0."password",
+        u1_0."profile_image_url",
+        u1_0."role",
+        u1_0."updated_at" 
+    from
+        "users" u1_0 
+    where
+        u1_0."email"=?
 ]]></system-out>
-    <system-err><![CDATA[WARNING: A Java agent has been loaded dynamically (/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/.m2repo/net/bytebuddy/byte-buddy-agent/1.14.19/byte-buddy-agent-1.14.19.jar)
-WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
-WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
-WARNING: Dynamic loading of agents will be disallowed by default in a future release
-]]></system-err>
   </testcase>
-  <testcase name="register_ShouldReturn201_WhenRegistrationIsSuccessful" classname="com.example.expensetracker.unit.controller.AuthControllerTest" time="0.13"/>
-  <testcase name="login_ShouldReturn400_WhenCredentialsAreInvalid" classname="com.example.expensetracker.unit.controller.AuthControllerTest" time="0.245"/>
-  <testcase name="register_ShouldReturn400_WhenEmailIsAlreadyTaken" classname="com.example.expensetracker.unit.controller.AuthControllerTest" time="0.127"/>
 </testsuite>
