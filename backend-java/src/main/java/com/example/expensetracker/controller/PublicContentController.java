@@ -38,6 +38,7 @@ public class PublicContentController {
 
     @GetMapping("/currencies")
     public ResponseEntity<?> getCurrentCurrencies() {
+        System.out.println("!!! КОНТРОЛЛЕР ВЫЗВАН !!!");
         log.info(">>> КОНТРОЛЛЕР: запрос курсов валют <<<");
         try {
             Map<String, Object> payload = currencyRateService.getCurrentRatesCached();

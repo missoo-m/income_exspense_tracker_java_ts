@@ -33,6 +33,7 @@ public class CurrencyRateService {
 
     @Cacheable(value = CURRENCY_RATES_CACHE, key = "'" + NBRB_CACHE_KEY + "'", sync = true)
     public Map<String, Object> getCurrentRatesCached() {
+        System.out.println("!!! СЕРВИС ВЫЗВАН (НЕ ИЗ КЭША) !!!");
         log.info(">>> ВЫЗОВ API (НЕ ИЗ КЭША) - ЗАГРУЖАЮ СВЕЖИЕ ДАННЫЕ <<<");
 
         try {
