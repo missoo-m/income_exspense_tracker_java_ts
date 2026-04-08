@@ -1,5 +1,6 @@
 package com.example.expensetracker.controller;
 
+import com.example.expensetracker.dto.CurrencyRatesDto;
 import com.example.expensetracker.model.News;
 import com.example.expensetracker.repository.NewsRepository;
 import com.example.expensetracker.service.CurrencyRateService;
@@ -37,19 +38,18 @@ public class PublicContentController {
     }
 
     @GetMapping("/currencies")
-    public ResponseEntity<?> getCurrentCurrencies() {
-        System.out.println("!!! КОНТРОЛЛЕР ВЫЗВАН !!!");
-        log.info(">>> КОНТРОЛЛЕР: запрос курсов валют <<<");
-        try {
-            Map<String, Object> payload = currencyRateService.getCurrentRatesCached();
-            log.info(">>> КОНТРОЛЛЕР: данные получены, отправляем ответ <<<");
-            return ResponseEntity.ok(payload);
-        } catch (Exception ex) {
-            log.error(">>> КОНТРОЛЛЕР: ошибка - {}", ex.getMessage());
-            return ResponseEntity.status(500).body(Map.of(
-                    "message", "Не удалось загрузить курсы валют из НБРБ.",
-                    "error", ex.getMessage()
-            ));
-        }
+public ResponseEntity<?> getCurrentCurrencies() {
+    log.info(">>> КОНТРОЛЛЕР: запрос курсов валют <<<");
+    try {
+        CurrencyRatesDto payload = currencyRateService.getCurrentRatesCached();
+        log.info(">>> КОНТРОЛЛЕР: данные получены, отправляем ответ <<<");
+        return ResponseEntity.ok(payload);
+    } catch (Exception ex) {
+        log.error(">>> КОНТРОЛЛЕР: ошибка - {}", ex.getMessage());
+        return ResponseEntity.status(500).body(Map.of(
+                "message", "Не удалось загрузить курсы валют из НБРБ.",
+                "error", ex.getMessage()
+        ));
     }
+}
 }

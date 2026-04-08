@@ -1,5 +1,6 @@
 package com.example.expensetracker.unit.service;
 
+import com.example.expensetracker.dto.CurrencyRatesDto;
 import com.example.expensetracker.service.CurrencyRateService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,8 +13,6 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
-
-import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.eq;
@@ -52,12 +51,16 @@ class CurrencyRateServiceTest {
         when(restTemplate.getForObject(eq("https://api.nbrb.by/exrates/rates?periodicity=0"), eq(CurrencyRateService.NbrbRate[].class)))
                 .thenReturn(apiResponse);
 
-        Map<String, Object> result = currencyRateService.getCurrentRatesCached();
+        CurrencyRatesDto result = currencyRateService.getCurrentRatesCached();
 
         assertThat(result).isNotNull();
-        assertThat(result.get("baseCurrency")).isEqualTo("BYN");
-        assertThat(result.get("source")).isEqualTo("NBRB");
-        assertThat(result.get("rates")).isNotNull();
+        assertThat(result.getBaseCurrency()).isEqualTo("BYN");
+        assertThat(result.getSource()).isEqualTo("NBRB");
+        assertThat(result.getRates()).isNotNull();
+        assertThat(result.getRates()).containsKey("USD");
+        assertThat(result.getRates()).containsKey("EUR");
+        assertThat(result.getRates()).containsKey("RUB");
+        assertThat(result.getRates()).containsKey("YEN");
     }
 
     @Test
@@ -68,10 +71,13 @@ class CurrencyRateServiceTest {
         when(restTemplate.getForObject(eq("https://api.nbrb.by/exrates/rates?periodicity=0"), eq(CurrencyRateService.NbrbRate[].class)))
                 .thenReturn(apiResponse);
 
-        Map<String, Object> firstCall = currencyRateService.getCurrentRatesCached();
-        Map<String, Object> secondCall = currencyRateService.getCurrentRatesCached();
+        CurrencyRatesDto firstCall = currencyRateService.getCurrentRatesCached();
+        CurrencyRatesDto secondCall = currencyRateService.getCurrentRatesCached();
 
-        assertThat(firstCall).isEqualTo(secondCall);
+        assertThat(firstCall.getBaseCurrency()).isEqualTo(secondCall.getBaseCurrency());
+        assertThat(firstCall.getRates()).isEqualTo(secondCall.getRates());
+        assertThat(firstCall.getSource()).isEqualTo(secondCall.getSource());
+        
         verify(restTemplate, times(1))
                 .getForObject(eq("https://api.nbrb.by/exrates/rates?periodicity=0"), eq(CurrencyRateService.NbrbRate[].class));
     }

@@ -9,4 +9,5 @@ com/example/expensetracker/unit/service/JwtServiceTest.class
 com/example/expensetracker/integration/controller/IncomeControllerTest.class
 com/example/expensetracker/unit/controller/AuthControllerTest.class
 com/example/expensetracker/config/TestcontainersConfig.class
+com/example/expensetracker/unit/service/CurrencyRateServiceTest$TestCacheConfig.class
 com/example/expensetracker/integration/controller/BudgetControllerTest.class

@@ -1,6 +1,5 @@
 com/example/expensetracker/controller/IncomeController$IncomeRequest.class
 com/example/expensetracker/config/SecurityConfig.class
-com/example/expensetracker/controller/PublicContentController$NbrbRate.class
 com/example/expensetracker/controller/NotificationController.class
 com/example/expensetracker/model/Income.class
 com/example/expensetracker/model/News$NewsBuilder.class
@@ -46,6 +45,7 @@ com/example/expensetracker/model/User$Role.class
 com/example/expensetracker/controller/AdminController.class
 com/example/expensetracker/model/Category$CategoryBuilder.class
 com/example/expensetracker/repository/BudgetRepository.class
+com/example/expensetracker/dto/CurrencyRatesDto.class
 com/example/expensetracker/repository/NotificationRepository.class
 com/example/expensetracker/config/StartupDataLoader.class
 com/example/expensetracker/service/UserService.class

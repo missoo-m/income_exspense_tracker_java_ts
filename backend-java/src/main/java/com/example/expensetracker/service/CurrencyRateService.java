@@ -1,5 +1,6 @@
 package com.example.expensetracker.service;
 
+import com.example.expensetracker.dto.CurrencyRatesDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.Cacheable;
@@ -32,8 +33,7 @@ public class CurrencyRateService {
     ) {}
 
     @Cacheable(value = CURRENCY_RATES_CACHE, key = "'" + NBRB_CACHE_KEY + "'", sync = true)
-    public Map<String, Object> getCurrentRatesCached() {
-        System.out.println("!!! СЕРВИС ВЫЗВАН (НЕ ИЗ КЭША) !!!");
+    public CurrencyRatesDto getCurrentRatesCached() {
         log.info(">>> ВЫЗОВ API (НЕ ИЗ КЭША) - ЗАГРУЖАЮ СВЕЖИЕ ДАННЫЕ <<<");
 
         try {
@@ -54,11 +54,11 @@ public class CurrencyRateService {
                 }
             }
 
-            Map<String, Object> result = Map.of(
-                    "baseCurrency", "BYN",
-                    "rates", mappedRates,
-                    "date", Instant.now().toString(),
-                    "source", "NBRB"
+            CurrencyRatesDto result = new CurrencyRatesDto(
+                    "BYN",
+                    mappedRates,
+                    "NBRB",
+                    Instant.now().toString()
             );
             
             log.info(">>> ДАННЫЕ ЗАГРУЖЕНЫ И БУДУТ СОХРАНЕНЫ В КЭШ <<<");

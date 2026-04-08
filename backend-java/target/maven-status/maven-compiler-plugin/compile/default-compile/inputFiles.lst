@@ -13,6 +13,7 @@
 /Users/mac/Desktop/geellya_tracker_java_ts/backend-java/src/main/java/com/example/expensetracker/controller/IncomeController.java
 /Users/mac/Desktop/geellya_tracker_java_ts/backend-java/src/main/java/com/example/expensetracker/controller/NotificationController.java
 /Users/mac/Desktop/geellya_tracker_java_ts/backend-java/src/main/java/com/example/expensetracker/controller/PublicContentController.java
+/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/src/main/java/com/example/expensetracker/dto/CurrencyRatesDto.java
 /Users/mac/Desktop/geellya_tracker_java_ts/backend-java/src/main/java/com/example/expensetracker/model/Budget.java
 /Users/mac/Desktop/geellya_tracker_java_ts/backend-java/src/main/java/com/example/expensetracker/model/Category.java
 /Users/mac/Desktop/geellya_tracker_java_ts/backend-java/src/main/java/com/example/expensetracker/model/Currency.java
