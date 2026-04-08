@@ -15,6 +15,15 @@ import java.util.Map;
 public class CurrencyRateService {
 
     private static final Logger log = LoggerFactory.getLogger(CurrencyRateService.class);
+    public static final String CURRENCY_RATES_CACHE = "currencyRates";
+    private static final String NBRB_CACHE_KEY = "nbrb";
+    private static final String NBRB_RATES_URL = "https://api.nbrb.by/exrates/rates?periodicity=0";
+
+    private final RestTemplate restTemplate;
+
+    public CurrencyRateService(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
 
     public record NbrbRate(
             String Cur_Abbreviation,
@@ -22,15 +31,12 @@ public class CurrencyRateService {
             Integer Cur_Scale
     ) {}
 
-    @Cacheable(value = "currencyRates", key = "'nbrb'")
+    @Cacheable(value = CURRENCY_RATES_CACHE, key = "'" + NBRB_CACHE_KEY + "'", sync = true)
     public Map<String, Object> getCurrentRatesCached() {
         log.info(">>> ВЫЗОВ API (НЕ ИЗ КЭША) - ЗАГРУЖАЮ СВЕЖИЕ ДАННЫЕ <<<");
-        
-        RestTemplate restTemplate = new RestTemplate();
-        String url = "https://api.nbrb.by/exrates/rates?periodicity=0";
-        
+
         try {
-            NbrbRate[] rates = restTemplate.getForObject(url, NbrbRate[].class);
+            NbrbRate[] rates = restTemplate.getForObject(NBRB_RATES_URL, NbrbRate[].class);
 
             Map<String, Double> mappedRates = new HashMap<>();
             if (rates != null) {
