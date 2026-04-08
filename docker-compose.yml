@@ -1,6 +1,6 @@
 services:
   postgres:
-    image: postgres:latest
+    image: postgres:15-alpine  
     container_name: expense-postgres
     environment:
       POSTGRES_DB: expense_tracker
@@ -10,12 +10,24 @@ services:
       - "5432:5432"
     volumes:
       - pg-data:/var/lib/postgresql/data
+    healthcheck:  
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
 
   redis:
     image: redis:7-alpine
     container_name: expense-redis
     ports:
       - "6379:6379"
+    volumes:  
+      - redis-data:/data
+    healthcheck:  
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
 
   backend-java:
     build:
@@ -26,12 +38,14 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/expense_tracker
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: 1234
+      SPRING_DATA_REDIS_HOST: redis  
+      SPRING_DATA_REDIS_PORT: 6379  
       CLIENT_URL: http://localhost:5173
-      REDIS_HOST: redis
-      REDIS_PORT: 6379
     depends_on:
-      - postgres
-      - redis
+      postgres:
+        condition: service_healthy  
+      redis:
+        condition: service_healthy  
     ports:
       - "5001:5001"
 
@@ -39,7 +53,7 @@ services:
     build:
       context: ./frontend/expense-tracker
       dockerfile: Dockerfile
-    container_name: react_frontend
+    container_name: react-frontend
     ports:
       - "5173:5173"
     depends_on:
@@ -49,4 +63,6 @@ services:
 
 volumes:
   pg-data:
+    driver: local
+  redis-data:  
     driver: local
