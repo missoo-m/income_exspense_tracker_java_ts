@@ -3,16 +3,21 @@ package com.example.expensetracker.controller;
 import com.example.expensetracker.model.News;
 import com.example.expensetracker.repository.NewsRepository;
 import com.example.expensetracker.service.CurrencyRateService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import java.util.List;
 import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/public")
 public class PublicContentController {
+
+    private static final Logger log = LoggerFactory.getLogger(PublicContentController.class);
 
     private final NewsRepository newsRepository;
     private final CurrencyRateService currencyRateService;
@@ -21,13 +26,6 @@ public class PublicContentController {
         this.newsRepository = newsRepository;
         this.currencyRateService = currencyRateService;
     }
-
-    // DTO под ответ NBRB
-    public record NbrbRate(
-            String Cur_Abbreviation,
-            Double Cur_OfficialRate,
-            Integer Cur_Scale
-    ) {}
 
     @GetMapping("/news")
     public ResponseEntity<?> getPublicNews() {
@@ -40,10 +38,13 @@ public class PublicContentController {
 
     @GetMapping("/currencies")
     public ResponseEntity<?> getCurrentCurrencies() {
+        log.info(">>> КОНТРОЛЛЕР: запрос курсов валют <<<");
         try {
             Map<String, Object> payload = currencyRateService.getCurrentRatesCached();
+            log.info(">>> КОНТРОЛЛЕР: данные получены, отправляем ответ <<<");
             return ResponseEntity.ok(payload);
         } catch (Exception ex) {
+            log.error(">>> КОНТРОЛЛЕР: ошибка - {}", ex.getMessage());
             return ResponseEntity.status(500).body(Map.of(
                     "message", "Не удалось загрузить курсы валют из НБРБ.",
                     "error", ex.getMessage()
@@ -51,4 +52,3 @@ public class PublicContentController {
         }
     }
 }
-

@@ -31,13 +31,6 @@ jobs:
           cd backend-java
           mvn clean test
 
-      - name: Build frontend
-        run: |
-          cd frontend
-          npm ci
-          npm run build
-        continue-on-error: true
-
       - name: Upload test results
         uses: actions/upload-artifact@v4
         if: always()
