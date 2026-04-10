@@ -1,17 +1,17 @@
 services:
   postgres:
-    image: postgres:15-alpine  
+    image: postgres:15-alpine
     container_name: expense-postgres
     environment:
-      POSTGRES_DB: expense_tracker
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
       - "5432:5432"
     volumes:
       - pg-data:/var/lib/postgresql/data
-    healthcheck:  
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
       interval: 5s
       timeout: 5s
       retries: 10
@@ -21,9 +21,9 @@ services:
     container_name: expense-redis
     ports:
       - "6379:6379"
-    volumes:  
+    volumes:
       - redis-data:/data
-    healthcheck:  
+    healthcheck:
       test: ["CMD", "redis-cli", "ping"]
       interval: 5s
       timeout: 5s
@@ -35,17 +35,22 @@ services:
       dockerfile: Dockerfile
     container_name: java-backend
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/expense_tracker
-      SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: 1234
-      SPRING_DATA_REDIS_HOST: redis  
-      SPRING_DATA_REDIS_PORT: 6379  
-      CLIENT_URL: http://localhost:5173
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB}
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
+      SPRING_DATA_REDIS_HOST: ${REDIS_HOST}
+      SPRING_DATA_REDIS_PORT: ${REDIS_PORT}
+      CLIENT_URL: ${CLIENT_URL}
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
+      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET}
+      GITHUB_CLIENT_ID: ${GITHUB_CLIENT_ID}
+      GITHUB_CLIENT_SECRET: ${GITHUB_CLIENT_SECRET}
+      JWT_SECRET: ${JWT_SECRET}
     depends_on:
       postgres:
-        condition: service_healthy  
+        condition: service_healthy
       redis:
-        condition: service_healthy  
+        condition: service_healthy
     ports:
       - "5001:5001"
 
@@ -64,5 +69,5 @@ services:
 volumes:
   pg-data:
     driver: local
-  redis-data:  
+  redis-data:
     driver: local
