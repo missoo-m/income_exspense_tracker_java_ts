@@ -1,3 +1,4 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Fri Apr 10 12:31:23 MSK 2026
-maven-metadata-central.xml.lastUpdated=1775813483695
+#Fri Apr 10 12:21:01 MSK 2026
+maven-jar-plugin-3.4.1.jar>central=
+maven-jar-plugin-3.4.1.pom>central=
