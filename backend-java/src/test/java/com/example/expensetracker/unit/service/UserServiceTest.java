@@ -1,5 +1,6 @@
 package com.example.expensetracker.unit.service;
 
+import com.example.expensetracker.exception.BadRequestException;
 import com.example.expensetracker.model.User;
 import com.example.expensetracker.repository.UserRepository;
 import com.example.expensetracker.service.UserService;
@@ -77,7 +78,7 @@ class UserServiceTest {
         when(userRepository.findByEmail(email)).thenReturn(Optional.of(testUser));
 
         assertThatThrownBy(() -> userService.register("Имя", email, "pass", null, null))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(BadRequestException.class)
                 .hasMessage("Электронная почта уже используется");
 
         verify(userRepository).findByEmail(email);

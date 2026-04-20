@@ -1,6 +1,5 @@
 package com.example.expensetracker.controller;
 
-import com.example.expensetracker.exception.ResourceNotFoundException;
 import com.example.expensetracker.model.Notification;
 import com.example.expensetracker.model.User;
 import com.example.expensetracker.repository.NotificationRepository;
@@ -10,6 +9,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/notifications")
@@ -38,7 +38,7 @@ public class NotificationController {
                     notificationRepository.save(n);
                     return ResponseEntity.ok(n);
                 })
-                .orElseThrow(() -> new ResourceNotFoundException("Уведомление не найдено"));
+                .orElseGet(() -> ResponseEntity.status(404).body(Map.of("message", "Уведомление не найдено")));
     }
 }
 

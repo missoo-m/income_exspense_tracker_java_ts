@@ -2,8 +2,10 @@ package com.example.expensetracker.unit.controller;
 
 import com.example.expensetracker.config.PasswordConfig;
 import com.example.expensetracker.controller.AuthController;
+import com.example.expensetracker.model.RefreshToken;
 import com.example.expensetracker.model.User;
 import com.example.expensetracker.security.JwtService;
+import com.example.expensetracker.service.RefreshTokenService;
 import com.example.expensetracker.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -44,6 +46,9 @@ class AuthControllerTest {
     @MockBean
     private JwtService jwtService;
 
+    @MockBean
+    private RefreshTokenService refreshTokenService;
+
     @Autowired
     private ObjectMapper objectMapper;
 
@@ -70,7 +75,8 @@ class AuthControllerTest {
         );
 
         when(userService.register(any(), any(), any(), any(), any())).thenReturn(testUser);
-        when(jwtService.generateToken(any())).thenReturn("test-jwt-token");
+        when(jwtService.generateAccessToken(any())).thenReturn("test-jwt-token");
+        when(refreshTokenService.createForUser(any())).thenReturn(RefreshToken.builder().token("refresh-token").build());
 
         mockMvc.perform(post("/api/v1/auth/register")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -78,7 +84,8 @@ class AuthControllerTest {
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id").value(1L))
                 .andExpect(jsonPath("$.user.email").value("ivan@example.com"))
-                .andExpect(jsonPath("$.token").value("test-jwt-token"));
+                .andExpect(jsonPath("$.token").value("test-jwt-token"))
+                .andExpect(jsonPath("$.refreshToken").value("refresh-token"));
     }
 
     @Test
@@ -104,7 +111,8 @@ class AuthControllerTest {
         );
 
         when(userService.findByEmail("ivan@example.com")).thenReturn(Optional.of(testUser));
-        when(jwtService.generateToken(1L)).thenReturn("test-jwt-token");
+        when(jwtService.generateAccessToken(1L)).thenReturn("test-jwt-token");
+        when(refreshTokenService.createForUser(any())).thenReturn(RefreshToken.builder().token("refresh-token").build());
 
         mockMvc.perform(post("/api/v1/auth/login")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -112,7 +120,8 @@ class AuthControllerTest {
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id").value(1L))
                 .andExpect(jsonPath("$.user.email").value("ivan@example.com"))
-                .andExpect(jsonPath("$.token").value("test-jwt-token"));
+                .andExpect(jsonPath("$.token").value("test-jwt-token"))
+                .andExpect(jsonPath("$.refreshToken").value("refresh-token"));
     }
 
     @Test

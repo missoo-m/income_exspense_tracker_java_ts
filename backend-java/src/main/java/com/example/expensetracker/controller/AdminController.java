@@ -48,11 +48,18 @@ public class AdminController {
         this.notificationRepository = notificationRepository;
     }
 
+    private boolean isAdmin(User user) {
+        return user != null && user.getRole() == User.Role.ADMIN;
+    }
+
     @GetMapping("/users")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> getAllUsers(@AuthenticationPrincipal User user,
                                          @RequestParam(value = "c", required = false) String from,
                                          @RequestParam(value = "gj", required = false) String to) {
+        if (!isAdmin(user)) {
+            return ResponseEntity.status(403).body(Map.of("message", "Доступ запрещен. Только для администраторов."));
+        }
         List<User> users = userRepository.findAll();
         return ResponseEntity.ok(users);
     }
