@@ -1,5 +1,7 @@
 package com.example.expensetracker.controller;
 
+import com.example.expensetracker.dto.NewsDto;
+import com.example.expensetracker.exception.ResourceNotFoundException;
 import com.example.expensetracker.model.News;
 import com.example.expensetracker.model.User;
 import com.example.expensetracker.repository.BudgetRepository;
@@ -9,6 +11,7 @@ import com.example.expensetracker.repository.IncomeRepository;
 import com.example.expensetracker.repository.NewsRepository;
 import com.example.expensetracker.repository.NotificationRepository;
 import com.example.expensetracker.repository.UserRepository;
+import com.example.expensetracker.service.NewsCrudService;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,7 +19,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.Instant;
 import java.util.List;
 import java.util.Map;
 
@@ -31,6 +33,7 @@ public class AdminController {
     private final IncomeRepository incomeRepository;
     private final BudgetRepository budgetRepository;
     private final NotificationRepository notificationRepository;
+    private final NewsCrudService newsCrudService;
 
     public AdminController(UserRepository userRepository,
                            NewsRepository newsRepository,
@@ -38,7 +41,8 @@ public class AdminController {
                            ExpenseRepository expenseRepository,
                            IncomeRepository incomeRepository,
                            BudgetRepository budgetRepository,
-                           NotificationRepository notificationRepository) {
+                           NotificationRepository notificationRepository,
+                           NewsCrudService newsCrudService) {
         this.userRepository = userRepository;
         this.newsRepository = newsRepository;
         this.categoryRepository = categoryRepository;
@@ -46,6 +50,7 @@ public class AdminController {
         this.incomeRepository = incomeRepository;
         this.budgetRepository = budgetRepository;
         this.notificationRepository = notificationRepository;
+        this.newsCrudService = newsCrudService;
     }
 
     private boolean isAdmin(User user) {
@@ -99,21 +104,19 @@ public class AdminController {
         if (body.title() == null || body.content() == null || body.type() == null) {
             return ResponseEntity.badRequest().body(Map.of("message", "Все поля обязательны для заполнения"));
         }
-        News news = News.builder()
-                .title(body.title())
-                .content(body.content())
-                .type(body.type())
-                .author(user)
-                .date(Instant.now())
-                .build();
-        newsRepository.save(news);
+        News news = newsCrudService.create(new NewsDto(
+                body.title(),
+                body.content(),
+                body.type(),
+                user
+        ));
         return ResponseEntity.ok(news);
     }
 
     @GetMapping("/content/admin")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> getAllContent(@AuthenticationPrincipal User user) {
-        List<News> content = newsRepository.findAll();
+        List<News> content = newsCrudService.findAll();
         return ResponseEntity.ok(content);
     }
     @PutMapping("/content/{id}")
@@ -121,29 +124,28 @@ public class AdminController {
     public ResponseEntity<?> updateNews(@AuthenticationPrincipal User user,
                                         @PathVariable("id") Long id,
                                         @RequestBody NewsRequest body) {
-        return newsRepository.findById(id)
-                .map(existing -> {
-                    if (body.title() != null) existing.setTitle(body.title());
-                    if (body.content() != null) existing.setContent(body.content());
-                    if (body.type() != null) existing.setType(body.type());
-                    existing.setDate(Instant.now());
-                    newsRepository.save(existing);
-                    return (Object) existing;
-                })
-                .<ResponseEntity<?>>map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.status(404).body(Map.of("message", "Новость не найдена.")));
+        try {
+            News updated = newsCrudService.update(id, new NewsDto(
+                    body.title(),
+                    body.content(),
+                    body.type(),
+                    null
+            ));
+            return ResponseEntity.ok(updated);
+        } catch (ResourceNotFoundException ex) {
+            return ResponseEntity.status(404).body(Map.of("message", "Новость не найдена."));
+        }
     }
 
     @DeleteMapping("/content/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteNews(@AuthenticationPrincipal User user,
                                         @PathVariable("id") Long id) {
-        return newsRepository.findById(id)
-                .map(existing -> {
-                    newsRepository.delete(existing);
-                    return (Object) Map.of("message", "Новость успешно удалена.");
-                })
-                .<ResponseEntity<?>>map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.status(404).body(Map.of("message", "Новость не найдена.")));
+        try {
+            newsCrudService.deleteById(id);
+            return ResponseEntity.ok(Map.of("message", "Новость успешно удалена."));
+        } catch (ResourceNotFoundException ex) {
+            return ResponseEntity.status(404).body(Map.of("message", "Новость не найдена."));
+        }
     }
 }

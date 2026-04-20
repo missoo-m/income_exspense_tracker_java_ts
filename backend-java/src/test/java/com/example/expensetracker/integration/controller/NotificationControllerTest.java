@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -47,7 +48,17 @@ class NotificationControllerTest {
                 .message("Бюджет превышен")
                 .read(false)
                 .build();
+        
+        // Создаём тестовое уведомление
+    Notification notification = Notification.builder()
+        .user(testUser)
+        .type("TEST")
+        .message("Test message")
+        .build();
+    notificationRepository.save(notification);
     }
+
+
 
     @Test
     void list_ShouldReturnNotifications_WhenUserHasNotifications() {

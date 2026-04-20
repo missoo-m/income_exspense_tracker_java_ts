@@ -4,6 +4,7 @@ import com.example.expensetracker.model.Notification;
 import com.example.expensetracker.model.User;
 import com.example.expensetracker.repository.NotificationRepository;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,33 +17,29 @@ public class NotificationController {
 
     private final NotificationRepository notificationRepository;
 
-<span class="fc" id="L19">    public NotificationController(NotificationRepository notificationRepository) {</span>
-<span class="fc" id="L20">        this.notificationRepository = notificationRepository;</span>
-<span class="fc" id="L21">    }</span>
+<span class="fc" id="L20">    public NotificationController(NotificationRepository notificationRepository) {</span>
+<span class="fc" id="L21">        this.notificationRepository = notificationRepository;</span>
+<span class="fc" id="L22">    }</span>
 
     @GetMapping
+    @PreAuthorize(&quot;isAuthenticated()&quot;)
     public ResponseEntity&lt;?&gt; list(@AuthenticationPrincipal User user) {
-<span class="pc bpc" id="L25" title="1 of 2 branches missed.">        if (user == null) {</span>
-<span class="nc" id="L26">            return ResponseEntity.status(401).body(Map.of(&quot;message&quot;, &quot;Unauthorized&quot;));</span>
-        }
-<span class="fc" id="L28">        List&lt;Notification&gt; list = notificationRepository.findByUserOrderByCreatedAtDesc(user);</span>
-<span class="fc" id="L29">        return ResponseEntity.ok(list);</span>
+<span class="fc" id="L27">        List&lt;Notification&gt; list = notificationRepository.findByUserOrderByCreatedAtDesc(user);</span>
+<span class="fc" id="L28">        return ResponseEntity.ok(list);</span>
     }
 
     @PutMapping(&quot;/{id}/read&quot;)
+    @PreAuthorize(&quot;isAuthenticated()&quot;)
     public ResponseEntity&lt;?&gt; markRead(@AuthenticationPrincipal User user,
                                       @PathVariable(&quot;id&quot;) Long id) {
-<span class="pc bpc" id="L35" title="1 of 2 branches missed.">        if (user == null) {</span>
-<span class="nc" id="L36">            return ResponseEntity.status(401).body(Map.of(&quot;message&quot;, &quot;Unauthorized&quot;));</span>
-        }
-<span class="fc" id="L38">        return notificationRepository.findByIdAndUser(id, user)</span>
-<span class="fc" id="L39">                .map(n -&gt; {</span>
-<span class="fc" id="L40">                    n.setRead(true);</span>
-<span class="fc" id="L41">                    notificationRepository.save(n);</span>
-<span class="fc" id="L42">                    return ResponseEntity.ok(n);</span>
+<span class="fc" id="L35">        return notificationRepository.findByIdAndUser(id, user)</span>
+<span class="fc" id="L36">                .map(n -&gt; {</span>
+<span class="fc" id="L37">                    n.setRead(true);</span>
+<span class="fc" id="L38">                    notificationRepository.save(n);</span>
+<span class="fc" id="L39">                    return ResponseEntity.ok(n);</span>
                 })
-<span class="fc" id="L44">                .&lt;ResponseEntity&lt;?&gt;&gt;map(r -&gt; r)</span>
-<span class="fc" id="L45">                .orElseGet(() -&gt; ResponseEntity.status(404).body(Map.of(&quot;message&quot;, &quot;Уведомление не найдено&quot;)));</span>
+<span class="fc" id="L41">                .&lt;ResponseEntity&lt;?&gt;&gt;map(r -&gt; r)</span>
+<span class="fc" id="L42">                .orElseGet(() -&gt; ResponseEntity.status(404).body(Map.of(&quot;message&quot;, &quot;Уведомление не найдено&quot;)));</span>
     }
 }
 

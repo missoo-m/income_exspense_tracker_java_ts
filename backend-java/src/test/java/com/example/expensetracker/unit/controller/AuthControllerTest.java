@@ -101,7 +101,7 @@ class AuthControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.messege").value("Электронная почта уже используется"));
+                .andExpect(jsonPath("$.message").value("Электронная почта уже используется"));
     }
 
     @Test
@@ -136,7 +136,7 @@ class AuthControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.messege").value("Неверные учетные данные"));
+                .andExpect(jsonPath("$.message").value("Неверные учетные данные"));
     }
    
 }

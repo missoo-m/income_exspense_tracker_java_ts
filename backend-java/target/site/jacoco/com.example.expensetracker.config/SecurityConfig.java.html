@@ -28,8 +28,8 @@ public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final OAuth2SuccessHandler oAuth2SuccessHandler;
 
-    public SecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter,
-<span class="fc" id="L32">                          OAuth2SuccessHandler oAuth2SuccessHandler) {</span>
+<span class="fc" id="L31">    public SecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter,</span>
+                          OAuth2SuccessHandler oAuth2SuccessHandler) {
 <span class="fc" id="L33">        this.jwtAuthenticationFilter = jwtAuthenticationFilter;</span>
 <span class="fc" id="L34">        this.oAuth2SuccessHandler = oAuth2SuccessHandler;</span>
 <span class="fc" id="L35">    }</span>
@@ -46,37 +46,38 @@ public class SecurityConfig {
 <span class="fc" id="L46">                .authorizeHttpRequests(auth -&gt; auth</span>
 <span class="fc" id="L47">                        .requestMatchers(HttpMethod.OPTIONS, &quot;/**&quot;).permitAll()</span>
 <span class="fc" id="L48">                        .requestMatchers(</span>
-                                &quot;/api/v1/auth/register&quot;,
-                                &quot;/api/v1/auth/login&quot;,
-                                &quot;/api/v1/public/**&quot;,
-                                &quot;/uploads/**&quot;
-<span class="fc" id="L53">                        ).permitAll()</span>
-<span class="fc" id="L54">                        .requestMatchers(&quot;/oauth2/**&quot;, &quot;/login/oauth2/**&quot;).permitAll()</span>
-<span class="fc" id="L55">                        .anyRequest().authenticated()</span>
+<span class="fc" id="L49">                                &quot;/api/v1/auth/register&quot;,</span>
+<span class="fc" id="L50">                                &quot;/api/v1/auth/login&quot;,</span>
+<span class="fc" id="L51">                                &quot;/api/v1/auth/refresh&quot;,</span>
+<span class="fc" id="L52">                                &quot;/api/v1/public/**&quot;,</span>
+<span class="fc" id="L53">                                &quot;/uploads/**&quot;</span>
+<span class="fc" id="L54">                        ).permitAll()</span>
+<span class="fc" id="L55">                        .requestMatchers(&quot;/oauth2/**&quot;, &quot;/login/oauth2/**&quot;).permitAll()</span>
+<span class="fc" id="L56">                        .anyRequest().authenticated()</span>
                 )
-<span class="fc" id="L57">                .formLogin(AbstractHttpConfigurer::disable)</span>
-<span class="fc" id="L58">                .oauth2Login(oauth -&gt; oauth.successHandler(oAuth2SuccessHandler))</span>
-<span class="fc" id="L59">                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);</span>
+<span class="fc" id="L58">                .formLogin(AbstractHttpConfigurer::disable)</span>
+<span class="fc" id="L59">                .oauth2Login(oauth -&gt; oauth.successHandler(oAuth2SuccessHandler))</span>
+<span class="fc" id="L60">                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);</span>
 
-<span class="fc" id="L61">        return http.build();</span>
+<span class="fc" id="L62">        return http.build();</span>
     }
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
-<span class="fc" id="L66">        CorsConfiguration config = new CorsConfiguration();</span>
-<span class="fc" id="L67">        config.setAllowedOriginPatterns(List.of(&quot;*&quot;));</span>
-<span class="fc" id="L68">        config.setAllowedMethods(List.of(&quot;GET&quot;, &quot;POST&quot;, &quot;PUT&quot;, &quot;DELETE&quot;, &quot;OPTIONS&quot;));</span>
-<span class="fc" id="L69">        config.setAllowedHeaders(List.of(&quot;Authorization&quot;, &quot;Content-Type&quot;));</span>
-<span class="fc" id="L70">        config.setAllowCredentials(true);</span>
+<span class="fc" id="L67">        CorsConfiguration config = new CorsConfiguration();</span>
+<span class="fc" id="L68">        config.setAllowedOriginPatterns(List.of(&quot;*&quot;));</span>
+<span class="fc" id="L69">        config.setAllowedMethods(List.of(&quot;GET&quot;, &quot;POST&quot;, &quot;PUT&quot;, &quot;DELETE&quot;, &quot;OPTIONS&quot;));</span>
+<span class="fc" id="L70">        config.setAllowedHeaders(List.of(&quot;Authorization&quot;, &quot;Content-Type&quot;));</span>
+<span class="fc" id="L71">        config.setAllowCredentials(true);</span>
 
-<span class="fc" id="L72">        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();</span>
-<span class="fc" id="L73">        source.registerCorsConfiguration(&quot;/**&quot;, config);</span>
-<span class="fc" id="L74">        return source;</span>
+<span class="fc" id="L73">        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();</span>
+<span class="fc" id="L74">        source.registerCorsConfiguration(&quot;/**&quot;, config);</span>
+<span class="fc" id="L75">        return source;</span>
     }
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
-<span class="fc" id="L79">        return configuration.getAuthenticationManager();</span>
+<span class="fc" id="L80">        return configuration.getAuthenticationManager();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

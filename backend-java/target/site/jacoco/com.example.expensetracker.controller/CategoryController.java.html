@@ -1,9 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CategoryController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">expense-tracker-backend</a> &gt; <a href="index.source.html" class="el_package">com.example.expensetracker.controller</a> &gt; <span class="el_source">CategoryController.java</span></div><h1>CategoryController.java</h1><pre class="source lang-java linenums">package com.example.expensetracker.controller;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CategoryController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">expense-tracker-backend</a> &gt; <a href="index.source.html" class="el_package">com.example.expensetracker.controller</a> &gt; <span class="el_source">CategoryController.java</span></div><h1>CategoryController.java</h1><pre class="source lang-java linenums"><span class="fc" id="L1">package com.example.expensetracker.controller;</span>
 
 import com.example.expensetracker.model.Category;
 import com.example.expensetracker.model.User;
 import com.example.expensetracker.repository.CategoryRepository;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,104 +18,96 @@ public class CategoryController {
 
     private final CategoryRepository categoryRepository;
 
-<span class="fc" id="L20">    public CategoryController(CategoryRepository categoryRepository) {</span>
-<span class="fc" id="L21">        this.categoryRepository = categoryRepository;</span>
-<span class="fc" id="L22">    }</span>
+<span class="fc" id="L21">    public CategoryController(CategoryRepository categoryRepository) {</span>
+<span class="fc" id="L22">        this.categoryRepository = categoryRepository;</span>
+<span class="fc" id="L23">    }</span>
 
-<span class="fc" id="L24">    public record CategoryRequest(String name) {}</span>
+    public record CategoryRequest(String name) {}
 
     @GetMapping
+    @PreAuthorize(&quot;isAuthenticated()&quot;)
     public ResponseEntity&lt;?&gt; getAll(@AuthenticationPrincipal User user) {
-<span class="pc bpc" id="L28" title="1 of 2 branches missed.">        if (user == null) {</span>
-<span class="nc" id="L29">            return ResponseEntity.status(401).body(Map.of(&quot;message&quot;, &quot;Unauthorized&quot;));</span>
-        }
         // Если у пользователя еще нет категорий — создаём базовый набор
-<span class="fc bfc" id="L32" title="All 2 branches covered.">        if (categoryRepository.countByUser(user) == 0) {</span>
-<span class="fc" id="L33">            List&lt;String&gt; defaults = Arrays.asList(</span>
-                    &quot;Транспорт&quot;,
-                    &quot;Еда&quot;,
-                    &quot;Дом&quot;,
-                    &quot;Здоровье&quot;,
-                    &quot;Развлечение&quot;,
-                    &quot;Шоппинг&quot;,
-                    &quot;Образование&quot;,
-                    &quot;Другое&quot;
+<span class="fc bfc" id="L31" title="All 2 branches covered.">        if (categoryRepository.countByUser(user) == 0) {</span>
+<span class="fc" id="L32">            List&lt;String&gt; defaults = Arrays.asList(</span>
+<span class="fc" id="L33">                    &quot;Транспорт&quot;,</span>
+<span class="fc" id="L34">                    &quot;Еда&quot;,</span>
+<span class="fc" id="L35">                    &quot;Дом&quot;,</span>
+<span class="fc" id="L36">                    &quot;Здоровье&quot;,</span>
+<span class="fc" id="L37">                    &quot;Развлечение&quot;,</span>
+<span class="fc" id="L38">                    &quot;Шоппинг&quot;,</span>
+<span class="fc" id="L39">                    &quot;Образование&quot;,</span>
+<span class="fc" id="L40">                    &quot;Другое&quot;</span>
             );
-<span class="fc" id="L43">            defaults.forEach(name -&gt; {</span>
-<span class="pc bpc" id="L44" title="1 of 2 branches missed.">                if (!categoryRepository.existsByUserAndName(user, name)) {</span>
-<span class="fc" id="L45">                    categoryRepository.save(Category.builder()</span>
-<span class="fc" id="L46">                            .user(user)</span>
-<span class="fc" id="L47">                            .name(name)</span>
-<span class="fc" id="L48">                            .isDefault(true)</span>
-<span class="fc" id="L49">                            .build());</span>
+<span class="fc" id="L42">            defaults.forEach(name -&gt; {</span>
+<span class="pc bpc" id="L43" title="1 of 2 branches missed.">                if (!categoryRepository.existsByUserAndName(user, name)) {</span>
+<span class="fc" id="L44">                    categoryRepository.save(Category.builder()</span>
+<span class="fc" id="L45">                            .user(user)</span>
+<span class="fc" id="L46">                            .name(name)</span>
+<span class="fc" id="L47">                            .isDefault(true)</span>
+<span class="fc" id="L48">                            .build());</span>
                 }
-<span class="fc" id="L51">            });</span>
+<span class="fc" id="L50">            });</span>
         }
 
-<span class="fc" id="L54">        List&lt;Category&gt; categories = categoryRepository.findByUserOrderByNameAsc(user);</span>
-<span class="fc" id="L55">        return ResponseEntity.ok(categories);</span>
+<span class="fc" id="L53">        List&lt;Category&gt; categories = categoryRepository.findByUserOrderByNameAsc(user);</span>
+<span class="fc" id="L54">        return ResponseEntity.ok(categories);</span>
     }
 
     @PostMapping
+    @PreAuthorize(&quot;isAuthenticated()&quot;)
     public ResponseEntity&lt;?&gt; create(@AuthenticationPrincipal User user,
                                     @RequestBody CategoryRequest body) {
-<span class="pc bpc" id="L61" title="1 of 2 branches missed.">        if (user == null) {</span>
-<span class="nc" id="L62">            return ResponseEntity.status(401).body(Map.of(&quot;message&quot;, &quot;Unauthorized&quot;));</span>
+<span class="fc" id="L61">        String name = body.name();</span>
+<span class="pc bpc" id="L62" title="1 of 4 branches missed.">        if (name == null || name.isBlank()) {</span>
+<span class="fc" id="L63">            return ResponseEntity.badRequest().body(Map.of(&quot;message&quot;, &quot;Укажите название категории.&quot;));</span>
         }
-<span class="fc" id="L64">        String name = body.name();</span>
-<span class="pc bpc" id="L65" title="1 of 4 branches missed.">        if (name == null || name.isBlank()) {</span>
-<span class="fc" id="L66">            return ResponseEntity.badRequest().body(Map.of(&quot;message&quot;, &quot;Укажите название категории.&quot;));</span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">        if (categoryRepository.existsByUserAndName(user, name.trim())) {</span>
+<span class="fc" id="L66">            return ResponseEntity.badRequest().body(Map.of(&quot;message&quot;, &quot;Категория с таким названием уже существует.&quot;));</span>
         }
-<span class="fc bfc" id="L68" title="All 2 branches covered.">        if (categoryRepository.existsByUserAndName(user, name.trim())) {</span>
-<span class="fc" id="L69">            return ResponseEntity.badRequest().body(Map.of(&quot;message&quot;, &quot;Категория с таким названием уже существует.&quot;));</span>
-        }
-<span class="fc" id="L71">        Category category = Category.builder()</span>
-<span class="fc" id="L72">                .user(user)</span>
-<span class="fc" id="L73">                .name(name.trim())</span>
-<span class="fc" id="L74">                .isDefault(false)</span>
-<span class="fc" id="L75">                .build();</span>
-<span class="fc" id="L76">        categoryRepository.save(category);</span>
-<span class="fc" id="L77">        return ResponseEntity.ok(category);</span>
+<span class="fc" id="L68">        Category category = Category.builder()</span>
+<span class="fc" id="L69">                .user(user)</span>
+<span class="fc" id="L70">                .name(name.trim())</span>
+<span class="fc" id="L71">                .isDefault(false)</span>
+<span class="fc" id="L72">                .build();</span>
+<span class="fc" id="L73">        categoryRepository.save(category);</span>
+<span class="fc" id="L74">        return ResponseEntity.ok(category);</span>
     }
 
     @PutMapping(&quot;/{id}&quot;)
+    @PreAuthorize(&quot;isAuthenticated()&quot;)
     public ResponseEntity&lt;?&gt; update(@AuthenticationPrincipal User user,
                                     @PathVariable(&quot;id&quot;) Long id,
                                     @RequestBody CategoryRequest body) {
-<span class="pc bpc" id="L84" title="1 of 2 branches missed.">        if (user == null) {</span>
-<span class="nc" id="L85">            return ResponseEntity.status(401).body(Map.of(&quot;message&quot;, &quot;Unauthorized&quot;));</span>
+<span class="fc" id="L82">        String name = body.name();</span>
+<span class="pc bpc" id="L83" title="2 of 4 branches missed.">        if (name == null || name.isBlank()) {</span>
+<span class="nc" id="L84">            return ResponseEntity.badRequest().body(Map.of(&quot;message&quot;, &quot;Укажите название категории.&quot;));</span>
         }
-<span class="fc" id="L87">        String name = body.name();</span>
-<span class="pc bpc" id="L88" title="2 of 4 branches missed.">        if (name == null || name.isBlank()) {</span>
-<span class="nc" id="L89">            return ResponseEntity.badRequest().body(Map.of(&quot;message&quot;, &quot;Укажите название категории.&quot;));</span>
-        }
-<span class="fc" id="L91">        return categoryRepository.findByIdAndUser(id, user)</span>
-<span class="fc" id="L92">                .map(existing -&gt; {</span>
-<span class="fc" id="L93">                    String trimmed = name.trim();</span>
-<span class="pc bpc" id="L94" title="1 of 2 branches missed.">                    if (!existing.getName().equals(trimmed)</span>
-<span class="pc bpc" id="L95" title="1 of 2 branches missed.">                            &amp;&amp; categoryRepository.existsByUserAndName(user, trimmed)) {</span>
-<span class="nc" id="L96">                        return ResponseEntity.badRequest()</span>
-<span class="nc" id="L97">                                .body(Map.of(&quot;message&quot;, &quot;Категория с таким названием уже существует.&quot;));</span>
+<span class="fc" id="L86">        return categoryRepository.findByIdAndUser(id, user)</span>
+<span class="fc" id="L87">                .map(existing -&gt; {</span>
+<span class="fc" id="L88">                    String trimmed = name.trim();</span>
+<span class="pc bpc" id="L89" title="1 of 2 branches missed.">                    if (!existing.getName().equals(trimmed)</span>
+<span class="pc bpc" id="L90" title="1 of 2 branches missed.">                            &amp;&amp; categoryRepository.existsByUserAndName(user, trimmed)) {</span>
+<span class="nc" id="L91">                        return ResponseEntity.badRequest()</span>
+<span class="nc" id="L92">                                .body(Map.of(&quot;message&quot;, &quot;Категория с таким названием уже существует.&quot;));</span>
                     }
-<span class="fc" id="L99">                    existing.setName(trimmed);</span>
-<span class="fc" id="L100">                    categoryRepository.save(existing);</span>
-<span class="fc" id="L101">                    return ResponseEntity.ok(existing);</span>
+<span class="fc" id="L94">                    existing.setName(trimmed);</span>
+<span class="fc" id="L95">                    categoryRepository.save(existing);</span>
+<span class="fc" id="L96">                    return ResponseEntity.ok(existing);</span>
                 })
-<span class="fc" id="L103">                .orElseGet(() -&gt; ResponseEntity.status(404).body(Map.of(&quot;message&quot;, &quot;Категория не найдена&quot;)));</span>
+<span class="fc" id="L98">                .orElseGet(() -&gt; ResponseEntity.status(404).body(Map.of(&quot;message&quot;, &quot;Категория не найдена&quot;)));</span>
     }
 
     @DeleteMapping(&quot;/{id}&quot;)
+    @PreAuthorize(&quot;isAuthenticated()&quot;)
     public ResponseEntity&lt;?&gt; delete(@AuthenticationPrincipal User user,
                                     @PathVariable(&quot;id&quot;) Long id) {
-<span class="pc bpc" id="L109" title="1 of 2 branches missed.">        if (user == null) {</span>
-<span class="nc" id="L110">            return ResponseEntity.status(401).body(Map.of(&quot;message&quot;, &quot;Unauthorized&quot;));</span>
-        }
-<span class="fc" id="L112">        return categoryRepository.findByIdAndUser(id, user)</span>
-<span class="fc" id="L113">                .map(existing -&gt; {</span>
-<span class="fc" id="L114">                    categoryRepository.delete(existing);</span>
-<span class="fc" id="L115">                    return ResponseEntity.ok(Map.of(&quot;message&quot;, &quot;Категория успешно удалена&quot;));</span>
+<span class="fc" id="L105">        return categoryRepository.findByIdAndUser(id, user)</span>
+<span class="fc" id="L106">                .map(existing -&gt; {</span>
+<span class="fc" id="L107">                    categoryRepository.delete(existing);</span>
+<span class="fc" id="L108">                    return ResponseEntity.ok(Map.of(&quot;message&quot;, &quot;Категория успешно удалена&quot;));</span>
                 })
-<span class="fc" id="L117">                .orElseGet(() -&gt; ResponseEntity.status(404).body(Map.of(&quot;message&quot;, &quot;Категория не найдена&quot;)));</span>
+<span class="fc" id="L110">                .orElseGet(() -&gt; ResponseEntity.status(404).body(Map.of(&quot;message&quot;, &quot;Категория не найдена&quot;)));</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

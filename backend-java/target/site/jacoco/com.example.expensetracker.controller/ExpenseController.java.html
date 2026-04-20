@@ -1,11 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ExpenseController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">expense-tracker-backend</a> &gt; <a href="index.source.html" class="el_package">com.example.expensetracker.controller</a> &gt; <span class="el_source">ExpenseController.java</span></div><h1>ExpenseController.java</h1><pre class="source lang-java linenums">package com.example.expensetracker.controller;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ExpenseController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">expense-tracker-backend</a> &gt; <a href="index.source.html" class="el_package">com.example.expensetracker.controller</a> &gt; <span class="el_source">ExpenseController.java</span></div><h1>ExpenseController.java</h1><pre class="source lang-java linenums"><span class="fc" id="L1">package com.example.expensetracker.controller;</span>
 
+import com.example.expensetracker.exception.BadRequestException;
 import com.example.expensetracker.model.Expense;
-import com.example.expensetracker.model.Notification;
 import com.example.expensetracker.model.User;
-import com.example.expensetracker.repository.BudgetRepository;
+import com.example.expensetracker.service.BudgetAlertService;
 import com.example.expensetracker.repository.ExpenseRepository;
-import com.example.expensetracker.repository.NotificationRepository;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import org.apache.poi.ss.usermodel.Row;
@@ -15,6 +14,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Page;
@@ -24,7 +24,6 @@ import org.springframework.data.domain.Pageable;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.YearMonth;
 import java.util.List;
 import java.util.Map;
 
@@ -33,18 +32,15 @@ import java.util.Map;
 public class ExpenseController {
 
     private final ExpenseRepository expenseRepository;
-    private final BudgetRepository budgetRepository;
-    private final NotificationRepository notificationRepository;
+    private final BudgetAlertService budgetAlertService;
 
-    public ExpenseController(ExpenseRepository expenseRepository,
-                             BudgetRepository budgetRepository,
-<span class="fc" id="L41">                             NotificationRepository notificationRepository) {</span>
-<span class="fc" id="L42">        this.expenseRepository = expenseRepository;</span>
-<span class="fc" id="L43">        this.budgetRepository = budgetRepository;</span>
-<span class="fc" id="L44">        this.notificationRepository = notificationRepository;</span>
-<span class="fc" id="L45">    }</span>
+<span class="fc" id="L37">    public ExpenseController(ExpenseRepository expenseRepository,</span>
+                             BudgetAlertService budgetAlertService) {
+<span class="fc" id="L39">        this.expenseRepository = expenseRepository;</span>
+<span class="fc" id="L40">        this.budgetAlertService = budgetAlertService;</span>
+<span class="fc" id="L41">    }</span>
 
-<span class="fc" id="L47">    public record ExpenseRequest(</span>
+    public record ExpenseRequest(
             String icon,
             String category,
             @NotNull String generalCategory,
@@ -54,59 +50,34 @@ public class ExpenseController {
     ) {}
 
     @PostMapping(&quot;/add&quot;)
+    @PreAuthorize(&quot;isAuthenticated()&quot;)
     public ResponseEntity&lt;?&gt; addExpense(@AuthenticationPrincipal User user,
                                         @Valid @RequestBody ExpenseRequest body) {
-<span class="pc bpc" id="L59" title="1 of 2 branches missed.">        if (user == null) {</span>
-<span class="nc" id="L60">            return ResponseEntity.status(401).body(Map.of(&quot;messege&quot;, &quot;Unauthorized&quot;));</span>
+<span class="pc bpc" id="L56" title="2 of 4 branches missed.">        if (body.generalCategory() == null || body.generalCategory().isBlank()) {</span>
+<span class="nc" id="L57">            throw new BadRequestException(&quot;Требуется общая категория&quot;);</span>
         }
-<span class="pc bpc" id="L62" title="2 of 4 branches missed.">        if (body.generalCategory() == null || body.generalCategory().isBlank()) {</span>
-<span class="nc" id="L63">            return ResponseEntity.badRequest().body(Map.of(&quot;message&quot;, &quot;Требуется общая категория&quot;));</span>
+<span class="fc" id="L59">        String category = body.category();</span>
+<span class="pc bpc" id="L60" title="2 of 4 branches missed.">        if (category == null || category.isBlank()) {</span>
+<span class="nc" id="L61">            category = body.generalCategory();</span>
         }
-<span class="fc" id="L65">        String category = body.category();</span>
-<span class="pc bpc" id="L66" title="2 of 4 branches missed.">        if (category == null || category.isBlank()) {</span>
-<span class="nc" id="L67">            category = body.generalCategory();</span>
-        }
-<span class="fc" id="L69">        LocalDate d = LocalDate.parse(body.date());</span>
-<span class="fc" id="L70">        Expense expense = Expense.builder()</span>
-<span class="fc" id="L71">                .user(user)</span>
-<span class="fc" id="L72">                .icon(body.icon())</span>
-<span class="fc" id="L73">                .category(category)</span>
-<span class="fc" id="L74">                .generalCategory(body.generalCategory())</span>
-<span class="fc" id="L75">                .description(body.description())</span>
-<span class="fc" id="L76">                .amount(body.amount())</span>
-<span class="fc" id="L77">                .date(d)</span>
-<span class="fc" id="L78">                .build();</span>
-<span class="fc" id="L79">        expenseRepository.save(expense);</span>
+<span class="fc" id="L63">        LocalDate d = LocalDate.parse(body.date());</span>
+<span class="fc" id="L64">        Expense expense = Expense.builder()</span>
+<span class="fc" id="L65">                .user(user)</span>
+<span class="fc" id="L66">                .icon(body.icon())</span>
+<span class="fc" id="L67">                .category(category)</span>
+<span class="fc" id="L68">                .generalCategory(body.generalCategory())</span>
+<span class="fc" id="L69">                .description(body.description())</span>
+<span class="fc" id="L70">                .amount(body.amount())</span>
+<span class="fc" id="L71">                .date(d)</span>
+<span class="fc" id="L72">                .build();</span>
+<span class="fc" id="L73">        expenseRepository.save(expense);</span>
+<span class="fc" id="L74">        budgetAlertService.checkBudgetAndNotify(user, expense);</span>
 
-        // Budget check (month + general category)
-<span class="fc" id="L82">        String month = YearMonth.from(d).toString(); // YYYY-MM</span>
-<span class="fc" id="L83">        budgetRepository.findByUserAndMonthAndGeneralCategory(user, month, body.generalCategory())</span>
-<span class="fc" id="L84">                .ifPresent(budget -&gt; {</span>
-<span class="nc" id="L85">                    LocalDate from = YearMonth.parse(month).atDay(1);</span>
-<span class="nc" id="L86">                    LocalDate to = YearMonth.parse(month).atEndOfMonth();</span>
-<span class="nc" id="L87">                    Double spent = expenseRepository.sumByUserAndGeneralCategoryAndMonth(user, body.generalCategory(), from, to);</span>
-<span class="nc bnc" id="L88" title="All 4 branches missed.">                    if (spent != null &amp;&amp; spent &gt; budget.getAmount()) {</span>
-<span class="nc" id="L89">                        String type = &quot;BUDGET_EXCEEDED&quot;;</span>
-<span class="nc" id="L90">                        boolean already = notificationRepository.existsByUserAndTypeAndMonthAndGeneralCategory(</span>
-<span class="nc" id="L91">                                user, type, month, body.generalCategory()</span>
-                        );
-<span class="nc bnc" id="L93" title="All 2 branches missed.">                        if (!already) {</span>
-<span class="nc" id="L94">                            notificationRepository.save(Notification.builder()</span>
-<span class="nc" id="L95">                                    .user(user)</span>
-<span class="nc" id="L96">                                    .type(type)</span>
-<span class="nc" id="L97">                                    .month(month)</span>
-<span class="nc" id="L98">                                    .generalCategory(body.generalCategory())</span>
-<span class="nc" id="L99">                                    .message(&quot;Бюджет превышен на &quot; + body.generalCategory() + &quot; (&quot; + month + &quot;). Бюджет: &quot;</span>
-<span class="nc" id="L100">                                            + budget.getAmount() + &quot;, потраченно: &quot; + spent)</span>
-<span class="nc" id="L101">                                    .build());</span>
-                        }
-                    }
-<span class="nc" id="L104">                });</span>
-
-<span class="fc" id="L106">        return ResponseEntity.ok(expense);</span>
+<span class="fc" id="L76">        return ResponseEntity.ok(expense);</span>
     }
 
     @GetMapping(&quot;/get&quot;)
+    @PreAuthorize(&quot;isAuthenticated()&quot;)
     public ResponseEntity&lt;?&gt; getAll(@AuthenticationPrincipal User user,
                                     @RequestParam(value = &quot;page&quot;, defaultValue = &quot;0&quot;) int page,
                                     @RequestParam(value = &quot;size&quot;, defaultValue = &quot;5&quot;) int size,
@@ -114,71 +85,64 @@ public class ExpenseController {
                                     @RequestParam(value = &quot;to&quot;, required = false) String to,
                                     @RequestParam(value = &quot;generalCategory&quot;, required = false) String generalCategory,
                                     @RequestParam(value = &quot;category&quot;, required = false) String category) {
-<span class="pc bpc" id="L117" title="1 of 2 branches missed.">        if (user == null) {</span>
-<span class="nc" id="L118">            return ResponseEntity.status(401).body(Map.of(&quot;messege&quot;, &quot;Unauthorized&quot;));</span>
-        }
-<span class="pc bpc" id="L120" title="1 of 4 branches missed.">        LocalDate fromDate = (from == null || from.isBlank()) ? null : LocalDate.parse(from);</span>
-<span class="pc bpc" id="L121" title="1 of 4 branches missed.">        LocalDate toDate = (to == null || to.isBlank()) ? null : LocalDate.parse(to);</span>
-<span class="pc bpc" id="L122" title="3 of 4 branches missed.">        String gen = (generalCategory == null || generalCategory.isBlank()) ? null : generalCategory.trim();</span>
-<span class="pc bpc" id="L123" title="3 of 4 branches missed.">        String cat = (category == null || category.isBlank()) ? null : category.trim();</span>
+<span class="pc bpc" id="L88" title="1 of 4 branches missed.">        LocalDate fromDate = (from == null || from.isBlank()) ? null : LocalDate.parse(from);</span>
+<span class="pc bpc" id="L89" title="1 of 4 branches missed.">        LocalDate toDate = (to == null || to.isBlank()) ? null : LocalDate.parse(to);</span>
+<span class="pc bpc" id="L90" title="3 of 4 branches missed.">        String gen = (generalCategory == null || generalCategory.isBlank()) ? null : generalCategory.trim();</span>
+<span class="pc bpc" id="L91" title="3 of 4 branches missed.">        String cat = (category == null || category.isBlank()) ? null : category.trim();</span>
 
-<span class="fc" id="L125">        Pageable pageable = PageRequest.of(Math.max(page, 0), Math.min(Math.max(size, 1), 100));</span>
-<span class="fc" id="L126">        Page&lt;Expense&gt; p = expenseRepository.findPage(user, fromDate, toDate, gen, cat, pageable);</span>
-<span class="fc" id="L127">        return ResponseEntity.ok(Map.of(</span>
-<span class="fc" id="L128">                &quot;items&quot;, p.getContent(),</span>
-<span class="fc" id="L129">                &quot;page&quot;, p.getNumber(),</span>
-<span class="fc" id="L130">                &quot;size&quot;, p.getSize(),</span>
-<span class="fc" id="L131">                &quot;totalItems&quot;, p.getTotalElements(),</span>
-<span class="fc" id="L132">                &quot;totalPages&quot;, p.getTotalPages()</span>
+<span class="fc" id="L93">        Pageable pageable = PageRequest.of(Math.max(page, 0), Math.min(Math.max(size, 1), 100));</span>
+<span class="fc" id="L94">        Page&lt;Expense&gt; p = expenseRepository.findPage(user, fromDate, toDate, gen, cat, pageable);</span>
+<span class="fc" id="L95">        return ResponseEntity.ok(Map.of(</span>
+<span class="fc" id="L96">                &quot;items&quot;, p.getContent(),</span>
+<span class="fc" id="L97">                &quot;page&quot;, p.getNumber(),</span>
+<span class="fc" id="L98">                &quot;size&quot;, p.getSize(),</span>
+<span class="fc" id="L99">                &quot;totalItems&quot;, p.getTotalElements(),</span>
+<span class="fc" id="L100">                &quot;totalPages&quot;, p.getTotalPages()</span>
         ));
     }
 
     @DeleteMapping(&quot;/{id}&quot;)
+    @PreAuthorize(&quot;isAuthenticated()&quot;)
     public ResponseEntity&lt;?&gt; delete(@AuthenticationPrincipal User user,
                                     @PathVariable(&quot;id&quot;) Long id) {
-<span class="pc bpc" id="L139" title="1 of 2 branches missed.">        if (user == null) {</span>
-<span class="nc" id="L140">            return ResponseEntity.status(401).body(Map.of(&quot;messege&quot;, &quot;Unauthorized&quot;));</span>
-        }
-<span class="fc" id="L142">        expenseRepository.deleteById(id);</span>
-<span class="fc" id="L143">        return ResponseEntity.ok(Map.of(&quot;messege&quot;, &quot; Расходы успешно удалены &quot;));</span>
+<span class="fc" id="L108">        expenseRepository.deleteById(id);</span>
+<span class="fc" id="L109">        return ResponseEntity.ok(Map.of(&quot;messege&quot;, &quot; Расходы успешно удалены &quot;));</span>
     }
 
     @GetMapping(&quot;/downloadexcel&quot;)
+    @PreAuthorize(&quot;isAuthenticated()&quot;)
     public ResponseEntity&lt;byte[]&gt; downloadExcel(@AuthenticationPrincipal User user) throws IOException {
-<span class="nc bnc" id="L148" title="All 2 branches missed.">        if (user == null) {</span>
-<span class="nc" id="L149">            return ResponseEntity.status(401).build();</span>
+<span class="nc" id="L115">        List&lt;Expense&gt; list = expenseRepository.findByUserOrderByDateDesc(user);</span>
+
+<span class="nc" id="L117">        Workbook workbook = new XSSFWorkbook();</span>
+<span class="nc" id="L118">        Sheet sheet = workbook.createSheet(&quot;Расходы&quot;);</span>
+<span class="nc" id="L119">        int rowIdx = 0;</span>
+<span class="nc" id="L120">        Row header = sheet.createRow(rowIdx++);</span>
+<span class="nc" id="L121">        header.createCell(0).setCellValue(&quot;Общая категория&quot;);</span>
+<span class="nc" id="L122">        header.createCell(1).setCellValue(&quot;Категория&quot;);</span>
+<span class="nc" id="L123">        header.createCell(2).setCellValue(&quot;Описание&quot;);</span>
+<span class="nc" id="L124">        header.createCell(3).setCellValue(&quot;Сумма&quot;);</span>
+<span class="nc" id="L125">        header.createCell(4).setCellValue(&quot;Дата&quot;);</span>
+
+<span class="nc bnc" id="L127" title="All 2 branches missed.">        for (Expense expense : list) {</span>
+<span class="nc" id="L128">            Row row = sheet.createRow(rowIdx++);</span>
+<span class="nc bnc" id="L129" title="All 2 branches missed.">            row.createCell(0).setCellValue(expense.getGeneralCategory() != null ? expense.getGeneralCategory() : &quot;&quot;);</span>
+<span class="nc" id="L130">            row.createCell(1).setCellValue(expense.getCategory());</span>
+<span class="nc bnc" id="L131" title="All 2 branches missed.">            row.createCell(2).setCellValue(expense.getDescription() != null ? expense.getDescription() : &quot;&quot;);</span>
+<span class="nc" id="L132">            row.createCell(3).setCellValue(expense.getAmount());</span>
+<span class="nc" id="L133">            row.createCell(4).setCellValue(expense.getDate().toString());</span>
         }
-<span class="nc" id="L151">        List&lt;Expense&gt; list = expenseRepository.findByUserOrderByDateDesc(user);</span>
 
-<span class="nc" id="L153">        Workbook workbook = new XSSFWorkbook();</span>
-<span class="nc" id="L154">        Sheet sheet = workbook.createSheet(&quot;Расходы&quot;);</span>
-<span class="nc" id="L155">        int rowIdx = 0;</span>
-<span class="nc" id="L156">        Row header = sheet.createRow(rowIdx++);</span>
-<span class="nc" id="L157">        header.createCell(0).setCellValue(&quot;Общая категория&quot;);</span>
-<span class="nc" id="L158">        header.createCell(1).setCellValue(&quot;Категория&quot;);</span>
-<span class="nc" id="L159">        header.createCell(2).setCellValue(&quot;Описание&quot;);</span>
-<span class="nc" id="L160">        header.createCell(3).setCellValue(&quot;Сумма&quot;);</span>
-<span class="nc" id="L161">        header.createCell(4).setCellValue(&quot;Дата&quot;);</span>
+<span class="nc" id="L136">        ByteArrayOutputStream out = new ByteArrayOutputStream();</span>
+<span class="nc" id="L137">        workbook.write(out);</span>
+<span class="nc" id="L138">        workbook.close();</span>
 
-<span class="nc bnc" id="L163" title="All 2 branches missed.">        for (Expense expense : list) {</span>
-<span class="nc" id="L164">            Row row = sheet.createRow(rowIdx++);</span>
-<span class="nc bnc" id="L165" title="All 2 branches missed.">            row.createCell(0).setCellValue(expense.getGeneralCategory() != null ? expense.getGeneralCategory() : &quot;&quot;);</span>
-<span class="nc" id="L166">            row.createCell(1).setCellValue(expense.getCategory());</span>
-<span class="nc bnc" id="L167" title="All 2 branches missed.">            row.createCell(2).setCellValue(expense.getDescription() != null ? expense.getDescription() : &quot;&quot;);</span>
-<span class="nc" id="L168">            row.createCell(3).setCellValue(expense.getAmount());</span>
-<span class="nc" id="L169">            row.createCell(4).setCellValue(expense.getDate().toString());</span>
-<span class="nc" id="L170">        }</span>
-
-<span class="nc" id="L172">        ByteArrayOutputStream out = new ByteArrayOutputStream();</span>
-<span class="nc" id="L173">        workbook.write(out);</span>
-<span class="nc" id="L174">        workbook.close();</span>
-
-<span class="nc" id="L176">        HttpHeaders headers = new HttpHeaders();</span>
-<span class="nc" id="L177">        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);</span>
-<span class="nc" id="L178">        headers.set(HttpHeaders.CONTENT_DISPOSITION, &quot;attachment; filename=expense_details.xlsx&quot;);</span>
-<span class="nc" id="L179">        return ResponseEntity.ok()</span>
-<span class="nc" id="L180">                .headers(headers)</span>
-<span class="nc" id="L181">                .body(out.toByteArray());</span>
+<span class="nc" id="L140">        HttpHeaders headers = new HttpHeaders();</span>
+<span class="nc" id="L141">        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);</span>
+<span class="nc" id="L142">        headers.set(HttpHeaders.CONTENT_DISPOSITION, &quot;attachment; filename=expense_details.xlsx&quot;);</span>
+<span class="nc" id="L143">        return ResponseEntity.ok()</span>
+<span class="nc" id="L144">                .headers(headers)</span>
+<span class="nc" id="L145">                .body(out.toByteArray());</span>
     }
 }
 

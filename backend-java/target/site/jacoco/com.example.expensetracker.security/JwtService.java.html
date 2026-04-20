@@ -16,15 +16,15 @@ public class JwtService {
     private final Key key;
     private final long expirationMs;
 
-    public JwtService(
+<span class="fc" id="L19">    public JwtService(</span>
             @Value(&quot;${app.jwt.secret}&quot;) String secret,
             @Value(&quot;${app.jwt.expiration-ms}&quot;) long expirationMs
-<span class="fc" id="L22">    ) {</span>
+    ) {
 <span class="fc" id="L23">        this.key = Keys.hmacShaKeyFor(secret.getBytes());</span>
 <span class="fc" id="L24">        this.expirationMs = expirationMs;</span>
 <span class="fc" id="L25">    }</span>
 
-    public String generateToken(Long userId) {
+    public String generateAccessToken(Long userId) {
 <span class="fc" id="L28">        Date now = new Date();</span>
 <span class="fc" id="L29">        Date expiry = new Date(now.getTime() + expirationMs);</span>
 <span class="fc" id="L30">        return Jwts.builder()</span>
@@ -35,27 +35,31 @@ public class JwtService {
 <span class="fc" id="L35">                .compact();</span>
     }
 
+    public String generateToken(Long userId) {
+<span class="fc" id="L39">        return generateAccessToken(userId);</span>
+    }
+
     public Long parseUserId(String token) {
     try {
-<span class="fc" id="L40">        var claims = Jwts.parserBuilder()</span>
-<span class="fc" id="L41">                .setSigningKey(key)</span>
-<span class="fc" id="L42">                .build()</span>
-<span class="fc" id="L43">                .parseClaimsJws(token)</span>
-<span class="fc" id="L44">                .getBody();</span>
-<span class="fc" id="L45">        Object id = claims.get(&quot;id&quot;);</span>
-<span class="pc bpc" id="L46" title="1 of 2 branches missed.">        if (id instanceof Integer i) {</span>
-<span class="fc" id="L47">            return i.longValue();</span>
+<span class="fc" id="L44">        var claims = Jwts.parserBuilder()</span>
+<span class="fc" id="L45">                .setSigningKey(key)</span>
+<span class="fc" id="L46">                .build()</span>
+<span class="fc" id="L47">                .parseClaimsJws(token)</span>
+<span class="fc" id="L48">                .getBody();</span>
+<span class="fc" id="L49">        Object id = claims.get(&quot;id&quot;);</span>
+<span class="pc bpc" id="L50" title="1 of 2 branches missed.">        if (id instanceof Integer i) {</span>
+<span class="fc" id="L51">            return i.longValue();</span>
         }
-<span class="nc bnc" id="L49" title="All 2 branches missed.">        if (id instanceof Long l) {</span>
-<span class="nc" id="L50">            return l;</span>
+<span class="nc bnc" id="L53" title="All 2 branches missed.">        if (id instanceof Long l) {</span>
+<span class="nc" id="L54">            return l;</span>
         }
-<span class="nc bnc" id="L52" title="All 2 branches missed.">        if (id instanceof String s) {</span>
-<span class="nc" id="L53">            return Long.parseLong(s);</span>
+<span class="nc bnc" id="L56" title="All 2 branches missed.">        if (id instanceof String s) {</span>
+<span class="nc" id="L57">            return Long.parseLong(s);</span>
         }
-<span class="nc" id="L55">        return null;</span>
-<span class="fc" id="L56">    } catch (Exception e) {</span>
+<span class="nc" id="L59">        return null;</span>
+<span class="fc" id="L60">    } catch (Exception e) {</span>
         // Любое исключение (невалидный токен, истекший токен и т.д.) -&gt; null
-<span class="fc" id="L58">        return null;</span>
+<span class="fc" id="L62">        return null;</span>
     }
 }
 }

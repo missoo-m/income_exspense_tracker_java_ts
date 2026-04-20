@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AdminController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">expense-tracker-backend</a> &gt; <a href="index.source.html" class="el_package">com.example.expensetracker.controller</a> &gt; <span class="el_source">AdminController.java</span></div><h1>AdminController.java</h1><pre class="source lang-java linenums">package com.example.expensetracker.controller;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AdminController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">expense-tracker-backend</a> &gt; <a href="index.source.html" class="el_package">com.example.expensetracker.controller</a> &gt; <span class="el_source">AdminController.java</span></div><h1>AdminController.java</h1><pre class="source lang-java linenums"><span class="fc" id="L1">package com.example.expensetracker.controller;</span>
 
 import com.example.expensetracker.model.News;
 import com.example.expensetracker.model.User;
@@ -11,6 +11,7 @@ import com.example.expensetracker.repository.NotificationRepository;
 import com.example.expensetracker.repository.UserRepository;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -31,44 +32,43 @@ public class AdminController {
     private final BudgetRepository budgetRepository;
     private final NotificationRepository notificationRepository;
 
-    public AdminController(UserRepository userRepository,
+<span class="fc" id="L35">    public AdminController(UserRepository userRepository,</span>
                            NewsRepository newsRepository,
                            CategoryRepository categoryRepository,
                            ExpenseRepository expenseRepository,
                            IncomeRepository incomeRepository,
                            BudgetRepository budgetRepository,
-<span class="fc" id="L40">                           NotificationRepository notificationRepository) {</span>
-<span class="fc" id="L41">        this.userRepository = userRepository;</span>
-<span class="fc" id="L42">        this.newsRepository = newsRepository;</span>
-<span class="fc" id="L43">        this.categoryRepository = categoryRepository;</span>
-<span class="fc" id="L44">        this.expenseRepository = expenseRepository;</span>
-<span class="fc" id="L45">        this.incomeRepository = incomeRepository;</span>
-<span class="fc" id="L46">        this.budgetRepository = budgetRepository;</span>
-<span class="fc" id="L47">        this.notificationRepository = notificationRepository;</span>
-<span class="fc" id="L48">    }</span>
+                           NotificationRepository notificationRepository) {
+<span class="fc" id="L42">        this.userRepository = userRepository;</span>
+<span class="fc" id="L43">        this.newsRepository = newsRepository;</span>
+<span class="fc" id="L44">        this.categoryRepository = categoryRepository;</span>
+<span class="fc" id="L45">        this.expenseRepository = expenseRepository;</span>
+<span class="fc" id="L46">        this.incomeRepository = incomeRepository;</span>
+<span class="fc" id="L47">        this.budgetRepository = budgetRepository;</span>
+<span class="fc" id="L48">        this.notificationRepository = notificationRepository;</span>
+<span class="fc" id="L49">    }</span>
 
     private boolean isAdmin(User user) {
-<span class="pc bpc" id="L51" title="1 of 4 branches missed.">        return user != null &amp;&amp; user.getRole() == User.Role.ADMIN;</span>
+<span class="pc bpc" id="L52" title="1 of 4 branches missed.">        return user != null &amp;&amp; user.getRole() == User.Role.ADMIN;</span>
     }
 
     @GetMapping(&quot;/users&quot;)
+    @PreAuthorize(&quot;hasRole('ADMIN')&quot;)
     public ResponseEntity&lt;?&gt; getAllUsers(@AuthenticationPrincipal User user,
                                          @RequestParam(value = &quot;c&quot;, required = false) String from,
                                          @RequestParam(value = &quot;gj&quot;, required = false) String to) {
-<span class="fc bfc" id="L58" title="All 2 branches covered.">        if (!isAdmin(user)) {</span>
-<span class="fc" id="L59">            return ResponseEntity.status(403).body(Map.of(&quot;message&quot;, &quot;Доступ запрещен. Только для администраторов.&quot;));</span>
+<span class="fc bfc" id="L60" title="All 2 branches covered.">        if (!isAdmin(user)) {</span>
+<span class="fc" id="L61">            return ResponseEntity.status(403).body(Map.of(&quot;message&quot;, &quot;Доступ запрещен. Только для администраторов.&quot;));</span>
         }
-<span class="fc" id="L61">        List&lt;User&gt; users = userRepository.findAll();</span>
-<span class="fc" id="L62">        return ResponseEntity.ok(users);</span>
+<span class="fc" id="L63">        List&lt;User&gt; users = userRepository.findAll();</span>
+<span class="fc" id="L64">        return ResponseEntity.ok(users);</span>
     }
 
     @DeleteMapping(&quot;/users/{id}&quot;)
     @Transactional
+    @PreAuthorize(&quot;hasRole('ADMIN')&quot;)
     public ResponseEntity&lt;?&gt; deleteUser(@AuthenticationPrincipal User user,
                                         @PathVariable(&quot;id&quot;) Long id) {
-<span class="pc bpc" id="L69" title="1 of 2 branches missed.">        if (!isAdmin(user)) {</span>
-<span class="nc" id="L70">            return ResponseEntity.status(403).body(Map.of(&quot;message&quot;, &quot;Доступ запрещен. Только для администраторов.&quot;));</span>
-        }
 <span class="fc" id="L72">        return userRepository.findById(id)</span>
 <span class="fc" id="L73">                .map(u -&gt; {</span>
                     try {
@@ -82,7 +82,7 @@ public class AdminController {
 <span class="fc" id="L82">                        return ResponseEntity.ok(Map.of(&quot;message&quot;, &quot;Пользователь успешно удален&quot;));</span>
 <span class="nc" id="L83">                    } catch (DataIntegrityViolationException ex) {</span>
 <span class="nc" id="L84">                        return ResponseEntity.status(409).body(Map.of(</span>
-                                &quot;message&quot;, &quot;Невозможно удалить пользователя, поскольку связанные записи все еще существуют.&quot;,
+<span class="nc" id="L85">                                &quot;message&quot;, &quot;Невозможно удалить пользователя, поскольку связанные записи все еще существуют.&quot;,</span>
 <span class="nc bnc" id="L86" title="All 2 branches missed.">                                &quot;error&quot;, ex.getMostSpecificCause() != null ? ex.getMostSpecificCause().getMessage() : ex.getMessage()</span>
                         ));
                     }
@@ -90,69 +90,61 @@ public class AdminController {
 <span class="fc" id="L90">                .orElseGet(() -&gt; ResponseEntity.status(404).body(Map.of(&quot;message&quot;, &quot;Пользователь не найден&quot;)));</span>
     }
 
-<span class="fc" id="L93">    public record NewsRequest(String title, String content, String type) {}</span>
+    public record NewsRequest(String title, String content, String type) {}
 
     @PostMapping(&quot;/content&quot;)
+    @PreAuthorize(&quot;hasRole('ADMIN')&quot;)
     public ResponseEntity&lt;?&gt; addNews(@AuthenticationPrincipal User user,
                                      @RequestBody NewsRequest body) {
-<span class="pc bpc" id="L98" title="1 of 2 branches missed.">        if (!isAdmin(user)) {</span>
-<span class="nc" id="L99">            return ResponseEntity.status(403).body(Map.of(&quot;message&quot;, &quot;Доступ запрещен. Только для администраторов.&quot;));</span>
+<span class="pc bpc" id="L99" title="2 of 6 branches missed.">        if (body.title() == null || body.content() == null || body.type() == null) {</span>
+<span class="fc" id="L100">            return ResponseEntity.badRequest().body(Map.of(&quot;message&quot;, &quot;Все поля обязательны для заполнения&quot;));</span>
         }
-<span class="pc bpc" id="L101" title="2 of 6 branches missed.">        if (body.title() == null || body.content() == null || body.type() == null) {</span>
-<span class="fc" id="L102">            return ResponseEntity.badRequest().body(Map.of(&quot;message&quot;, &quot;Все поля обязательны для заполнения&quot;));</span>
-        }
-<span class="fc" id="L104">        News news = News.builder()</span>
-<span class="fc" id="L105">                .title(body.title())</span>
-<span class="fc" id="L106">                .content(body.content())</span>
-<span class="fc" id="L107">                .type(body.type())</span>
-<span class="fc" id="L108">                .author(user)</span>
-<span class="fc" id="L109">                .date(Instant.now())</span>
-<span class="fc" id="L110">                .build();</span>
-<span class="fc" id="L111">        newsRepository.save(news);</span>
-<span class="fc" id="L112">        return ResponseEntity.ok(news);</span>
+<span class="fc" id="L102">        News news = News.builder()</span>
+<span class="fc" id="L103">                .title(body.title())</span>
+<span class="fc" id="L104">                .content(body.content())</span>
+<span class="fc" id="L105">                .type(body.type())</span>
+<span class="fc" id="L106">                .author(user)</span>
+<span class="fc" id="L107">                .date(Instant.now())</span>
+<span class="fc" id="L108">                .build();</span>
+<span class="fc" id="L109">        newsRepository.save(news);</span>
+<span class="fc" id="L110">        return ResponseEntity.ok(news);</span>
     }
 
     @GetMapping(&quot;/content/admin&quot;)
+    @PreAuthorize(&quot;hasRole('ADMIN')&quot;)
     public ResponseEntity&lt;?&gt; getAllContent(@AuthenticationPrincipal User user) {
-<span class="nc bnc" id="L117" title="All 2 branches missed.">        if (!isAdmin(user)) {</span>
-<span class="nc" id="L118">            return ResponseEntity.status(403).body(Map.of(&quot;message&quot;, &quot;Доступ запрещен. Только для администраторов.&quot;));</span>
-        }
-<span class="nc" id="L120">        List&lt;News&gt; content = newsRepository.findAll();</span>
-<span class="nc" id="L121">        return ResponseEntity.ok(content);</span>
+<span class="nc" id="L116">        List&lt;News&gt; content = newsRepository.findAll();</span>
+<span class="nc" id="L117">        return ResponseEntity.ok(content);</span>
     }
     @PutMapping(&quot;/content/{id}&quot;)
+    @PreAuthorize(&quot;hasRole('ADMIN')&quot;)
     public ResponseEntity&lt;?&gt; updateNews(@AuthenticationPrincipal User user,
                                         @PathVariable(&quot;id&quot;) Long id,
                                         @RequestBody NewsRequest body) {
-<span class="nc bnc" id="L127" title="All 2 branches missed.">        if (!isAdmin(user)) {</span>
-<span class="nc" id="L128">            return ResponseEntity.status(403).body(Map.of(&quot;message&quot;, &quot;Доступ запрещен. Только для администраторов.&quot;));</span>
-        }
-<span class="nc" id="L130">        return newsRepository.findById(id)</span>
-<span class="nc" id="L131">                .map(existing -&gt; {</span>
-<span class="nc bnc" id="L132" title="All 2 branches missed.">                    if (body.title() != null) existing.setTitle(body.title());</span>
-<span class="nc bnc" id="L133" title="All 2 branches missed.">                    if (body.content() != null) existing.setContent(body.content());</span>
-<span class="nc bnc" id="L134" title="All 2 branches missed.">                    if (body.type() != null) existing.setType(body.type());</span>
-<span class="nc" id="L135">                    existing.setDate(Instant.now());</span>
-<span class="nc" id="L136">                    newsRepository.save(existing);</span>
-<span class="nc" id="L137">                    return (Object) existing;</span>
+<span class="nc" id="L124">        return newsRepository.findById(id)</span>
+<span class="nc" id="L125">                .map(existing -&gt; {</span>
+<span class="nc bnc" id="L126" title="All 2 branches missed.">                    if (body.title() != null) existing.setTitle(body.title());</span>
+<span class="nc bnc" id="L127" title="All 2 branches missed.">                    if (body.content() != null) existing.setContent(body.content());</span>
+<span class="nc bnc" id="L128" title="All 2 branches missed.">                    if (body.type() != null) existing.setType(body.type());</span>
+<span class="nc" id="L129">                    existing.setDate(Instant.now());</span>
+<span class="nc" id="L130">                    newsRepository.save(existing);</span>
+<span class="nc" id="L131">                    return (Object) existing;</span>
                 })
-<span class="nc" id="L139">                .&lt;ResponseEntity&lt;?&gt;&gt;map(ResponseEntity::ok)</span>
-<span class="nc" id="L140">                .orElseGet(() -&gt; ResponseEntity.status(404).body(Map.of(&quot;message&quot;, &quot;Новость не найдена.&quot;)));</span>
+<span class="nc" id="L133">                .&lt;ResponseEntity&lt;?&gt;&gt;map(ResponseEntity::ok)</span>
+<span class="nc" id="L134">                .orElseGet(() -&gt; ResponseEntity.status(404).body(Map.of(&quot;message&quot;, &quot;Новость не найдена.&quot;)));</span>
     }
 
     @DeleteMapping(&quot;/content/{id}&quot;)
+    @PreAuthorize(&quot;hasRole('ADMIN')&quot;)
     public ResponseEntity&lt;?&gt; deleteNews(@AuthenticationPrincipal User user,
                                         @PathVariable(&quot;id&quot;) Long id) {
-<span class="pc bpc" id="L146" title="1 of 2 branches missed.">        if (!isAdmin(user)) {</span>
-<span class="nc" id="L147">            return ResponseEntity.status(403).body(Map.of(&quot;message&quot;, &quot;Доступ запрещен. Только для администраторов.&quot;));</span>
-        }
-<span class="fc" id="L149">        return newsRepository.findById(id)</span>
-<span class="fc" id="L150">                .map(existing -&gt; {</span>
-<span class="fc" id="L151">                    newsRepository.delete(existing);</span>
-<span class="fc" id="L152">                    return (Object) Map.of(&quot;message&quot;, &quot;Новость успешно удалена.&quot;);</span>
+<span class="fc" id="L141">        return newsRepository.findById(id)</span>
+<span class="fc" id="L142">                .map(existing -&gt; {</span>
+<span class="fc" id="L143">                    newsRepository.delete(existing);</span>
+<span class="fc" id="L144">                    return (Object) Map.of(&quot;message&quot;, &quot;Новость успешно удалена.&quot;);</span>
                 })
-<span class="fc" id="L154">                .&lt;ResponseEntity&lt;?&gt;&gt;map(ResponseEntity::ok)</span>
-<span class="pc" id="L155">                .orElseGet(() -&gt; ResponseEntity.status(404).body(Map.of(&quot;message&quot;, &quot;Новость не найдена.&quot;)));</span>
+<span class="fc" id="L146">                .&lt;ResponseEntity&lt;?&gt;&gt;map(ResponseEntity::ok)</span>
+<span class="pc" id="L147">                .orElseGet(() -&gt; ResponseEntity.status(404).body(Map.of(&quot;message&quot;, &quot;Новость не найдена.&quot;)));</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
