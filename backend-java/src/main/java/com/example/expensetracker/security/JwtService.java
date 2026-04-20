@@ -24,7 +24,7 @@ public class JwtService {
         this.expirationMs = expirationMs;
     }
 
-    public String generateToken(Long userId) {
+    public String generateAccessToken(Long userId) {
         Date now = new Date();
         Date expiry = new Date(now.getTime() + expirationMs);
         return Jwts.builder()
@@ -33,6 +33,10 @@ public class JwtService {
                 .setExpiration(expiry)
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
+    }
+
+    public String generateToken(Long userId) {
+        return generateAccessToken(userId);
     }
 
     public Long parseUserId(String token) {

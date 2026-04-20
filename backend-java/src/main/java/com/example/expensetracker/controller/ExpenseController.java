@@ -1,11 +1,10 @@
 package com.example.expensetracker.controller;
 
+import com.example.expensetracker.exception.BadRequestException;
 import com.example.expensetracker.model.Expense;
-import com.example.expensetracker.model.Notification;
 import com.example.expensetracker.model.User;
-import com.example.expensetracker.repository.BudgetRepository;
+import com.example.expensetracker.service.BudgetAlertService;
 import com.example.expensetracker.repository.ExpenseRepository;
-import com.example.expensetracker.repository.NotificationRepository;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import org.apache.poi.ss.usermodel.Row;
@@ -15,6 +14,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Page;
@@ -24,7 +24,6 @@ import org.springframework.data.domain.Pageable;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.YearMonth;
 import java.util.List;
 import java.util.Map;
 
@@ -33,15 +32,12 @@ import java.util.Map;
 public class ExpenseController {
 
     private final ExpenseRepository expenseRepository;
-    private final BudgetRepository budgetRepository;
-    private final NotificationRepository notificationRepository;
+    private final BudgetAlertService budgetAlertService;
 
     public ExpenseController(ExpenseRepository expenseRepository,
-                             BudgetRepository budgetRepository,
-                             NotificationRepository notificationRepository) {
+                             BudgetAlertService budgetAlertService) {
         this.expenseRepository = expenseRepository;
-        this.budgetRepository = budgetRepository;
-        this.notificationRepository = notificationRepository;
+        this.budgetAlertService = budgetAlertService;
     }
 
     public record ExpenseRequest(
@@ -54,13 +50,11 @@ public class ExpenseController {
     ) {}
 
     @PostMapping("/add")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> addExpense(@AuthenticationPrincipal User user,
                                         @Valid @RequestBody ExpenseRequest body) {
-        if (user == null) {
-            return ResponseEntity.status(401).body(Map.of("messege", "Unauthorized"));
-        }
         if (body.generalCategory() == null || body.generalCategory().isBlank()) {
-            return ResponseEntity.badRequest().body(Map.of("message", "Требуется общая категория"));
+            throw new BadRequestException("Требуется общая категория");
         }
         String category = body.category();
         if (category == null || category.isBlank()) {
@@ -77,36 +71,13 @@ public class ExpenseController {
                 .date(d)
                 .build();
         expenseRepository.save(expense);
-
-        // Budget check (month + general category)
-        String month = YearMonth.from(d).toString(); // YYYY-MM
-        budgetRepository.findByUserAndMonthAndGeneralCategory(user, month, body.generalCategory())
-                .ifPresent(budget -> {
-                    LocalDate from = YearMonth.parse(month).atDay(1);
-                    LocalDate to = YearMonth.parse(month).atEndOfMonth();
-                    Double spent = expenseRepository.sumByUserAndGeneralCategoryAndMonth(user, body.generalCategory(), from, to);
-                    if (spent != null && spent > budget.getAmount()) {
-                        String type = "BUDGET_EXCEEDED";
-                        boolean already = notificationRepository.existsByUserAndTypeAndMonthAndGeneralCategory(
-                                user, type, month, body.generalCategory()
-                        );
-                        if (!already) {
-                            notificationRepository.save(Notification.builder()
-                                    .user(user)
-                                    .type(type)
-                                    .month(month)
-                                    .generalCategory(body.generalCategory())
-                                    .message("Бюджет превышен на " + body.generalCategory() + " (" + month + "). Бюджет: "
-                                            + budget.getAmount() + ", потраченно: " + spent)
-                                    .build());
-                        }
-                    }
-                });
+        budgetAlertService.checkBudgetAndNotify(user, expense);
 
         return ResponseEntity.ok(expense);
     }
 
     @GetMapping("/get")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> getAll(@AuthenticationPrincipal User user,
                                     @RequestParam(value = "page", defaultValue = "0") int page,
                                     @RequestParam(value = "size", defaultValue = "5") int size,
@@ -114,9 +85,6 @@ public class ExpenseController {
                                     @RequestParam(value = "to", required = false) String to,
                                     @RequestParam(value = "generalCategory", required = false) String generalCategory,
                                     @RequestParam(value = "category", required = false) String category) {
-        if (user == null) {
-            return ResponseEntity.status(401).body(Map.of("messege", "Unauthorized"));
-        }
         LocalDate fromDate = (from == null || from.isBlank()) ? null : LocalDate.parse(from);
         LocalDate toDate = (to == null || to.isBlank()) ? null : LocalDate.parse(to);
         String gen = (generalCategory == null || generalCategory.isBlank()) ? null : generalCategory.trim();
@@ -134,20 +102,16 @@ public class ExpenseController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> delete(@AuthenticationPrincipal User user,
                                     @PathVariable("id") Long id) {
-        if (user == null) {
-            return ResponseEntity.status(401).body(Map.of("messege", "Unauthorized"));
-        }
         expenseRepository.deleteById(id);
         return ResponseEntity.ok(Map.of("messege", " Расходы успешно удалены "));
     }
 
     @GetMapping("/downloadexcel")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<byte[]> downloadExcel(@AuthenticationPrincipal User user) throws IOException {
-        if (user == null) {
-            return ResponseEntity.status(401).build();
-        }
         List<Expense> list = expenseRepository.findByUserOrderByDateDesc(user);
 
         Workbook workbook = new XSSFWorkbook();

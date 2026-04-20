@@ -4,6 +4,7 @@ import com.example.expensetracker.model.Expense;
 import com.example.expensetracker.model.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -13,6 +14,7 @@ import java.util.List;
 
 public interface ExpenseRepository extends JpaRepository<Expense, Long> {
 
+    @EntityGraph(attributePaths = "user")
     List<Expense> findByUserOrderByDateDesc(User user);
 
     List<Expense> findByUserAndDateGreaterThanEqualOrderByDateDesc(User user, LocalDate from);
@@ -45,6 +47,7 @@ public interface ExpenseRepository extends JpaRepository<Expense, Long> {
               and (coalesce(:category, '') = '' or e.category = :category)
             order by e.date desc
             """)
+    @EntityGraph(attributePaths = "user")
     Page<Expense> findPage(
             @Param("user") User user,
             @Param("from") LocalDate from,

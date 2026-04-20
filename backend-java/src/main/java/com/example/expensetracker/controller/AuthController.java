@@ -1,13 +1,17 @@
 package com.example.expensetracker.controller;
 
+import com.example.expensetracker.exception.BadRequestException;
+import com.example.expensetracker.exception.ResourceNotFoundException;
 import com.example.expensetracker.model.User;
 import com.example.expensetracker.security.JwtService;
+import com.example.expensetracker.service.RefreshTokenService;
 import com.example.expensetracker.service.UserService;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,15 +30,18 @@ public class AuthController {
 
     private final UserService userService;
     private final JwtService jwtService;
+    private final RefreshTokenService refreshTokenService;
     private final PasswordEncoder passwordEncoder;
     private final Path uploadRoot;
 
     public AuthController(UserService userService,
                           JwtService jwtService,
+                          RefreshTokenService refreshTokenService,
                           PasswordEncoder passwordEncoder,
                           @Value("${app.upload.dir}") String uploadDir) throws IOException {
         this.userService = userService;
         this.jwtService = jwtService;
+        this.refreshTokenService = refreshTokenService;
         this.passwordEncoder = passwordEncoder;
         this.uploadRoot = Paths.get(uploadDir).toAbsolutePath().normalize();
         Files.createDirectories(uploadRoot);
@@ -50,24 +57,23 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterRequest body) {
-        try {
-            User user = userService.register(
-                    body.fullName(),
-                    body.email(),
-                    body.password(),
-                    body.role(),
-                    body.profileImageUrl()
-            );
-            String token = jwtService.generateToken(user.getId());
-            return ResponseEntity.created(URI.create("/api/v1/auth/getUser"))
-                    .body(Map.of(
-                            "id", user.getId(),
-                            "user", user,
-                            "token", token
-                    ));
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(Map.of("messege", e.getMessage()));
-        }
+        User user = userService.register(
+                body.fullName(),
+                body.email(),
+                body.password(),
+                body.role(),
+                body.profileImageUrl()
+        );
+        String accessToken = jwtService.generateAccessToken(user.getId());
+        String refreshToken = refreshTokenService.createForUser(user).getToken();
+        return ResponseEntity.created(URI.create("/api/v1/auth/getUser"))
+                .body(Map.of(
+                        "id", user.getId(),
+                        "user", user,
+                        "token", accessToken,
+                        "accessToken", accessToken,
+                        "refreshToken", refreshToken
+                ));
     }
 
     public record LoginRequest(
@@ -79,37 +85,50 @@ public class AuthController {
     public ResponseEntity<?> login(@RequestBody LoginRequest body) {
         var userOpt = userService.findByEmail(body.email());
         if (userOpt.isEmpty() || !passwordEncoder.matches(body.password(), userOpt.get().getPassword())) {
-            return ResponseEntity.badRequest().body(Map.of("messege", "Неверные учетные данные"));
+            throw new BadRequestException("Неверные учетные данные");
         }
         User user = userOpt.get();
-        String token = jwtService.generateToken(user.getId());
+        String accessToken = jwtService.generateAccessToken(user.getId());
+        String refreshToken = refreshTokenService.createForUser(user).getToken();
         return ResponseEntity.status(201).body(Map.of(
                 "id", user.getId(),
                 "user", user,
-                "token", token
+                "token", accessToken,
+                "accessToken", accessToken,
+                "refreshToken", refreshToken
+        ));
+    }
+
+    public record RefreshTokenRequest(@NotBlank String refreshToken) {}
+
+    @PostMapping("/refresh")
+    public ResponseEntity<?> refresh(@RequestBody RefreshTokenRequest body) {
+        User user = refreshTokenService.verifyAndGetUser(body.refreshToken());
+        String accessToken = jwtService.generateAccessToken(user.getId());
+        String refreshToken = refreshTokenService.createForUser(user).getToken();
+        return ResponseEntity.ok(Map.of(
+                "token", accessToken,
+                "accessToken", accessToken,
+                "refreshToken", refreshToken
         ));
     }
 
     @GetMapping("/getUser")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> getUser(@AuthenticationPrincipal User currentUser) {
-        if (currentUser == null) {
-            return ResponseEntity.status(401).body(Map.of("messege", "Несанкционированный"));
-        }
         return ResponseEntity.ok(currentUser);
     }
 
     @PutMapping("/update")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> update(
             @AuthenticationPrincipal User currentUser,
             @RequestParam(value = "fullName", required = false) String fullName,
             @RequestParam(value = "password", required = false) String password,
             @RequestPart(value = "profileImage", required = false) MultipartFile profileImage
     ) {
-        if (currentUser == null) {
-            return ResponseEntity.status(401).body(Map.of("message", "Unauthorized"));
-        }
         User user = userService.findById(currentUser.getId())
-                .orElseThrow(() -> new IllegalStateException("Пользователь не найден"));
+                .orElseThrow(() -> new ResourceNotFoundException("Пользователь не найден"));
         if (fullName != null && !fullName.isBlank()) {
             user.setFullName(fullName);
         }
@@ -139,6 +158,7 @@ public class AuthController {
     }
 
     @PostMapping("/upload-image")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> uploadImage(@RequestParam("image") MultipartFile image) {
         if (image == null || image.isEmpty()) {
             return ResponseEntity.badRequest().body(Map.of("message", "Ни один файл не загружен"));

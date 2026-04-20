@@ -1,5 +1,6 @@
 package com.example.expensetracker.service;
 
+import com.example.expensetracker.exception.BadRequestException;
 import com.example.expensetracker.model.User;
 import com.example.expensetracker.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,7 +21,7 @@ public class UserService {
 
     public User register(String fullName, String email, String rawPassword, String role, String profileImageUrl) {
         if (userRepository.findByEmail(email).isPresent()) {
-            throw new IllegalArgumentException("Электронная почта уже используется");
+            throw new BadRequestException("Электронная почта уже используется");
         }
 
         User.Role userRole = "ADMIN".equalsIgnoreCase(role) ? User.Role.ADMIN : User.Role.NORMAL;

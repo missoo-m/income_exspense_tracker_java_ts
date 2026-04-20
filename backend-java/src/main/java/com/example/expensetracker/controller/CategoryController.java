@@ -4,6 +4,7 @@ import com.example.expensetracker.model.Category;
 import com.example.expensetracker.model.User;
 import com.example.expensetracker.repository.CategoryRepository;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,10 +25,8 @@ public class CategoryController {
     public record CategoryRequest(String name) {}
 
     @GetMapping
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> getAll(@AuthenticationPrincipal User user) {
-        if (user == null) {
-            return ResponseEntity.status(401).body(Map.of("message", "Unauthorized"));
-        }
         // Если у пользователя еще нет категорий — создаём базовый набор
         if (categoryRepository.countByUser(user) == 0) {
             List<String> defaults = Arrays.asList(
@@ -56,11 +55,9 @@ public class CategoryController {
     }
 
     @PostMapping
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> create(@AuthenticationPrincipal User user,
                                     @RequestBody CategoryRequest body) {
-        if (user == null) {
-            return ResponseEntity.status(401).body(Map.of("message", "Unauthorized"));
-        }
         String name = body.name();
         if (name == null || name.isBlank()) {
             return ResponseEntity.badRequest().body(Map.of("message", "Укажите название категории."));
@@ -78,12 +75,10 @@ public class CategoryController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> update(@AuthenticationPrincipal User user,
                                     @PathVariable("id") Long id,
                                     @RequestBody CategoryRequest body) {
-        if (user == null) {
-            return ResponseEntity.status(401).body(Map.of("message", "Unauthorized"));
-        }
         String name = body.name();
         if (name == null || name.isBlank()) {
             return ResponseEntity.badRequest().body(Map.of("message", "Укажите название категории."));
@@ -104,11 +99,9 @@ public class CategoryController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> delete(@AuthenticationPrincipal User user,
                                     @PathVariable("id") Long id) {
-        if (user == null) {
-            return ResponseEntity.status(401).body(Map.of("message", "Unauthorized"));
-        }
         return categoryRepository.findByIdAndUser(id, user)
                 .map(existing -> {
                     categoryRepository.delete(existing);

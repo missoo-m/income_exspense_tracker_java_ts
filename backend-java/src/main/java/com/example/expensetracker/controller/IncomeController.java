@@ -15,6 +15,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,11 +43,9 @@ public class IncomeController {
     ) {}
 
     @PostMapping("/add")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> addIncome(@AuthenticationPrincipal User user,
                                        @Valid @RequestBody IncomeRequest body) {
-        if (user == null) {
-            return ResponseEntity.status(401).body(Map.of("messege", "Unauthorized"));
-        }
         LocalDate d = LocalDate.parse(body.date());
         Income income = Income.builder()
                 .user(user)
@@ -60,15 +59,13 @@ public class IncomeController {
     }
 
     @GetMapping("/get")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> getAll(@AuthenticationPrincipal User user,
                                     @RequestParam(value = "page", defaultValue = "0") int page,
                                     @RequestParam(value = "size", defaultValue = "5") int size,
                                     @RequestParam(value = "from", required = false) String from,
                                     @RequestParam(value = "to", required = false) String to,
                                     @RequestParam(value = "source", required = false) String source) {
-        if (user == null) {
-            return ResponseEntity.status(401).body(Map.of("messege", "Unauthorized"));
-        }
         LocalDate fromDate = (from == null || from.isBlank()) ? null : LocalDate.parse(from);
         LocalDate toDate = (to == null || to.isBlank()) ? null : LocalDate.parse(to);
         String sourceFilter = (source == null || source.isBlank()) ? null : source.trim();
@@ -85,20 +82,16 @@ public class IncomeController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> delete(@AuthenticationPrincipal User user,
                                     @PathVariable("id") Long id) {
-        if (user == null) {
-            return ResponseEntity.status(401).body(Map.of("messege", "Unauthorized"));
-        }
         incomeRepository.deleteById(id);
         return ResponseEntity.ok(Map.of("messege", " Доход успешно удален "));
     }
 
     @GetMapping("/downloadexcel")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<byte[]> downloadExcel(@AuthenticationPrincipal User user) throws IOException {
-        if (user == null) {
-            return ResponseEntity.status(401).build();
-        }
         List<Income> list = incomeRepository.findByUserOrderByDateDesc(user);
 
         Workbook workbook = new XSSFWorkbook();

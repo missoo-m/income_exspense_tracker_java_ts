@@ -2,6 +2,7 @@ package com.example.expensetracker.security;
 
 import com.example.expensetracker.model.User;
 import com.example.expensetracker.repository.UserRepository;
+import com.example.expensetracker.service.RefreshTokenService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -22,17 +23,20 @@ import java.util.UUID;
 public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
 
     private final JwtService jwtService;
+    private final RefreshTokenService refreshTokenService;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final String clientUrl;
 
     public OAuth2SuccessHandler(
             JwtService jwtService,
+            RefreshTokenService refreshTokenService,
             UserRepository userRepository,
             PasswordEncoder passwordEncoder,
             @Value("${app.client-url}") String clientUrl
     ) {
         this.jwtService = jwtService;
+        this.refreshTokenService = refreshTokenService;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.clientUrl = clientUrl;
@@ -57,12 +61,14 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
         String picture = extractPicture(registrationId, oauthUser);
 
         User user = upsertUser(email, fullName, picture);
-        String jwt = jwtService.generateToken(user.getId());
+        String jwt = jwtService.generateAccessToken(user.getId());
+        String refreshToken = refreshTokenService.createForUser(user).getToken();
 
         String redirectUrl = UriComponentsBuilder
                 .fromUriString(clientUrl)
                 .path("/oauth2/callback")
                 .queryParam("token", jwt)
+                .queryParam("refreshToken", refreshToken)
                 .build()
                 .toUriString();
 

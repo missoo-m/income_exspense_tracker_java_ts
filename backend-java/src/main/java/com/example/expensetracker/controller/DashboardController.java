@@ -6,6 +6,7 @@ import com.example.expensetracker.model.User;
 import com.example.expensetracker.repository.ExpenseRepository;
 import com.example.expensetracker.repository.IncomeRepository;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,11 +29,8 @@ public class DashboardController {
     }
 
     @GetMapping
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> getDashboard(@AuthenticationPrincipal User user) {
-        if (user == null) {
-            return ResponseEntity.status(401).body(Map.of("messege", "Unauthorized"));
-        }
-
         Double totalIncome = Optional.ofNullable(incomeRepository.sumByUser(user)).orElse(0.0);
         Double totalExpense = Optional.ofNullable(expenseRepository.sumByUser(user)).orElse(0.0);
 

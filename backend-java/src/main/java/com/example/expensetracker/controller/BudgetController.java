@@ -1,11 +1,14 @@
 package com.example.expensetracker.controller;
 
+import com.example.expensetracker.exception.BadRequestException;
+import com.example.expensetracker.exception.ResourceNotFoundException;
 import com.example.expensetracker.model.Budget;
 import com.example.expensetracker.model.User;
 import com.example.expensetracker.repository.BudgetRepository;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,26 +32,22 @@ public class BudgetController {
     ) {}
 
     @GetMapping
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> getByMonth(@AuthenticationPrincipal User user,
                                         @RequestParam("month") String month) {
-        if (user == null) {
-            return ResponseEntity.status(401).body(Map.of("message", "Несанкционирован"));
-        }
         String m = Budget.normalizeMonth(month);
         List<Budget> budgets = budgetRepository.findByUserAndMonthOrderByGeneralCategoryAsc(user, m);
         return ResponseEntity.ok(budgets);
     }
 
     @PostMapping
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> upsert(@AuthenticationPrincipal User user,
                                     @RequestBody BudgetRequest body) {
-        if (user == null) {
-            return ResponseEntity.status(401).body(Map.of("message", "Unauthorized"));
-        }
         String month = Budget.normalizeMonth(body.month());
         String category = body.generalCategory().trim();
         if (body.amount() == null || body.amount() < 0) {
-            return ResponseEntity.badRequest().body(Map.of("message", "Неверная сумма"));
+            throw new BadRequestException("Неверная сумма");
         }
 
         Budget budget = budgetRepository.findByUserAndMonthAndGeneralCategory(user, month, category)
@@ -63,17 +62,15 @@ public class BudgetController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> delete(@AuthenticationPrincipal User user,
                                     @PathVariable("id") Long id) {
-        if (user == null) {
-            return ResponseEntity.status(401).body(Map.of("message", "Unauthorized"));
-        }
         return budgetRepository.findByIdAndUser(id, user)
                 .map(b -> {
                     budgetRepository.delete(b);
                     return ResponseEntity.ok(Map.of("message", "Бюджет удален."));
                 })
-                .orElseGet(() -> ResponseEntity.status(404).body(Map.of("message", "Бюджет не найден")));
+                .orElseThrow(() -> new ResourceNotFoundException("Бюджет не найден"));
     }
 }
 

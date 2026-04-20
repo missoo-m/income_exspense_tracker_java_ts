@@ -11,6 +11,7 @@ import com.example.expensetracker.repository.NotificationRepository;
 import com.example.expensetracker.repository.UserRepository;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -47,28 +48,20 @@ public class AdminController {
         this.notificationRepository = notificationRepository;
     }
 
-    private boolean isAdmin(User user) {
-        return user != null && user.getRole() == User.Role.ADMIN;
-    }
-
     @GetMapping("/users")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> getAllUsers(@AuthenticationPrincipal User user,
                                          @RequestParam(value = "c", required = false) String from,
                                          @RequestParam(value = "gj", required = false) String to) {
-        if (!isAdmin(user)) {
-            return ResponseEntity.status(403).body(Map.of("message", "Доступ запрещен. Только для администраторов."));
-        }
         List<User> users = userRepository.findAll();
         return ResponseEntity.ok(users);
     }
 
     @DeleteMapping("/users/{id}")
     @Transactional
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteUser(@AuthenticationPrincipal User user,
                                         @PathVariable("id") Long id) {
-        if (!isAdmin(user)) {
-            return ResponseEntity.status(403).body(Map.of("message", "Доступ запрещен. Только для администраторов."));
-        }
         return userRepository.findById(id)
                 .map(u -> {
                     try {
@@ -93,11 +86,9 @@ public class AdminController {
     public record NewsRequest(String title, String content, String type) {}
 
     @PostMapping("/content")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> addNews(@AuthenticationPrincipal User user,
                                      @RequestBody NewsRequest body) {
-        if (!isAdmin(user)) {
-            return ResponseEntity.status(403).body(Map.of("message", "Доступ запрещен. Только для администраторов."));
-        }
         if (body.title() == null || body.content() == null || body.type() == null) {
             return ResponseEntity.badRequest().body(Map.of("message", "Все поля обязательны для заполнения"));
         }
@@ -113,20 +104,16 @@ public class AdminController {
     }
 
     @GetMapping("/content/admin")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> getAllContent(@AuthenticationPrincipal User user) {
-        if (!isAdmin(user)) {
-            return ResponseEntity.status(403).body(Map.of("message", "Доступ запрещен. Только для администраторов."));
-        }
         List<News> content = newsRepository.findAll();
         return ResponseEntity.ok(content);
     }
     @PutMapping("/content/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> updateNews(@AuthenticationPrincipal User user,
                                         @PathVariable("id") Long id,
                                         @RequestBody NewsRequest body) {
-        if (!isAdmin(user)) {
-            return ResponseEntity.status(403).body(Map.of("message", "Доступ запрещен. Только для администраторов."));
-        }
         return newsRepository.findById(id)
                 .map(existing -> {
                     if (body.title() != null) existing.setTitle(body.title());
@@ -141,11 +128,9 @@ public class AdminController {
     }
 
     @DeleteMapping("/content/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteNews(@AuthenticationPrincipal User user,
                                         @PathVariable("id") Long id) {
-        if (!isAdmin(user)) {
-            return ResponseEntity.status(403).body(Map.of("message", "Доступ запрещен. Только для администраторов."));
-        }
         return newsRepository.findById(id)
                 .map(existing -> {
                     newsRepository.delete(existing);

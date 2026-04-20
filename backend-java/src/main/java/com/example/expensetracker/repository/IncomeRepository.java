@@ -4,6 +4,7 @@ import com.example.expensetracker.model.Income;
 import com.example.expensetracker.model.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -13,6 +14,7 @@ import java.util.List;
 
 public interface IncomeRepository extends JpaRepository<Income, Long> {
 
+    @EntityGraph(attributePaths = "user")
     List<Income> findByUserOrderByDateDesc(User user);
 
     List<Income> findByUserAndDateGreaterThanEqualOrderByDateDesc(User user, LocalDate from);
@@ -29,6 +31,7 @@ public interface IncomeRepository extends JpaRepository<Income, Long> {
               and (coalesce(:source, '') = '' or lower(i.source) like lower(concat('%', :source, '%')))
             order by i.date desc
             """)
+    @EntityGraph(attributePaths = "user")
     Page<Income> findPage(
             @Param("user") User user,
             @Param("from") LocalDate from,
