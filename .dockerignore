@@ -1,0 +1,20 @@
+.git/
+.gitignore
+
+*.log
+logs/
+
+# Build outputs
+frontend/expense-tracker/dist/
+frontend/expense-tracker/.vite/
+
+.env
+.env.local
+.env.*.local
+
+**/src/test/
+**/test-output/
+
+Dockerfile
+.dockerignore
+docker-compose*.yml
