@@ -10,6 +10,17 @@ const seed = [
 ];
 const LS_KEY = "expense_tracker_subscriptions";
 
+const readStoredSubscriptions = () => {
+  try {
+    const raw = localStorage.getItem(LS_KEY);
+    if (!raw) return seed;
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? parsed : seed;
+  } catch {
+    return seed;
+  }
+};
+
 const CountUpValue = ({ value }) => {
   const [display, setDisplay] = useState(0);
 
@@ -34,7 +45,8 @@ const CountUpValue = ({ value }) => {
 const Subscriptions = () => {
   useUserAuth();
 
-  const [list, setList] = useState(seed);
+  const [list, setList] = useState(() => readStoredSubscriptions());
+  const [isHydrated, setIsHydrated] = useState(false);
   const [showAdd, setShowAdd] = useState(false);
   const [form, setForm] = useState({ name: "", amount: "", nextDate: "" });
 
@@ -44,25 +56,18 @@ const Subscriptions = () => {
   );
 
   useEffect(() => {
-    try {
-      const raw = localStorage.getItem(LS_KEY);
-      if (!raw) return;
-      const parsed = JSON.parse(raw);
-      if (Array.isArray(parsed)) {
-        setList(parsed);
-      }
-    } catch {
-      // ignore invalid local cache
-    }
+    // Mark hydration complete after initial render.
+    setIsHydrated(true);
   }, []);
 
   useEffect(() => {
+    if (!isHydrated) return;
     try {
       localStorage.setItem(LS_KEY, JSON.stringify(list));
     } catch {
       // ignore write issues
     }
-  }, [list]);
+  }, [list, isHydrated]);
 
   const isDueSoon = (nextDate) => {
     const now = new Date();

@@ -1,57 +1,62 @@
-import { useState } from "react";
 import AuthLayout from "../../components/layouts/AuthLayout";
 import { Link, useNavigate } from 'react-router-dom';
 import Input from "../../components/Inputs/Input";
-import { validateEmail } from "../../utils/helper";
 import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
 import { UserContext } from "../../context/userContext";
 import { useContext } from "react";
-import SocialLogin from "../../components/SocialLogin";
 import OAuthButtons from "../../components/OAuthButtons";
+import { useMutation } from "@tanstack/react-query";
+import { useForm, Controller } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const loginSchema = z.object({
+  email: z.string().trim().email("Пожалуйста, введите действительный адрес электронной почты"),
+  password: z.string().min(1, "Пожалуйста, введите пароль"),
+});
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState(null);
-
   const { updateUser } = useContext(UserContext);
   const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+    setError,
+  } = useForm({
+    resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
 
-    if (!validateEmail(email)) {
-      setError("Пожалуйста, введите действительный адрес электронной почты");
-      return;
-    }
-
-    if (!password) {
-      setError("Пожалуйста, введите пароль");
-      return;
-    }
-
-    setError("");
-
-    try {
+  const loginMutation = useMutation({
+    mutationFn: async ({ email, password }) => {
       const response = await axiosInstance.post(API_PATHS.AUTH.LOGIN, {
         email,
         password,
       });
-      const { token, user } = response.data;
-
+      return response.data;
+    },
+    onSuccess: ({ token, user }) => {
       if (token) {
         localStorage.setItem("token", token);
         updateUser(user);
         navigate("/dashboard");
       }
-    } catch (error) {
-      if (error.response && error.response.data.message) {
-        setError(error.response.data.message);
-      } else {
-        setError("Произошла ошибка. Пожалуйста, попробуйте еще раз.");
-      }
-    }
+    },
+    onError: (error) => {
+      const errorMessage = error?.response?.data?.message
+        || "Произошла ошибка. Пожалуйста, попробуйте еще раз.";
+      setError("root", { message: errorMessage });
+    },
+  });
+
+  const handleLogin = async (data) => {
+    loginMutation.mutate(data);
   };
 
   return (
@@ -62,26 +67,40 @@ const Login = () => {
           Пожалуйста, введите свои данные для входа в систему.
         </p>
 
-        <form onSubmit={handleLogin}>
-          <Input
-            value={email}
-            onChange={({ target }) => setEmail(target.value)}
-            label="Адрес электронной почты"
-            placeholder="john@example.com"
-            type="text"
+        <form onSubmit={handleSubmit(handleLogin)}>
+          <Controller
+            name="email"
+            control={control}
+            render={({ field }) => (
+              <Input
+                value={field.value}
+                onChange={field.onChange}
+                label="Адрес электронной почты"
+                placeholder="john@example.com"
+                type="text"
+              />
+            )}
           />
+          {errors.email && <p className="text-red-500 text-xs pb-2.5"> {errors.email.message} </p>}
 
-          <Input
-            value={password}
-            onChange={({ target }) => setPassword(target.value)}
-            label="Пароль"
-            placeholder="Минимум 8 символов"
-            type="password"
+          <Controller
+            name="password"
+            control={control}
+            render={({ field }) => (
+              <Input
+                value={field.value}
+                onChange={field.onChange}
+                label="Пароль"
+                placeholder="Минимум 8 символов"
+                type="password"
+              />
+            )}
           />
+          {errors.password && <p className="text-red-500 text-xs pb-2.5"> {errors.password.message} </p>}
 
-          {error && <p className="text-red-500 text-xs pb-2.5"> {error} </p>}
+          {errors.root?.message && <p className="text-red-500 text-xs pb-2.5"> {errors.root.message} </p>}
 
-          <button type="submit" className="btn-primary">
+          <button type="submit" className="btn-primary" disabled={loginMutation.isPending}>
             Войти
           </button>
 

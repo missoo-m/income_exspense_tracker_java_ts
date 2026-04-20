@@ -1,16 +1,19 @@
-import { createContext, useState } from "react";
+import { createContext } from "react";
+import { useAuthStore } from "../store/authStore";
 
 export const UserContext = createContext();
 
 const UserProvider = ({ children }) => {
-    const [user, setUser] = useState(null);
+    const user = useAuthStore((state) => state.user);
+    const updateUserStore = useAuthStore((state) => state.updateUser);
+    const clearAuth = useAuthStore((state) => state.clearAuth);
 
     const updateUser = (userData) => {
-        setUser(userData);
+        updateUserStore(userData);
     };
 
     const clearUser = () => {
-        setUser(null);
+        clearAuth();
     };
 
     return (

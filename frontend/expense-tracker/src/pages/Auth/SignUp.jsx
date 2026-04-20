@@ -1,7 +1,6 @@
 import { useState } from "react";
 import AuthLayout from "../../components/layouts/AuthLayout";
 import { Link, useNavigate } from 'react-router-dom';
-import { validateEmail } from "../../utils/helper";
 import Input from "../../components/Inputs/Input";
 import ProfilePhotoSelector from "../../components/Inputs/ProfilePhotoSelector";
 import axiosInstance from "../../utils/axiosInstance";
@@ -10,45 +9,40 @@ import { useContext } from "react";
 import { UserContext } from "../../context/userContext";
 import uploadImage from "../../utils/uploadImage";
 import OAuthButtons from "../../components/OAuthButtons";
+import { Controller, useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
+
+const signUpSchema = z.object({
+  fullName: z.string().trim().min(1, "Пожалуйста, введите ваше имя"),
+  email: z.string().trim().email("Пожалуйста, введите действительный адрес электронной почты"),
+  password: z.string().min(8, "Пароль должен содержать минимум 8 символов"),
+});
 
 const SignUp = () => {
   const [profilePic, setProfilePic] = useState(null);
-  const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState(null);
 
   const { updateUser } = useContext(UserContext);
   const navigate = useNavigate();
 
-  const handleSignUp = async (e) => {
-    e.preventDefault();
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+    setError,
+  } = useForm({
+    resolver: zodResolver(signUpSchema),
+    defaultValues: {
+      fullName: "",
+      email: "",
+      password: "",
+    },
+  });
 
-    let profileImageUrl = "";
-
-    if (!fullName) {
-      setError("Пожалуйста, введите ваше имя");
-      return;
-    }
-
-    if (!validateEmail(email)) {
-      setError("Пожалуйста, введите действительный адрес электронной почты");
-      return;
-    }
-
-    if (!password) {
-      setError("Пожалуйста, введите пароль");
-      return;
-    }
-
-    if (password.length < 8) {
-      setError("Пароль должен содержать минимум 8 символов");
-      return;
-    }
-
-    setError("");
-
-    try {
+  const signUpMutation = useMutation({
+    mutationFn: async ({ fullName, email, password }) => {
+      let profileImageUrl = "";
       if (profilePic) {
         const imgUploadRes = await uploadImage(profilePic);
         profileImageUrl = imgUploadRes.imageURL || "";
@@ -60,21 +54,24 @@ const SignUp = () => {
         password,
         profileImageUrl
       });
-
-      const { token, user } = response.data;
-
+      return response.data;
+    },
+    onSuccess: ({ token, user }) => {
       if (token) {
         localStorage.setItem("token", token);
         updateUser(user);
         navigate("/dashboard");
       }
-    } catch (error) {
-      if (error.response && error.response.data.message) {
-        setError(error.response.data.message);
-      } else {
-        setError("Произошла ошибка. Пожалуйста, попробуйте еще раз.");
-      }
-    }
+    },
+    onError: (error) => {
+      const errorMessage = error?.response?.data?.message
+        || "Произошла ошибка. Пожалуйста, попробуйте еще раз.";
+      setError("root", { message: errorMessage });
+    },
+  });
+
+  const handleSignUp = async (data) => {
+    signUpMutation.mutate(data);
   };
 
   return (
@@ -85,40 +82,61 @@ const SignUp = () => {
           Присоединяйтесь к нам, заполнив форму ниже
         </p>
 
-        <form onSubmit={handleSignUp}>
+        <form onSubmit={handleSubmit(handleSignUp)}>
           <ProfilePhotoSelector image={profilePic} setImage={setProfilePic} />
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <Input
-              value={fullName}
-              onChange={({ target }) => setFullName(target.value)}
-              label="Полное имя"
-              placeholder="Иван Иванов"
-              type="text"
+            <Controller
+              name="fullName"
+              control={control}
+              render={({ field }) => (
+                <Input
+                  value={field.value}
+                  onChange={field.onChange}
+                  label="Полное имя"
+                  placeholder="Иван Иванов"
+                  type="text"
+                />
+              )}
             />
 
-            <Input
-              value={email}
-              onChange={({ target }) => setEmail(target.value)}
-              label="Адрес электронной почты"
-              placeholder="ivan@example.com"
-              type="text"
+            <Controller
+              name="email"
+              control={control}
+              render={({ field }) => (
+                <Input
+                  value={field.value}
+                  onChange={field.onChange}
+                  label="Адрес электронной почты"
+                  placeholder="ivan@example.com"
+                  type="text"
+                />
+              )}
             />
 
             <div className="col-span-2">
-              <Input
-                value={password}
-                onChange={({ target }) => setPassword(target.value)}
-                label="Пароль"
-                placeholder="Минимум 8 символов"
-                type="password"
+              <Controller
+                name="password"
+                control={control}
+                render={({ field }) => (
+                  <Input
+                    value={field.value}
+                    onChange={field.onChange}
+                    label="Пароль"
+                    placeholder="Минимум 8 символов"
+                    type="password"
+                  />
+                )}
               />
             </div>
           </div>
 
-          {error && <p className="text-red-500 text-xs pb-2.5"> {error} </p>}
+          {errors.fullName && <p className="text-red-500 text-xs pb-2.5"> {errors.fullName.message} </p>}
+          {errors.email && <p className="text-red-500 text-xs pb-2.5"> {errors.email.message} </p>}
+          {errors.password && <p className="text-red-500 text-xs pb-2.5"> {errors.password.message} </p>}
+          {errors.root?.message && <p className="text-red-500 text-xs pb-2.5"> {errors.root.message} </p>}
 
-          <button type="submit" className="btn-primary">
+          <button type="submit" className="btn-primary" disabled={signUpMutation.isPending}>
             Зарегистрироваться
           </button>
 
