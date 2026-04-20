@@ -1,7 +1,6 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
 expense-tracker-backend,com.example.expensetracker.config,SecurityConfig,0,153,0,0,0,29,0,10,0,10
 expense-tracker-backend,com.example.expensetracker.config,PasswordConfig,0,7,0,0,0,2,0,2,0,2
-expense-tracker-backend,com.example.expensetracker.config,StartupDataLoader,12,41,2,0,4,13,2,4,1,4
 expense-tracker-backend,com.example.expensetracker.config,RedisCacheConfig,0,41,0,0,0,13,0,3,0,3
 expense-tracker-backend,com.example.expensetracker.config,WebConfig,0,30,0,0,0,5,0,2,0,2
 expense-tracker-backend,com.example.expensetracker.dto,CurrencyRatesDto,22,24,0,0,6,9,6,4,6,4

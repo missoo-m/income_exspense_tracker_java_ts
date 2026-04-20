@@ -47,7 +47,6 @@ com/example/expensetracker/model/Category$CategoryBuilder.class
 com/example/expensetracker/repository/BudgetRepository.class
 com/example/expensetracker/dto/CurrencyRatesDto.class
 com/example/expensetracker/repository/NotificationRepository.class
-com/example/expensetracker/config/StartupDataLoader.class
 com/example/expensetracker/service/UserService.class
 com/example/expensetracker/model/Expense$ExpenseBuilder.class
 com/example/expensetracker/model/Currency.class

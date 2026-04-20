@@ -38,18 +38,18 @@ public class PublicContentController {
     }
 
     @GetMapping("/currencies")
-public ResponseEntity<?> getCurrentCurrencies() {
-    log.info(">>> КОНТРОЛЛЕР: запрос курсов валют <<<");
-    try {
-        CurrencyRatesDto payload = currencyRateService.getCurrentRatesCached();
-        log.info(">>> КОНТРОЛЛЕР: данные получены, отправляем ответ <<<");
-        return ResponseEntity.ok(payload);
-    } catch (Exception ex) {
-        log.error(">>> КОНТРОЛЛЕР: ошибка - {}", ex.getMessage());
-        return ResponseEntity.status(500).body(Map.of(
-                "message", "Не удалось загрузить курсы валют из НБРБ.",
-                "error", ex.getMessage()
-        ));
+    public ResponseEntity<?> getCurrentCurrencies() {
+        log.info(">>> КОНТРОЛЛЕР: запрос курсов валют <<<");
+        try {
+            CurrencyRatesDto payload = currencyRateService.getCurrentRatesCached();
+            log.info(">>> КОНТРОЛЛЕР: данные получены, отправляем ответ <<<");
+            return ResponseEntity.ok(payload);
+        } catch (Exception ex) {
+            log.error(">>> КОНТРОЛЛЕР: ошибка - {}", ex.getMessage());
+            return ResponseEntity.status(500).body(Map.of(
+                    "message", "Не удалось загрузить курсы валют из НБРБ.",
+                    "error", ex.getMessage()
+            ));
+        }
     }
-}
 }

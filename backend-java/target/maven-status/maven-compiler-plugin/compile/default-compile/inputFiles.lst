@@ -2,7 +2,6 @@
 /Users/mac/Desktop/geellya_tracker_java_ts/backend-java/src/main/java/com/example/expensetracker/config/PasswordConfig.java
 /Users/mac/Desktop/geellya_tracker_java_ts/backend-java/src/main/java/com/example/expensetracker/config/RedisCacheConfig.java
 /Users/mac/Desktop/geellya_tracker_java_ts/backend-java/src/main/java/com/example/expensetracker/config/SecurityConfig.java
-/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/src/main/java/com/example/expensetracker/config/StartupDataLoader.java
 /Users/mac/Desktop/geellya_tracker_java_ts/backend-java/src/main/java/com/example/expensetracker/config/WebConfig.java
 /Users/mac/Desktop/geellya_tracker_java_ts/backend-java/src/main/java/com/example/expensetracker/controller/AdminController.java
 /Users/mac/Desktop/geellya_tracker_java_ts/backend-java/src/main/java/com/example/expensetracker/controller/AuthController.java

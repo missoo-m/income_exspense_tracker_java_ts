@@ -38,19 +38,19 @@ public class PublicContentController {
     }
 
     @GetMapping(&quot;/currencies&quot;)
-public ResponseEntity&lt;?&gt; getCurrentCurrencies() {
-<span class="nc" id="L42">    log.info(&quot;&gt;&gt;&gt; КОНТРОЛЛЕР: запрос курсов валют &lt;&lt;&lt;&quot;);</span>
-    try {
-<span class="nc" id="L44">        CurrencyRatesDto payload = currencyRateService.getCurrentRatesCached();</span>
-<span class="nc" id="L45">        log.info(&quot;&gt;&gt;&gt; КОНТРОЛЛЕР: данные получены, отправляем ответ &lt;&lt;&lt;&quot;);</span>
-<span class="nc" id="L46">        return ResponseEntity.ok(payload);</span>
-<span class="nc" id="L47">    } catch (Exception ex) {</span>
-<span class="nc" id="L48">        log.error(&quot;&gt;&gt;&gt; КОНТРОЛЛЕР: ошибка - {}&quot;, ex.getMessage());</span>
-<span class="nc" id="L49">        return ResponseEntity.status(500).body(Map.of(</span>
-                &quot;message&quot;, &quot;Не удалось загрузить курсы валют из НБРБ.&quot;,
-<span class="nc" id="L51">                &quot;error&quot;, ex.getMessage()</span>
-        ));
+    public ResponseEntity&lt;?&gt; getCurrentCurrencies() {
+<span class="nc" id="L42">        log.info(&quot;&gt;&gt;&gt; КОНТРОЛЛЕР: запрос курсов валют &lt;&lt;&lt;&quot;);</span>
+        try {
+<span class="nc" id="L44">            CurrencyRatesDto payload = currencyRateService.getCurrentRatesCached();</span>
+<span class="nc" id="L45">            log.info(&quot;&gt;&gt;&gt; КОНТРОЛЛЕР: данные получены, отправляем ответ &lt;&lt;&lt;&quot;);</span>
+<span class="nc" id="L46">            return ResponseEntity.ok(payload);</span>
+<span class="nc" id="L47">        } catch (Exception ex) {</span>
+<span class="nc" id="L48">            log.error(&quot;&gt;&gt;&gt; КОНТРОЛЛЕР: ошибка - {}&quot;, ex.getMessage());</span>
+<span class="nc" id="L49">            return ResponseEntity.status(500).body(Map.of(</span>
+                    &quot;message&quot;, &quot;Не удалось загрузить курсы валют из НБРБ.&quot;,
+<span class="nc" id="L51">                    &quot;error&quot;, ex.getMessage()</span>
+            ));
+        }
     }
-}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
