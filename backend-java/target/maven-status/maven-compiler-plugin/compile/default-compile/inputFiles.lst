@@ -1,4 +1,7 @@
 /Users/mac/Desktop/geellya_tracker_java_ts/backend-java/src/main/java/com/example/expensetracker/ExpenseTrackerApplication.java
+/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/src/main/java/com/example/expensetracker/aop/Loggable.java
+/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/src/main/java/com/example/expensetracker/aop/LoggableAspect.java
+/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/src/main/java/com/example/expensetracker/config/OpenApiConfig.java
 /Users/mac/Desktop/geellya_tracker_java_ts/backend-java/src/main/java/com/example/expensetracker/config/PasswordConfig.java
 /Users/mac/Desktop/geellya_tracker_java_ts/backend-java/src/main/java/com/example/expensetracker/config/RedisCacheConfig.java
 /Users/mac/Desktop/geellya_tracker_java_ts/backend-java/src/main/java/com/example/expensetracker/config/SecurityConfig.java
@@ -13,6 +16,7 @@
 /Users/mac/Desktop/geellya_tracker_java_ts/backend-java/src/main/java/com/example/expensetracker/controller/NotificationController.java
 /Users/mac/Desktop/geellya_tracker_java_ts/backend-java/src/main/java/com/example/expensetracker/controller/PublicContentController.java
 /Users/mac/Desktop/geellya_tracker_java_ts/backend-java/src/main/java/com/example/expensetracker/dto/CurrencyRatesDto.java
+/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/src/main/java/com/example/expensetracker/dto/NewsDto.java
 /Users/mac/Desktop/geellya_tracker_java_ts/backend-java/src/main/java/com/example/expensetracker/exception/ApiException.java
 /Users/mac/Desktop/geellya_tracker_java_ts/backend-java/src/main/java/com/example/expensetracker/exception/BadRequestException.java
 /Users/mac/Desktop/geellya_tracker_java_ts/backend-java/src/main/java/com/example/expensetracker/exception/ForbiddenException.java
@@ -40,8 +44,10 @@
 /Users/mac/Desktop/geellya_tracker_java_ts/backend-java/src/main/java/com/example/expensetracker/security/JwtAuthenticationFilter.java
 /Users/mac/Desktop/geellya_tracker_java_ts/backend-java/src/main/java/com/example/expensetracker/security/JwtService.java
 /Users/mac/Desktop/geellya_tracker_java_ts/backend-java/src/main/java/com/example/expensetracker/security/OAuth2SuccessHandler.java
+/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/src/main/java/com/example/expensetracker/service/AbstractCrudService.java
 /Users/mac/Desktop/geellya_tracker_java_ts/backend-java/src/main/java/com/example/expensetracker/service/BudgetAlertService.java
 /Users/mac/Desktop/geellya_tracker_java_ts/backend-java/src/main/java/com/example/expensetracker/service/CurrencyRateService.java
+/Users/mac/Desktop/geellya_tracker_java_ts/backend-java/src/main/java/com/example/expensetracker/service/NewsCrudService.java
 /Users/mac/Desktop/geellya_tracker_java_ts/backend-java/src/main/java/com/example/expensetracker/service/RefreshTokenService.java
 /Users/mac/Desktop/geellya_tracker_java_ts/backend-java/src/main/java/com/example/expensetracker/service/UserService.java
 /Users/mac/Desktop/geellya_tracker_java_ts/backend-java/src/main/java/com/example/expensetracker/service/budget/BudgetExceededStrategy.java

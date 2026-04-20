@@ -24,8 +24,10 @@ com/example/expensetracker/model/Income$IncomeBuilder.class
 com/example/expensetracker/config/PasswordConfig.class
 com/example/expensetracker/controller/BudgetController.class
 com/example/expensetracker/controller/DashboardController.class
+com/example/expensetracker/dto/NewsDto.class
 com/example/expensetracker/model/Category.class
 com/example/expensetracker/controller/AdminController$NewsRequest.class
+com/example/expensetracker/service/NewsCrudService.class
 com/example/expensetracker/exception/ForbiddenException.class
 com/example/expensetracker/service/CurrencyRateService$NbrbRate.class
 com/example/expensetracker/model/Currency$CurrencyBuilder.class
@@ -33,15 +35,18 @@ com/example/expensetracker/model/Notification.class
 com/example/expensetracker/config/WebConfig.class
 com/example/expensetracker/security/OAuth2SuccessHandler.class
 com/example/expensetracker/exception/BadRequestException.class
+com/example/expensetracker/service/AbstractCrudService.class
 com/example/expensetracker/security/JwtService.class
 com/example/expensetracker/model/RefreshToken.class
 com/example/expensetracker/controller/AuthController$RefreshTokenRequest.class
+com/example/expensetracker/aop/LoggableAspect.class
 com/example/expensetracker/controller/IncomeController.class
 com/example/expensetracker/exception/ResourceNotFoundException.class
 com/example/expensetracker/model/Expense.class
 com/example/expensetracker/controller/ExpenseController.class
 com/example/expensetracker/model/News.class
 com/example/expensetracker/controller/AuthController.class
+com/example/expensetracker/config/OpenApiConfig.class
 com/example/expensetracker/controller/CategoryController.class
 com/example/expensetracker/repository/RefreshTokenRepository.class
 com/example/expensetracker/controller/BudgetController$BudgetRequest.class
@@ -60,6 +65,7 @@ com/example/expensetracker/controller/AdminController.class
 com/example/expensetracker/model/Category$CategoryBuilder.class
 com/example/expensetracker/repository/BudgetRepository.class
 com/example/expensetracker/dto/CurrencyRatesDto.class
+com/example/expensetracker/aop/Loggable.class
 com/example/expensetracker/repository/NotificationRepository.class
 com/example/expensetracker/service/UserService.class
 com/example/expensetracker/service/notification/NotificationFactory.class

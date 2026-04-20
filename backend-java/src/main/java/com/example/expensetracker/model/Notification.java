@@ -30,20 +30,19 @@ public class Notification {
     private User user;
 
     @Column(nullable = false)
-    private String type; // e.g. BUDGET_EXCEEDED
+    private String type;
 
     @Column(nullable = false, columnDefinition = "text")
     private String message;
 
-    @Column(nullable = false)
-    @Default
+    @Column(name = "is_read", nullable = false)  // ← явно указываем имя колонки
+    @Builder.Default
     private boolean read = false;
 
-    private String month; // YYYY-MM (optional)
-    private String generalCategory; // optional
+    private String month;
+    private String generalCategory;
 
     @Column(nullable = false, updatable = false)
-    @Default
+    @Builder.Default
     private Instant createdAt = Instant.now();
 }
-
